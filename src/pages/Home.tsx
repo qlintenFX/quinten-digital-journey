@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
@@ -7,21 +6,26 @@ import { Link } from 'react-router-dom';
 const Home = () => {
   return (
     <>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-cyber-light to-background py-20">
-        <div className="container">
+      {/* Hero Section with Parallax */}
+      <section className="relative overflow-hidden bg-gradient-to-b from-purple-light via-background to-background py-20">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+        </div>
+        <div className="container relative">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="mb-4 text-cyber-dark">Welcome to My E-Portfolio</h1>
-            <p className="text-xl mb-8 text-muted-foreground">
-              Cloud and Cybersecurity student specializing in Applied Computer Science / Electronics - ICT
-            </p>
+            <h1 className="animate-fade-up mb-4 text-purple-dark dark:text-purple-light">Welcome to My E-Portfolio</h1>
+            <div className="animate-parallax">
+              <p className="text-xl mb-8 text-muted-foreground">
+                Cloud and Cybersecurity student specializing in Applied Computer Science / Electronics - ICT
+              </p>
+            </div>
             <div className="flex justify-center gap-4">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="bg-purple-dark hover:bg-purple text-white">
                 <Link to="/about">
                   About Me <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
+              <Button asChild variant="outline" size="lg" className="border-purple-dark text-purple-dark hover:bg-purple-light">
                 <Link to="/projects">
                   View Projects <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
