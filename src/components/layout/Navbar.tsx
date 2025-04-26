@@ -48,7 +48,7 @@ const Navbar = ({ currentPath }: NavbarProps) => {
         <nav className="hidden md:flex items-center gap-6">
           <Link 
             to="/" 
-            className={`flex items-center gap-1 transition-colors ${
+            className={`flex items-center gap-1 transition-colors relative ${
               isActive('/') 
                 ? 'text-primary font-semibold' 
                 : 'text-foreground hover:text-primary'
@@ -56,11 +56,13 @@ const Navbar = ({ currentPath }: NavbarProps) => {
           >
             <Home className="h-4 w-4" />
             <span>Home</span>
-            {isActive('/') && <span className="block h-1 w-full bg-primary mt-1 rounded-full"></span>}
+            {isActive('/') && (
+              <span className="absolute -bottom-1 left-0 h-1 w-full bg-primary rounded-full shadow-[0_0_12px_rgba(155,135,245,0.5)] transition-all duration-300"></span>
+            )}
           </Link>
           <Link 
             to="/about" 
-            className={`flex items-center gap-1 transition-colors ${
+            className={`flex items-center gap-1 transition-colors relative ${
               isActive('/about') 
                 ? 'text-primary font-semibold' 
                 : 'text-foreground hover:text-primary'
@@ -68,11 +70,13 @@ const Navbar = ({ currentPath }: NavbarProps) => {
           >
             <User className="h-4 w-4" />
             <span>About Me</span>
-            {isActive('/about') && <span className="block h-1 w-full bg-primary mt-1 rounded-full"></span>}
+            {isActive('/about') && (
+              <span className="absolute -bottom-1 left-0 h-1 w-full bg-primary rounded-full shadow-[0_0_12px_rgba(155,135,245,0.5)] transition-all duration-300"></span>
+            )}
           </Link>
           <Link 
             to="/projects" 
-            className={`flex items-center gap-1 transition-colors ${
+            className={`flex items-center gap-1 transition-colors relative ${
               isActive('/projects') 
                 ? 'text-primary font-semibold' 
                 : 'text-foreground hover:text-primary'
@@ -80,7 +84,9 @@ const Navbar = ({ currentPath }: NavbarProps) => {
           >
             <Briefcase className="h-4 w-4" />
             <span>Projects / Achievements</span>
-            {isActive('/projects') && <span className="block h-1 w-full bg-primary mt-1 rounded-full"></span>}
+            {isActive('/projects') && (
+              <span className="absolute -bottom-1 left-0 h-1 w-full bg-primary rounded-full shadow-[0_0_12px_rgba(155,135,245,0.5)] transition-all duration-300"></span>
+            )}
           </Link>
         </nav>
       </div>

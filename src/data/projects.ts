@@ -1,4 +1,3 @@
-
 import { ProjectCardProps } from "@/components/projects/ProjectCard";
 
 export interface ProjectData extends ProjectCardProps {
@@ -48,14 +47,14 @@ export const projectsData: ProjectData[] = [
   {
     id: "keyed-colors",
     title: "KeyedColors",
-    description: "A personal project focused on color management and visualization.",
-    context: "[Placeholder: Background information on why you created this project, what problem it solves, and your personal interest in this area]",
-    contribution: "[Placeholder: As a personal project, describe your role as the sole developer or your collaboration with others]",
-    lessons: "[Placeholder: What technical skills and personal insights you gained from building this color-focused application]",
-    realizations: "[Placeholder: Details about the features implemented, technologies used, and challenges overcome]",
-    imageSrc: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07",
-    repoUrl: "https://github.com/yourusername/keyed-colors",
-    demoUrl: "https://keyed-colors.example.com",
+    description: "A Windows desktop application for color management and visualization.",
+    context: "KeyedColors is a personal project developed to provide an intuitive interface for color management in Windows applications.",
+    contribution: "Developed the entire application from concept to implementation, including the user interface and color manipulation functionality.",
+    lessons: "Gained deep understanding of color spaces, Windows desktop application development, and user interface design principles.",
+    realizations: "Successfully implemented a fully functional color management system with an intuitive user interface, supporting various color formats and providing real-time visualization.",
+    imageSrc: "/keyedcolorsapp.png",
+    repoUrl: "https://github.com/qlintenFX/KeyedColors",
+    demoUrl: "https://github.com/qlintenFX/KeyedColors/releases",
     category: "personal"
   },
   
