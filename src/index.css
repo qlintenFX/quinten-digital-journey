@@ -38,22 +38,22 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
+    --background: 20 14% 9%;
     --foreground: 210 40% 98%;
     
-    --card: 222 47% 11%;
+    --card: 30 10% 13%;
     --card-foreground: 210 40% 98%;
     
-    --popover: 222 47% 11%;
+    --popover: 30 10% 13%;
     --popover-foreground: 210 40% 98%;
     
     --primary: 262 83% 74%;
     --primary-foreground: 222 47% 11%;
     
-    --secondary: 217 33% 18%;
+    --secondary: 30 10% 13%;
     --secondary-foreground: 210 40% 98%;
     
-    --muted: 217 33% 18%;
+    --muted: 30 10% 13%;
     --muted-foreground: 215 20% 65%;
     
     --accent: 262 83% 64%;
@@ -62,8 +62,8 @@
     --destructive: 0 63% 31%;
     --destructive-foreground: 210 40% 98%;
     
-    --border: 217 33% 18%;
-    --input: 217 33% 18%;
+    --border: 30 10% 13%;
+    --input: 30 10% 13%;
     --ring: 262 83% 74%;
   }
 }
@@ -111,5 +111,23 @@
   
   .container {
     @apply px-4 md:px-6 mx-auto max-w-7xl;
+  }
+}
+
+@layer components {
+  .section {
+    @apply py-12 md:py-16;
+  }
+  
+  .container {
+    @apply px-4 md:px-6 mx-auto max-w-7xl;
+  }
+
+  .gradient-light {
+    @apply bg-gradient-to-b from-purple-light via-background to-background;
+  }
+
+  .gradient-dark {
+    @apply dark:bg-gradient-to-b dark:from-purple-dark dark:via-background dark:to-background;
   }
 }
