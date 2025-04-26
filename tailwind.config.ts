@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -85,13 +86,31 @@ export default {
             opacity: "1",
             transform: "translateY(0)"
           }
+        },
+        "parallax-slow": {
+          "0%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-5px)" },
+          "100%": { transform: "translateY(0)" }
+        },
+        "parallax-medium": {
+          "0%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+          "100%": { transform: "translateY(0)" }
+        },
+        "parallax-fast": {
+          "0%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-15px)" },
+          "100%": { transform: "translateY(0)" }
         }
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "parallax": "parallax 8s ease-in-out infinite",
-        "fade-up": "fade-up 0.5s ease-out forwards"
+        "fade-up": "fade-up 0.5s ease-out forwards",
+        "parallax-slow": "parallax-slow 8s ease-in-out infinite",
+        "parallax-medium": "parallax-medium 6s ease-in-out infinite",
+        "parallax-fast": "parallax-fast 4s ease-in-out infinite"
       },
     },
   },

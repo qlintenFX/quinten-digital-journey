@@ -7,7 +7,7 @@ const Projects = () => {
   return (
     <>
       {/* Header Section */}
-      <section className="bg-gradient-to-b from-cyber-light to-background py-16">
+      <section className="gradient-light gradient-dark py-16">
         <div className="container">
           <h1 className="text-center mb-6">Projects / Achievements</h1>
           <p className="text-lg text-center text-muted-foreground max-w-3xl mx-auto">
@@ -19,7 +19,7 @@ const Projects = () => {
       {/* Main Projects Section */}
       <section className="section">
         <div className="container">
-          <h2 className="mb-12 text-cyber-primary">Academic Projects</h2>
+          <h2 className="mb-12 text-primary">Academic Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {projectsData
               .filter(project => project.category === 'academic')
@@ -28,7 +28,7 @@ const Projects = () => {
               ))}
           </div>
           
-          <h2 className="mb-12 text-cyber-primary">Personal Projects</h2>
+          <h2 className="mb-12 text-primary">Personal Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {projectsData
               .filter(project => project.category === 'personal')
@@ -37,7 +37,7 @@ const Projects = () => {
               ))}
           </div>
           
-          <h2 className="mb-12 text-cyber-primary">Additional Projects</h2>
+          <h2 className="mb-12 text-primary">Additional Projects</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {projectsData
               .filter(project => project.category === 'additional')

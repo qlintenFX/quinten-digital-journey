@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@500;600;700&display=swap');
 
 @tailwind base;
@@ -130,4 +131,36 @@
   .gradient-dark {
     @apply dark:bg-gradient-to-b dark:from-purple-dark dark:via-background dark:to-background;
   }
+
+  /* Animation classes */
+  .parallax-slow {
+    @apply animate-parallax-slow;
+  }
+  
+  .parallax-medium {
+    @apply animate-parallax-medium;
+  }
+  
+  .parallax-fast {
+    @apply animate-parallax-fast;
+  }
+}
+
+/* Custom keyframes for different parallax speeds */
+@keyframes parallax-slow {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes parallax-medium {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes parallax-fast {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-15px); }
+  100% { transform: translateY(0); }
 }
