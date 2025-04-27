@@ -1,8 +1,7 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export interface ProjectCardProps {
@@ -26,17 +25,29 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   repoUrl,
   demoUrl
 }) => {
+  // Determine if this is the KeyedColors project
+  const isKeyedColors = id === "keyed-colors";
+  
   return (
     <Card className="overflow-hidden transition-all hover:shadow-lg h-full flex flex-col">
-      <div className="h-48 overflow-hidden">
+      <div className={`overflow-hidden ${isKeyedColors ? 'h-36' : 'h-48'}`}>
         <img 
           src={imageSrc} 
           alt={`${title} project thumbnail`} 
-          className="w-full h-full object-cover transition-transform hover:scale-105"
+          className={`w-full object-cover transition-transform hover:scale-105 ${isKeyedColors ? 'object-contain py-2' : 'h-full'}`}
         />
       </div>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          {isKeyedColors && (
+            <img 
+              src="/logokeyedcolors.png" 
+              alt="KeyedColors Logo" 
+              className="h-6 w-auto"
+            />
+          )}
+          {title}
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col flex-grow">
         <p className="text-muted-foreground mb-4 flex-grow">
@@ -53,7 +64,15 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {demoUrl && (
             <Button variant="outline" size="sm" asChild>
               <a href={demoUrl} target="_blank" rel="noreferrer">
-                <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                {isKeyedColors ? (
+                  <>
+                    <Download className="mr-2 h-4 w-4" /> Free App
+                  </>
+                ) : (
+                  <>
+                    <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                  </>
+                )}
               </a>
             </Button>
           )}

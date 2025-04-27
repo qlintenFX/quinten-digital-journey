@@ -1,21 +1,33 @@
-
-import { Toaster } from "@/components/ui/toaster";
+import React, { Suspense, lazy } from 'react';
+import { Toaster } from "@/components/ui-optimized/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter } from "react-router-dom";
-import Index from "./pages/Index";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import routes from "./routes";
+import CursorEffectsProvider from "./components/ui/CursorEffectsProvider";
+
+// Lazy load components
+const Index = lazy(() => import("./pages/Index"));
+const CV = lazy(() => import("./components/cv/CV"));
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Index />
-      </BrowserRouter>
+      <CursorEffectsProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path={routes.cv} element={<CV />} />
+            </Routes>
+          </Suspense>
+        </BrowserRouter>
+      </CursorEffectsProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

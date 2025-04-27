@@ -1,14 +1,16 @@
-
 import React from 'react';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Github, ExternalLink, ArrowLeft } from 'lucide-react';
+import { Github, ExternalLink, ArrowLeft, Download } from 'lucide-react';
 import { Link, useParams, Navigate } from 'react-router-dom';
 import { projectsData } from '@/data/projects';
 
 const ProjectDetail = () => {
   const { id } = useParams<{ id: string }>();
   const project = projectsData.find(p => p.id === id);
+  
+  // Check if this is the KeyedColors project
+  const isKeyedColors = id === "keyed-colors";
 
   if (!project) {
     return <Navigate to="/projects" replace />;
@@ -25,7 +27,16 @@ const ProjectDetail = () => {
               Back to Projects
             </Link>
           </Button>
-          <h1 className="mb-4">{project.title}</h1>
+          <h1 className="mb-4 flex items-center gap-3">
+            {isKeyedColors && (
+              <img 
+                src="/logokeyedcolors.png" 
+                alt="KeyedColors Logo" 
+                className="h-8 w-auto"
+              />
+            )}
+            {project.title}
+          </h1>
           <p className="text-lg text-muted-foreground max-w-3xl">
             {project.description}
           </p>
@@ -33,13 +44,13 @@ const ProjectDetail = () => {
       </section>
 
       {/* Project Details */}
-      <section className="section">
+      <section className="py-12">
         <div className="container max-w-5xl">
           <div className="mb-12">
             <img 
               src={project.imageSrc} 
               alt={`${project.title} project`}
-              className="w-full h-auto rounded-lg shadow-lg mb-6" 
+              className={`w-full rounded-lg shadow-lg mb-6 ${isKeyedColors ? 'max-w-2xl mx-auto' : 'h-auto'}`} 
             />
 
             <div className="flex flex-wrap gap-4 mb-8">
@@ -53,7 +64,15 @@ const ProjectDetail = () => {
               {project.demoUrl && (
                 <Button asChild>
                   <a href={project.demoUrl} target="_blank" rel="noreferrer">
-                    <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                    {isKeyedColors ? (
+                      <>
+                        <Download className="mr-2 h-4 w-4" /> Download Free App
+                      </>
+                    ) : (
+                      <>
+                        <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+                      </>
+                    )}
                   </a>
                 </Button>
               )}

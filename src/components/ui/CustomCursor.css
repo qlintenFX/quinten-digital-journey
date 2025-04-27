@@ -1,0 +1,337 @@
+/* Reset default cursor */
+* {
+  cursor: none;
+}
+
+/* Base cursor styles */
+:root {
+  /* Primary cursor colors */
+  --cursor-primary: rgba(168, 85, 247, 0.8);
+  --cursor-secondary: rgba(192, 132, 252, 0.6);
+  --cursor-highlight: rgba(233, 213, 255, 0.9);
+  --cursor-shadow: rgba(107, 33, 168, 0.4);
+  
+  /* Cursor sizes */
+  --cursor-dot-size: 8px;
+  --cursor-ring-size: 40px;
+  --cursor-shadow-size: 80px;
+}
+
+body.has-custom-cursor {
+  cursor: none !important;
+}
+
+body.has-custom-cursor a,
+body.has-custom-cursor button,
+body.has-custom-cursor input,
+body.has-custom-cursor textarea,
+body.has-custom-cursor select,
+body.has-custom-cursor [role="button"],
+body.has-custom-cursor .cursor-hover {
+  cursor: none !important;
+}
+
+/* Custom cursor components */
+.cursor-dot,
+.cursor-ring,
+.cursor-shadow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  will-change: transform, left, top;
+}
+
+.cursor-dot {
+  width: var(--cursor-dot-size);
+  height: var(--cursor-dot-size);
+  background: var(--cursor-highlight);
+  box-shadow: 0 0 10px var(--cursor-primary);
+  transition: width 0.15s ease, height 0.15s ease;
+  animation: cursorDotPulse 2s infinite alternate;
+}
+
+.cursor-dot::after {
+  content: '';
+  position: absolute;
+  width: 40%;
+  height: 40%;
+  top: 15%;
+  left: 15%;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  opacity: 0.8;
+}
+
+.cursor-ring {
+  width: var(--cursor-ring-size);
+  height: var(--cursor-ring-size);
+  border: 1.5px solid var(--cursor-highlight);
+  background-color: transparent;
+  filter: drop-shadow(0 0 4px var(--cursor-highlight));
+  opacity: 0.7;
+  transition: left 0.08s ease-out, top 0.08s ease-out, width 0.2s ease, height 0.2s ease;
+  animation: cursorRingRotate 6s linear infinite;
+}
+
+.cursor-shadow {
+  width: var(--cursor-shadow-size);
+  height: var(--cursor-shadow-size);
+  background: radial-gradient(
+    circle at center,
+    var(--cursor-secondary) 0%,
+    transparent 70%
+  );
+  opacity: 0.3;
+  transition: left 0.12s ease-out, top 0.12s ease-out, width 0.3s ease, height 0.3s ease;
+}
+
+/* Interactive states */
+.cursor-dot.hovering {
+  width: calc(var(--cursor-dot-size) * 1.5);
+  height: calc(var(--cursor-dot-size) * 1.5);
+  background: var(--cursor-highlight);
+  animation: cursorDotHoverPulse 0.6s infinite alternate;
+}
+
+.cursor-ring.hovering {
+  width: calc(var(--cursor-ring-size) * 1.2);
+  height: calc(var(--cursor-ring-size) * 1.2);
+  border-color: var(--cursor-highlight);
+  opacity: 0.8;
+  animation: cursorRingRotate 3s linear infinite;
+}
+
+.cursor-shadow.hovering {
+  width: calc(var(--cursor-shadow-size) * 1.4);
+  height: calc(var(--cursor-shadow-size) * 1.4);
+  opacity: 0.4;
+}
+
+.cursor-dot.clicking {
+  width: calc(var(--cursor-dot-size) * 0.8);
+  height: calc(var(--cursor-dot-size) * 0.8);
+  background: var(--cursor-highlight);
+  opacity: 1;
+  animation: cursorDotClick 0.35s ease;
+}
+
+.cursor-ring.clicking {
+  width: calc(var(--cursor-ring-size) * 0.9);
+  height: calc(var(--cursor-ring-size) * 0.9);
+  border-color: var(--cursor-highlight);
+  background-color: rgba(168, 85, 247, 0.1);
+  opacity: 0.9;
+}
+
+.cursor-shadow.clicking {
+  width: calc(var(--cursor-shadow-size) * 1.6);
+  height: calc(var(--cursor-shadow-size) * 1.6);
+  opacity: 0.5;
+}
+
+/* Canvas for particles */
+.particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+/* Simplified animations */
+@keyframes cursorDotPulse {
+  0% {
+    box-shadow: 0 0 5px var(--cursor-primary);
+  }
+  100% {
+    box-shadow: 0 0 12px var(--cursor-primary);
+  }
+}
+
+@keyframes cursorDotHoverPulse {
+  0% {
+    box-shadow: 0 0 10px var(--cursor-primary);
+  }
+  100% {
+    box-shadow: 0 0 15px var(--cursor-primary);
+  }
+}
+
+@keyframes cursorDotClick {
+  0% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.7);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes cursorRingRotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+/* Media queries for different devices */
+@media (max-width: 768px) {
+  :root {
+    --cursor-dot-size: 6px;
+    --cursor-ring-size: 30px;
+    --cursor-shadow-size: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --cursor-dot-size: 4px;
+    --cursor-ring-size: 20px;
+    --cursor-shadow-size: 40px;
+  }
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion) {
+  .cursor-dot, .cursor-ring, .cursor-shadow {
+    transition: none;
+    animation: none !important;
+  }
+  
+  .particles-canvas {
+    display: none;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cursor-primary: rgba(192, 132, 252, 0.8);   /* Brighter purple-400 for dark mode */
+    --cursor-highlight: rgba(233, 213, 255, 0.9); /* purple-200 */
+  }
+}
+
+/* Magnetic element styles */
+.magnetic-element {
+  display: inline-block;
+}
+
+.magnetic-element.is-hovered {
+  z-index: 1;
+}
+
+/* Animation for gradient shift */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* State variations */
+/* Hover state */
+.cursor-dot.hovering {
+  width: calc(var(--cursor-dot-size) * 1.5);
+  height: calc(var(--cursor-dot-size) * 1.5);
+  background: var(--cursor-highlight);
+  box-shadow: 0 0 15px 3px rgba(168, 85, 247, 0.6);
+}
+
+.cursor-ring.hovering {
+  width: calc(var(--cursor-ring-size) * 1.2);
+  height: calc(var(--cursor-ring-size) * 1.2);
+  border-color: var(--cursor-highlight);
+  transform: translate(-50%, -50%) scale(0.9);
+}
+
+.cursor-ring.hovering::before {
+  opacity: 0.6;
+  transform: scale(1);
+}
+
+.cursor-shadow.hovering {
+  opacity: 0.15;
+  width: calc(var(--cursor-shadow-size) * 1.3);
+  height: calc(var(--cursor-shadow-size) * 1.3);
+  filter: blur(12px);
+}
+
+/* Click state */
+.cursor-dot.clicking {
+  width: calc(var(--cursor-dot-size) * 0.8);
+  height: calc(var(--cursor-dot-size) * 0.8);
+  background: var(--cursor-highlight);
+  opacity: 1;
+  animation: cursorDotClick 0.35s ease;
+}
+
+.cursor-ring.clicking {
+  width: calc(var(--cursor-ring-size) * 0.8);
+  height: calc(var(--cursor-ring-size) * 0.8);
+  border-color: var(--cursor-highlight);
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.cursor-ring.clicking::before {
+  opacity: 0.7;
+  transform: scale(0.8);
+}
+
+.cursor-shadow.clicking {
+  opacity: 0.2;
+  width: calc(var(--cursor-shadow-size) * 0.7);
+  height: calc(var(--cursor-shadow-size) * 0.7);
+  filter: blur(15px);
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .cursor-dot, .cursor-ring, .cursor-shadow, .particles-canvas {
+    display: none;
+  }
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot, .cursor-ring, .cursor-shadow {
+    transition: none;
+  }
+  
+  .chrome-particle {
+    display: none;
+  }
+}
+
+/* Color scheme preferences */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --chrome-glow: 0 0 12px 3px rgba(168, 85, 247, 0.5);
+    --chrome-edge-glow: 0 0 7px rgba(168, 85, 247, 0.8);
+  }
+  
+  .cursor-dot {
+    background: var(--cursor-highlight);
+  }
+  
+  .cursor-shadow {
+    opacity: 0.12;
+  }
+} 

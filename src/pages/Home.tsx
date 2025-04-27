@@ -1,103 +1,1642 @@
-
-import React from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { motion, useScroll, useAnimation, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { 
+  ArrowUpRight, 
+  ChevronDown, 
+  Code, 
+  Brush, 
+  Layout, 
+  FileText, 
+  Download,
+  ExternalLink,
+  Youtube,
+  Star,
+  Circle,
+  Triangle,
+  Square,
+  Plus
+} from 'lucide-react';
+import { Modal } from '@/components/ui/modal';
 
-const Home = () => {
+/**
+ * Function to check if the page is in dark mode by looking at the document element
+ */
+function isDarkMode() {
+  // Check for .dark class on html element (standard for many themes including Tailwind)
+  return document.documentElement.classList.contains('dark');
+}
+
+/**
+ * PurpleSparkle Component
+ * Creates floating sparkle effects across the screen
+ * @param {number} count - Number of sparkles to display
+ */
+const PurpleSparkle = ({ count = 15 }) => {
+  const [sparkles, setSparkles] = useState([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  useEffect(() => {
+    // Create initial sparkles
+    const initialSparkles = Array.from({ length: count }).map(() => ({
+      id: Math.random(),
+      size: Math.random() * 20 + 10, // 10-30px
+      x: Math.random() * 100, // position across width (%)
+      y: Math.random() * 100, // position across height (%)
+      rotation: Math.random() * 360, // random rotation
+      opacity: Math.random() * 0.6 + 0.3, // Increased from 0.2-0.7 to 0.3-0.9
+      animationDuration: Math.random() * 15 + 10, // 10-25s
+      delay: Math.random() * 10,
+    }));
+    
+    setSparkles(initialSparkles);
+    
+    // Periodically refresh sparkles
+    const interval = setInterval(() => {
+      setSparkles(prevSparkles => {
+        // Replace 1-3 sparkles randomly
+        const replacementCount = Math.floor(Math.random() * 3) + 1;
+        const newSparkles = [...prevSparkles];
+        
+        for (let i = 0; i < replacementCount; i++) {
+          const indexToReplace = Math.floor(Math.random() * prevSparkles.length);
+          newSparkles[indexToReplace] = {
+            id: Math.random(),
+            size: Math.random() * 20 + 10,
+            x: Math.random() * 100,
+            y: Math.random() * 100,
+            rotation: Math.random() * 360,
+            opacity: Math.random() * 0.6 + 0.3,
+            animationDuration: Math.random() * 15 + 10,
+            delay: 0, // No delay for replacements
+          };
+        }
+        
+        return newSparkles;
+      });
+    }, 3000); // Refresh some sparkles every 3 seconds
+    
+    return () => clearInterval(interval);
+  }, [count]);
+  
   return (
-    <>
-      {/* Hero Section with Parallax */}
-      <section className="relative overflow-hidden gradient-light gradient-dark py-20">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]" />
+    <div className="fixed inset-0 pointer-events-none z-10 overflow-hidden">
+      {sparkles.map(sparkle => (
+        <motion.div
+          key={sparkle.id}
+          className="absolute"
+          style={{
+            left: `${sparkle.x}%`,
+            top: `${sparkle.y}%`,
+            width: `${sparkle.size}px`,
+            height: `${sparkle.size}px`,
+          }}
+          initial={{ 
+            opacity: 0, 
+            scale: 0,
+            rotate: 0
+          }}
+          animate={{ 
+            opacity: [0, sparkle.opacity, sparkle.opacity, 0],
+            scale: [0, 1, 1, 0],
+            rotate: [0, sparkle.rotation, sparkle.rotation + 180],
+            y: [0, -30, -60]
+          }}
+          transition={{
+            duration: sparkle.animationDuration,
+            delay: sparkle.delay,
+            repeat: Infinity,
+            repeatDelay: Math.random() * 5 + 5, // 5-10s between repeats
+          }}
+        >
+          <img 
+            src={isDark ? "/images-optimized/purple-star.png" : "/images-optimized/dark-star.png"} 
+            alt=""
+            className="w-full h-full object-contain"
+          />
+        </motion.div>
+      ))}
+    </div>
+  );
+};
+
+/**
+ * FloatingElement Component
+ * Creates decorative floating elements with animations
+ * @param {Object} props - Component properties
+ * @param {Icon} props.icon - Lucide icon to display
+ * @param {number} props.size - Size of the icon
+ * @param {Object} props.position - Position coordinates
+ * @param {string} props.color - Color of the icon
+ * @param {number} props.delay - Animation delay
+ * @param {number} props.duration - Animation duration
+ */
+const FloatingElement = ({ icon, size, position, color, delay, duration }) => {
+  const Icon = icon;
+  return (
+    <motion.div 
+      className="absolute opacity-20 pointer-events-none"
+      style={{ ...position }}
+      animate={{
+        y: [0, -15, 0],
+        rotate: [0, 5, -5, 0],
+      }}
+      transition={{
+        duration: duration,
+        repeat: Infinity,
+        repeatType: "reverse",
+        delay: delay,
+        ease: "easeInOut"
+      }}
+    >
+      <Icon size={size} className={`text-${color}`} />
+    </motion.div>
+  );
+};
+
+/**
+ * SparkleText Component
+ * Creates text with sparkle effects on hover
+ * @param {Object} props - Component properties
+ * @param {ReactNode} props.children - Text content
+ * @param {string} props.className - Additional CSS classes
+ */
+const SparkleText = ({ children, className }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [sparklePositions, setSparklePositions] = useState([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  useEffect(() => {
+    if (isHovered) {
+      // Generate 6-10 random sparkle positions
+      const count = Math.floor(Math.random() * 5) + 6;
+      const newPositions = Array(count).fill(0).map(() => ({
+        id: Math.random(),
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 15 + 5,
+        delay: Math.random() * 0.3,
+        duration: Math.random() * 0.8 + 0.5,
+        rotation: Math.random() * 360,
+        opacity: Math.random() * 0.7 + 0.3 // Increased from default for better visibility
+      }));
+      setSparklePositions(newPositions);
+    }
+  }, [isHovered]);
+  
+  return (
+    <div 
+      className={`relative inline-block ${className}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {children}
+      
+      <AnimatePresence>
+        {isHovered && sparklePositions.map(sparkle => (
+          <motion.div
+            key={sparkle.id}
+            className="absolute pointer-events-none"
+            style={{
+              left: `${sparkle.x}%`,
+              top: `${sparkle.y}%`,
+              width: `${sparkle.size}px`,
+              height: `${sparkle.size}px`,
+              zIndex: 10
+            }}
+            initial={{ opacity: 0, scale: 0, rotate: 0 }}
+            animate={{ 
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              rotate: [0, sparkle.rotation],
+              y: [0, -20]
+            }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{
+              duration: sparkle.duration,
+              delay: sparkle.delay,
+              ease: "easeOut"
+            }}
+          >
+            <img 
+              src={isDark ? "/images-optimized/purple-star.png" : "/images-optimized/dark-star.png"}
+              alt=""
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/**
+ * SparkleButton Component
+ * Creates a button with sparkle effects on click
+ * @param {Object} props - Component properties
+ * @param {ReactNode} props.children - Button content
+ * @param {string} props.className - Additional CSS classes
+ * @param {Function} props.onClick - Click handler
+ */
+const SparkleButton = ({ children, className, onClick, ...props }) => {
+  const [sparkles, setSparkles] = useState([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  const handleClick = (e) => {
+    // Create 8-12 sparkles from the button on click
+    const count = Math.floor(Math.random() * 5) + 8;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    
+    const newSparkles = Array(count).fill(0).map(() => ({
+      id: Math.random(),
+      x: centerX + (Math.random() * rect.width * 0.8 - rect.width * 0.4),
+      y: centerY + (Math.random() * rect.height * 0.8 - rect.height * 0.4),
+      size: Math.random() * 25 + 10,
+      duration: Math.random() * 0.8 + 0.5,
+      delay: Math.random() * 0.2,
+      rotation: Math.random() * 360,
+      opacity: Math.random() * 0.7 + 0.3 // Increased from default for better visibility
+    }));
+    
+    setSparkles(newSparkles);
+    
+    // Call the original onClick handler if provided
+    if (onClick) onClick(e);
+  };
+  
+  return (
+    <div className="relative inline-block">
+      <Button 
+        {...props} 
+        className={className} 
+        onClick={handleClick}
+      >
+        {children}
+      </Button>
+      
+      <AnimatePresence>
+        {sparkles.map(sparkle => (
+          <motion.div
+            key={sparkle.id}
+            className="absolute pointer-events-none"
+            style={{
+              left: `${sparkle.x}px`,
+              top: `${sparkle.y}px`,
+              width: `${sparkle.size}px`,
+              height: `${sparkle.size}px`,
+              zIndex: 20
+            }}
+            initial={{ opacity: 0, scale: 0, rotate: 0 }}
+            animate={{ 
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              rotate: [0, sparkle.rotation],
+              x: [0, (Math.random() * 100 - 50)],
+              y: [0, (Math.random() * -100 - 20)]
+            }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{
+              duration: sparkle.duration,
+              delay: sparkle.delay,
+              ease: "easeOut"
+            }}
+          >
+            <img 
+              src={isDark ? "/images-optimized/purple-star.png" : "/images-optimized/dark-star.png"}
+              alt=""
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+/**
+ * LensGlare Component
+ * Creates lens flare and distant glow effects in the background
+ * Uses randomized positions and properties for natural-looking effects
+ */
+const LensGlare = () => {
+  const [glarePositions, setGlarePositions] = useState([]);
+  const [distantGlows, setDistantGlows] = useState([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  useEffect(() => {
+    // Create 3-5 random lens glares
+    const count = Math.floor(Math.random() * 3) + 3;
+    const newGlarePositions = Array(count).fill(0).map(() => ({
+      id: Math.random(),
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 200 + 100, // 100-300px
+      opacity: Math.random() * 0.15 + 0.08, // Increased from 0.05-0.15 to 0.08-0.23
+      blur: Math.random() * 50 + 50, // 50-100px blur
+    }));
+    setGlarePositions(newGlarePositions);
+    
+    // Create 2-4 larger distant background glows
+    const distantCount = Math.floor(Math.random() * 3) + 2;
+    const newDistantGlows = Array(distantCount).fill(0).map(() => ({
+      id: Math.random(),
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 600 + 500, // 500-1100px
+      opacity: Math.random() * 0.2 + 0.1, // Increased from 0.05-0.2 to 0.1-0.3
+      blur: Math.random() * 100 + 120, // 120-220px blur
+      color: [
+        'rgba(168, 85, 247, 0.35)', // Increased from 0.25
+        'rgba(196, 111, 255, 0.3)', // Increased from 0.2
+        'rgba(134, 39, 230, 0.35)', // Increased from 0.25
+        'rgba(224, 149, 255, 0.3)', // Increased from 0.2
+      ][Math.floor(Math.random() * 4)],
+    }));
+    setDistantGlows(newDistantGlows);
+  }, []);
+  
+  // Adjust opacity and color for light mode
+  const getLightModeAdjustedOpacity = (opacity) => {
+    return !isDark ? opacity * 1.5 : opacity;
+  };
+  
+  const getLightModeAdjustedColor = (color) => {
+    if (!isDark) {
+      // Extract values from rgba color string
+      const rgbaMatch = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+      if (rgbaMatch) {
+        const [_, r, g, b, a] = rgbaMatch;
+        // Darken the color for light mode by reducing brightness and increasing opacity
+        return `rgba(${Math.max(0, r - 20)}, ${Math.max(0, g - 20)}, ${Math.max(0, b - 20)}, ${Math.min(1, parseFloat(a) * 1.5)})`;
+      }
+    }
+    return color;
+  };
+  
+  return (
+    <div className="fixed inset-0 pointer-events-none z-[-2]">
+      {/* Distant large background glows */}
+      {distantGlows.map(glow => (
+        <div
+          key={glow.id}
+          className="absolute"
+          style={{
+            left: `${glow.x}%`,
+            top: `${glow.y}%`,
+            width: `${glow.size}px`,
+            height: `${glow.size}px`,
+            opacity: getLightModeAdjustedOpacity(glow.opacity),
+            filter: `blur(${glow.blur}px)`,
+            background: `radial-gradient(circle, ${getLightModeAdjustedColor(glow.color)} 0%, rgba(168, 85, 247, 0) 70%)`,
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      ))}
+      
+      {/* Original lens glares */}
+      {glarePositions.map(glare => (
+        <div
+          key={glare.id}
+          className="absolute"
+          style={{
+            left: `${glare.x}%`,
+            top: `${glare.y}%`,
+            width: `${glare.size}px`,
+            height: `${glare.size}px`,
+            opacity: getLightModeAdjustedOpacity(glare.opacity),
+            filter: `blur(${glare.blur}px)`,
+            background: !isDark 
+              ? 'radial-gradient(circle, rgba(134, 39, 230, 0.45) 0%, rgba(134, 39, 230, 0) 70%)'
+              : 'radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, rgba(168, 85, 247, 0) 70%)',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 1
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+/**
+ * GridDeformation Component
+ * Creates an interactive grid that deforms based on cursor position
+ * Features:
+ * - 30px grid spacing
+ * - Enhanced cloth-like deformation effect
+ * - More pronounced "ball under covers" effect
+ * - Smooth physics-based movement
+ * - Performance optimized with GPU acceleration
+ */
+const GridDeformation = () => {
+  const canvasRef = useRef(null);
+  const animationRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
+  const lastMousePosition = useRef({ x: -1000, y: -1000 });
+  const lastUpdateTime = useRef(0);
+  const gridPoints = useRef([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  // Throttle mouse position updates
+  const handleMouseMove = useCallback((e) => {
+    const now = performance.now();
+    if (now - lastUpdateTime.current > 16) { // ~60fps
+      lastMousePosition.current = { x: e.clientX, y: e.clientY };
+      lastUpdateTime.current = now;
+    }
+  }, []);
+
+  // Setup canvas and create grid
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (canvasRef.current) {
+        const { clientWidth, clientHeight } = document.documentElement;
+        setDimensions({
+          width: clientWidth,
+          height: clientHeight
+        });
+        canvasRef.current.width = clientWidth;
+        canvasRef.current.height = clientHeight;
+      }
+    };
+    
+    // Initialize
+    updateDimensions();
+    
+    // Generate grid points
+    const createGrid = () => {
+      const spacing = 60; // Increased from 30px to 60px for larger squares
+      const newGridPoints = [];
+      
+      const columns = Math.ceil(dimensions.width / spacing) + 1;
+      const rows = Math.ceil(dimensions.height / spacing) + 1;
+      
+      for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < columns; j++) {
+          newGridPoints.push({
+            x: j * spacing,
+            y: i * spacing,
+            originalX: j * spacing,
+            originalY: i * spacing,
+            velocity: { x: 0, y: 0 },
+            acceleration: { x: 0, y: 0 },
+            mass: 1 + Math.random() * 0.5 // Add slight mass variation for more natural movement
+          });
+        }
+      }
+      
+      gridPoints.current = newGridPoints;
+    };
+    
+    createGrid();
+    
+    window.addEventListener('resize', updateDimensions);
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [dimensions.width, dimensions.height, handleMouseMove]);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  // Animation and rendering
+  useEffect(() => {
+    if (!canvasRef.current || gridPoints.current.length === 0) return;
+    
+    const ctx = canvasRef.current.getContext('2d');
+    const maxDistance = 250; // Increased from 200 for larger deformation area
+    const repulsionForce = 0.8; // Increased from 0.3 for stronger deformation
+    const friction = 0.85; // Reduced from 0.93 for more fluid movement
+    const stiffness = 0.05; // Reduced from 0.1 for slower return to original position
+    const maxDisplacement = 100; // Increased from 50 for more pronounced effect
+    const ballRadius = 150; // Size of the "ball" effect
+    
+    const animate = () => {
+      // Update mouse position from throttled value
+      setMousePosition(lastMousePosition.current);
+      
+      ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+      
+      // Update grid points with enhanced physics
+      gridPoints.current.forEach(point => {
+        // Calculate distance to cursor
+        const dx = mousePosition.x - point.x;
+        const dy = mousePosition.y - point.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        // Reset acceleration
+        point.acceleration = { x: 0, y: 0 };
+        
+        if (distance < maxDistance) {
+          // Enhanced deformation force with inverse square law
+          const normalizedDistance = distance / maxDistance;
+          const force = (1 - normalizedDistance) * repulsionForce;
+          
+          // Add a "ball" effect by modifying the force based on distance
+          const ballEffect = Math.max(0, 1 - (distance / ballRadius));
+          const enhancedForce = force * (1 + ballEffect * 2); // Amplify force near the center
+          
+          const angle = Math.atan2(dy, dx);
+          
+          // Apply deformation force with mass consideration
+          point.acceleration.x -= (Math.cos(angle) * enhancedForce) / point.mass;
+          point.acceleration.y -= (Math.sin(angle) * enhancedForce) / point.mass;
+        }
+        
+        // Add spring force to return to original position
+        point.acceleration.x += (point.originalX - point.x) * stiffness;
+        point.acceleration.y += (point.originalY - point.y) * stiffness;
+        
+        // Update velocity and position with mass consideration
+        point.velocity.x = (point.velocity.x + point.acceleration.x) * friction;
+        point.velocity.y = (point.velocity.y + point.acceleration.y) * friction;
+        point.x += point.velocity.x;
+        point.y += point.velocity.y;
+        
+        // Limit maximum displacement
+        const currentDisplacementX = point.x - point.originalX;
+        const currentDisplacementY = point.y - point.originalY;
+        const currentDisplacement = Math.sqrt(currentDisplacementX * currentDisplacementX + currentDisplacementY * currentDisplacementY);
+        
+        if (currentDisplacement > maxDisplacement) {
+          const scale = maxDisplacement / currentDisplacement;
+          point.x = point.originalX + currentDisplacementX * scale;
+          point.y = point.originalY + currentDisplacementY * scale;
+          point.velocity.x *= 0.5;
+          point.velocity.y *= 0.5;
+        }
+      });
+      
+      // Draw grid lines with enhanced visual effects
+      ctx.strokeStyle = !isDark
+        ? 'rgba(134, 39, 230, 0.4)' // Darker and more opaque for light mode
+        : 'rgba(168, 85, 247, 0.25)';
+      ctx.lineWidth = !isDark ? 1 : 0.8;
+      
+      // Draw horizontal lines
+      const columns = Math.ceil(dimensions.width / 60) + 1; // Updated to match new spacing
+      const rows = Math.ceil(dimensions.height / 60) + 1; // Updated to match new spacing
+      
+      for (let i = 0; i < rows; i++) {
+        ctx.beginPath();
+        for (let j = 0; j < columns - 1; j++) {
+          const index = i * columns + j;
+          const nextIndex = i * columns + j + 1;
+          
+          if (index < gridPoints.current.length && nextIndex < gridPoints.current.length) {
+            const point = gridPoints.current[index];
+            const nextPoint = gridPoints.current[nextIndex];
+            
+            if (j === 0) {
+              ctx.moveTo(point.x, point.y);
+            }
+            ctx.lineTo(nextPoint.x, nextPoint.y);
+          }
+        }
+        ctx.stroke();
+      }
+      
+      // Draw vertical lines
+      for (let j = 0; j < columns; j++) {
+        ctx.beginPath();
+        for (let i = 0; i < rows - 1; i++) {
+          const index = i * columns + j;
+          const nextIndex = (i + 1) * columns + j;
+          
+          if (index < gridPoints.current.length && nextIndex < gridPoints.current.length) {
+            const point = gridPoints.current[index];
+            const nextPoint = gridPoints.current[nextIndex];
+            
+            if (i === 0) {
+              ctx.moveTo(point.x, point.y);
+            }
+            ctx.lineTo(nextPoint.x, nextPoint.y);
+          }
+        }
+        ctx.stroke();
+      }
+      
+      animationRef.current = requestAnimationFrame(animate);
+    };
+    
+    animationRef.current = requestAnimationFrame(animate);
+    
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, [dimensions, mousePosition, isDark]);
+  
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[-10]"
+      style={{ opacity: !isDark ? 0.85 : 0.7 }}
+    />
+  );
+};
+
+/**
+ * Home Component
+ * Main page component containing all sections:
+ * - Hero section with welcome message
+ * - About section with profile and CV
+ * - Projects section with project cards
+ * - YouTube section with video carousel
+ * - Contact section with form and links
+ */
+const Home = () => {
+  const { scrollY } = useScroll();
+  const controls = useAnimation();
+  const [emailVisible, setEmailVisible] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [isDark, setIsDark] = useState(true);
+  
+  // YouTube video IDs for the carousel - using direct embed only, no API
+  const videos = [
+    "LAHGY-rWtbk",
+    "K7J6DIJPVew",
+    "MGYgqgDiEVg"
+  ];
+
+  // Video carousel navigation functions
+  const nextVideo = () => {
+    setCurrentVideoIndex((prev) => (prev + 1) % videos.length);
+  };
+
+  const prevVideo = () => {
+    setCurrentVideoIndex((prev) => (prev - 1 + videos.length) % videos.length);
+  };
+
+  // Scroll-based section detection for navigation highlighting
+  useEffect(() => {
+    const handleScroll = () => {
+      // Get all sections
+      const sections = ['home', 'about', 'projects', 'youtube', 'contact'];
+      
+      // Check which section is currently in view
+      let currentSection = '';
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          // If the section is in view (top of section is above the middle of viewport and bottom is below)
+          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+            currentSection = section;
+            break;
+          }
+        }
+      }
+      
+      // Update active section in navbar
+      if (currentSection) {
+        const navLinks = document.querySelectorAll('nav a');
+        navLinks.forEach(link => {
+          const href = link.getAttribute('href');
+          if (href === `#${currentSection}`) {
+            link.setAttribute('data-active', 'true');
+          } else {
+            link.setAttribute('data-active', 'false');
+          }
+        });
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Email reveal functionality with bot protection
+  const revealEmail = () => {
+    setEmailVisible(true);
+  };
+
+  // Email obfuscation for security
+  const emailParts = ['quinten1508', 'gmail.com'];
+  const obfuscatedEmail = emailVisible ? `${emailParts[0]}@${emailParts[1]}` : "Click to reveal email";
+
+  // Project data
+  const projects = {
+    project1: {
+      title: "Project Title 1",
+      semester: "SKIL2 Semester 1",
+      context: "Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.",
+      contribution: "Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.",
+      learnings: "Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.",
+      technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
+      image: "/placeholder-project1.jpg"
+    },
+    project2: {
+      title: "Project Title 2",
+      semester: "SKIL2 Semester 2",
+      context: "Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.",
+      contribution: "Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.",
+      learnings: "Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.",
+      technologies: ["Python", "TensorFlow", "OpenCV", "Docker"],
+      image: "/placeholder-project2.jpg"
+    },
+    project3: {
+      title: "Additional Project 1",
+      context: "Brief description of the project and context.",
+      learnings: "Key skills and knowledge gained.",
+      technologies: ["JavaScript", "HTML", "CSS", "Firebase"],
+      image: "/placeholder-project3.jpg"
+    },
+    project4: {
+      title: "Additional Project 2",
+      context: "Brief description of the project and context.",
+      learnings: "Key skills and knowledge gained.",
+      technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
+      image: "/placeholder-project4.jpg"
+    }
+  };
+
+  // Add cursor styles for light/dark mode
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    const cursorStyles = `
+      .cursor-follower {
+        background: ${!isDark
+          ? 'rgba(134, 39, 230, 0.3)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.15)'};
+        border: 1px solid ${!isDark
+          ? 'rgba(134, 39, 230, 0.5)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.3)'};
+        box-shadow: 0 0 20px ${!isDark
+          ? 'rgba(134, 39, 230, 0.4)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.2)'};
+      }
+      
+      .cursor-follower::before {
+        background: ${!isDark
+          ? 'rgba(134, 39, 230, 0.25)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.1)'};
+        border: 1px solid ${!isDark
+          ? 'rgba(134, 39, 230, 0.4)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.2)'};
+      }
+      
+      .cursor-follower::after {
+        background: ${!isDark
+          ? 'rgba(134, 39, 230, 0.2)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.05)'};
+        border: 1px solid ${!isDark
+          ? 'rgba(134, 39, 230, 0.35)'  // More visible in light mode
+          : 'rgba(168, 85, 247, 0.15)'};
+      }
+    `;
+    
+    const styleElement = document.createElement('style');
+    styleElement.textContent = cursorStyles;
+    document.head.appendChild(styleElement);
+    
+    return () => {
+      document.head.removeChild(styleElement);
+      observer.disconnect();
+    };
+  }, [isDark]);
+
+  return (
+    <div className="flex flex-col min-h-screen relative">
+      {/* Interactive grid background */}
+      <GridDeformation />
+      
+      {/* Lens glares */}
+      <LensGlare />
+      
+      {/* Purple Sparkle Effects */}
+      <PurpleSparkle count={10} />
+      
+      {/* Hero Section */}
+      <header className="container relative z-[1]" id="home">
+        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] relative">
+          <div className="max-w-3xl text-center">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-5xl md:text-7xl font-bold mb-8"
+            >
+              Welcome to my <SparkleText className="text-primary">E-Portfolio</SparkleText> 👋
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-xl md:text-2xl"
+            >
+              Hi, I'm <span className="font-semibold text-primary">Quinten</span>, a passionate student in Applied Computer Science / Electronics - ICT.
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+              className="text-xl md:text-2xl mt-4 mb-8"
+            >
+              I design and develop digital experiences with creativity and technical expertise. Welcome to my professional journey!
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              <SparkleButton 
+                className="mt-6" 
+                size="lg"
+                onClick={() => {
+                  const contactSection = document.getElementById('contact');
+                  if (contactSection) {
+                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              >
+                Contact Me <ArrowUpRight className="ml-2 h-4 w-4" />
+              </SparkleButton>
+            </motion.div>
+          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center"
+            onClick={() => {
+              const aboutSection = document.getElementById('about');
+              if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+          >
+            <p className="italic mb-2">learn more ✨</p>
+            <ChevronDown className="mx-auto animate-bounce" size={24} />
+          </motion.div>
         </div>
-        <div className="container relative">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="animate-fade-up mb-4 text-purple-dark dark:text-purple-light">Welcome to My E-Portfolio</h1>
-            <div className="parallax-medium">
-              <p className="text-xl mb-8 text-muted-foreground">
-                Cloud and Cybersecurity student specializing in Applied Computer Science / Electronics - ICT
-              </p>
+      </header>
+
+      {/* About Me Section */}
+      <section className="py-24 bg-muted/30 relative z-[1]" id="about">
+        <div className="container">
+          <div className="mb-16 relative">
+            <SparkleText className="inline-block">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[-4deg] relative z-10">About Me</h2>
+            </SparkleText>
+            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[-6deg]">About Me</span>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-16 items-start">
+            <div>
+              <div className="mb-8 overflow-hidden rounded-lg">
+                <img 
+                  src="/placeholder-profile.jpg" 
+                  alt="Profile Photo" 
+                  className="w-full object-cover rounded-lg"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://placehold.co/600x600?text=Profile+Photo";
+                  }}
+                />
+              </div>
+              <div className="bg-card p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-bold mb-4">My CV</h3>
+                <div className="flex flex-col space-y-4">
+                  <SparkleButton 
+                    variant="outline" 
+                    className="flex items-center justify-center"
+                    onClick={() => window.open('/cv', '_blank')}
+                  >
+                    <FileText className="mr-2 h-4 w-4" />
+                    View CV Online
+                  </SparkleButton>
+                  <SparkleButton 
+                    variant="default" 
+                    className="flex items-center justify-center"
+                    onClick={() => window.open('/files/CV_Quinten.pdf', '_blank')}
+                  >
+                    <Download className="mr-2 h-4 w-4" />
+                    Download CV_Quinten.pdf
+                  </SparkleButton>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-center gap-4 parallax-slow">
-              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link to="/about">
-                  About Me <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-accent">
-                <Link to="/projects">
-                  View Projects <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+
+            <div>
+              <h3 className="text-2xl font-bold text-primary mb-6">Who Am I?</h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">Why Applied Computer Science / Electronics - ICT?</h4>
+                  <p className="text-lg">
+                    I've chosen Applied Computer Science / Electronics - ICT because I'm fascinated by how technology can solve real-world problems. The blend of theoretical knowledge and practical applications allows me to turn my creative ideas into functional solutions.
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">My Unique Hobbies</h4>
+                  <p className="text-lg">
+                    Beyond coding, I'm passionate about [Your unique hobby 1] which has taught me [lesson]. I also enjoy [Your unique hobby 2], which helps me develop [skill]. These activities complement my technical expertise by enhancing my [relevant skill].
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-xl font-semibold mb-2">Future Dreams & Professional Ambitions</h4>
+                  <p className="text-lg">
+                    I aspire to become a [career goal], specializing in [specialization]. My goal is to [professional ambition] while continuing to learn and adapt to emerging technologies. I'm particularly interested in [specific technology/field] and its potential to [benefit].
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Introduction Section */}
-      <section className="section">
+      {/* Projects Section */}
+      <section className="py-24 relative z-[1]" id="projects">
         <div className="container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="mb-6 text-primary">Brief Introduction</h2>
-              <p className="mb-4 text-lg">
-                [Placeholder: Professional introduction text. This will include a brief overview of who I am professionally,
-                my area of specialization in Cloud and Cybersecurity, and what I bring to the field.]
-              </p>
-              <p className="text-lg">
-                [Placeholder: Additional context about my educational journey and why I'm passionate about technology and
-                cybersecurity specifically.]
-              </p>
+          <div className="mb-16 relative">
+            <SparkleText className="inline-block">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[4deg] relative z-10">Projects / Achievements</h2>
+            </SparkleText>
+            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[2deg]">Projects / Achievements</span>
+          </div>
+
+          {/* Project 1: SKIL2 Semester 1 */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="mb-20 relative"
+          >
+            {/* Decorative elements specifically for project cards */}
+            <motion.div 
+              className="absolute -left-6 md:-left-16 top-1/3 w-12 h-12 opacity-10 pointer-events-none"
+              animate={{ 
+                rotate: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ duration: 15, repeat: Infinity }}
+            >
+              <div className="w-full h-full rounded-full border-2 border-primary"></div>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -right-6 md:-right-16 bottom-1/3 w-10 h-10 opacity-10 pointer-events-none"
+              animate={{ 
+                rotate: [360, 0],
+                scale: [1, 1.2, 1]
+              }}
+              transition={{ duration: 10, repeat: Infinity }}
+            >
+              <div className="w-full h-full rounded-md border-2 border-secondary"></div>
+            </motion.div>
+
+            <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+              <div className="grid md:grid-cols-2">
+                <div className="p-8">
+                  <div className="mb-6">
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Semester 1</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Project Title 1</h3>
+                  
+                  <div className="space-y-4 mb-6">
+                    <h4 className="text-lg font-semibold">Context & Background</h4>
+                    <p>Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.</p>
+                    
+                    <h4 className="text-lg font-semibold">My Contribution</h4>
+                    <p>Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.</p>
+                    
+                    <h4 className="text-lg font-semibold">What I Learned</h4>
+                    <p>Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.</p>
+                  </div>
+                  
+                  <SparkleButton 
+                    variant="outline" 
+                    className="flex items-center"
+                    onClick={() => setSelectedProject('project1')}
+                  >
+                    View Project Details <ExternalLink className="ml-2 h-4 w-4" />
+                  </SparkleButton>
+                </div>
+                <div className="bg-muted h-full">
+                  <img 
+                    src="/placeholder-project1.jpg" 
+                    alt="Project 1 Screenshot" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                    }}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="bg-card rounded-lg p-8 shadow-lg">
+          </motion.div>
+
+          {/* Project 2: SKIL2 Semester 2 */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mb-20 relative"
+          >
+            {/* Decorative elements for project 2 */}
+            <motion.div 
+              className="absolute -left-10 md:-left-20 bottom-1/4 w-16 h-16 opacity-10 pointer-events-none"
+              animate={{ 
+                y: [0, 15, 0],
+                rotate: [45, 0, 45]
+              }}
+              transition={{ duration: 12, repeat: Infinity }}
+            >
+              <div className="w-full h-full border-2 border-primary transform rotate-45"></div>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -right-8 md:-right-16 top-1/4 w-8 h-8 opacity-10 pointer-events-none"
+              animate={{ 
+                x: [0, 10, 0],
+                y: [0, -10, 0]
+              }}
+              transition={{ duration: 8, repeat: Infinity }}
+            >
+              <div className="w-full h-full rounded-full bg-secondary/20"></div>
+            </motion.div>
+
+            <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+              <div className="grid md:grid-cols-2">
+                <div className="bg-muted h-full order-2 md:order-1">
+                  <img 
+                    src="/placeholder-project2.jpg" 
+                    alt="Project 2 Screenshot" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                    }}
+                  />
+                </div>
+                <div className="p-8 order-1 md:order-2">
+                  <div className="mb-6">
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Semester 2</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Project Title 2</h3>
+                  
+                  <div className="space-y-4 mb-6">
+                    <h4 className="text-lg font-semibold">Context & Background</h4>
+                    <p>Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.</p>
+                    
+                    <h4 className="text-lg font-semibold">My Contribution</h4>
+                    <p>Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.</p>
+                    
+                    <h4 className="text-lg font-semibold">What I Learned</h4>
+                    <p>Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.</p>
+                  </div>
+                  
+                  <SparkleButton 
+                    variant="outline" 
+                    className="flex items-center"
+                    onClick={() => setSelectedProject('project2')}
+                  >
+                    View Project Details <ExternalLink className="ml-2 h-4 w-4" />
+                  </SparkleButton>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Additional Projects */}
+          <div className="grid md:grid-cols-2 gap-8 mb-12 relative">
+            {/* Decorative connecting line between smaller project cards */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/10 hidden md:block"></div>
+            <div className="absolute top-1/2 left-0 right-0 h-px bg-primary/10 hidden md:block"></div>
+            
+            {/* Project 3 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="bg-card rounded-lg overflow-hidden shadow-md relative"
+            >
+              {/* Corner decoration */}
+              <div className="absolute top-0 right-0 w-12 h-12 overflow-hidden">
+                <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 bg-primary/10 w-12 h-2"></div>
+              </div>
+              
               <img 
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-                alt="Placeholder image showing technology workspace"
-                className="rounded-md w-full h-auto object-cover"
+                src="/placeholder-project3.jpg" 
+                alt="Project 3" 
+                className="w-full h-48 object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "https://placehold.co/800x400?text=Project+3";
+                }}
               />
-              <div className="mt-6 bg-secondary p-6 rounded-md shadow-md">
-                <h3 className="text-lg font-medium mb-2 text-foreground">Professional Skills</h3>
-                <ul className="space-y-2">
-                  <li className="flex items-center gap-2">
-                    <span className="w-3 h-3 bg-primary rounded-full"></span>
-                    <span className="text-foreground">[Placeholder: Skill 1]</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-3 h-3 bg-primary rounded-full"></span>
-                    <span className="text-foreground">[Placeholder: Skill 2]</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-3 h-3 bg-primary rounded-full"></span>
-                    <span className="text-foreground">[Placeholder: Skill 3]</span>
-                  </li>
-                </ul>
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">Additional Project 1</h3>
+                <div className="mb-4">
+                  <h4 className="text-lg font-semibold">Context & Background</h4>
+                  <p className="text-muted-foreground mb-2">Brief description of the project and context.</p>
+                  
+                  <h4 className="text-lg font-semibold">What I Learned</h4>
+                  <p className="text-muted-foreground">Key skills and knowledge gained.</p>
+                </div>
+                <SparkleButton 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setSelectedProject('project3')}
+                >
+                  View Details
+                </SparkleButton>
+              </div>
+            </motion.div>
+            
+            {/* Project 4 */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="bg-card rounded-lg overflow-hidden shadow-md relative"
+            >
+              {/* Corner decoration */}
+              <div className="absolute top-0 left-0 w-12 h-12 overflow-hidden">
+                <div className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2 rotate-45 bg-secondary/10 w-12 h-2"></div>
+              </div>
+              
+              <img 
+                src="/placeholder-project4.jpg" 
+                alt="Project 4" 
+                className="w-full h-48 object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "https://placehold.co/800x400?text=Project+4";
+                }}
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-bold mb-2">Additional Project 2</h3>
+                <div className="mb-4">
+                  <h4 className="text-lg font-semibold">Context & Background</h4>
+                  <p className="text-muted-foreground mb-2">Brief description of the project and context.</p>
+                  
+                  <h4 className="text-lg font-semibold">What I Learned</h4>
+                  <p className="text-muted-foreground">Key skills and knowledge gained.</p>
+                </div>
+                <SparkleButton 
+                  variant="outline" 
+                  className="w-full"
+                  onClick={() => setSelectedProject('project4')}
+                >
+                  View Details
+                </SparkleButton>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* YouTube Channel Section */}
+      <section className="py-24 bg-muted/30 relative z-[1]" id="youtube">
+        <div className="container">
+          <div className="mb-16 relative">
+            <SparkleText className="inline-block">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[-2deg] relative z-10">YouTube Channel</h2>
+            </SparkleText>
+            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[-4deg]">YouTube Channel</span>
+          </div>
+
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+              {/* Banner and Profile */}
+              <div className="w-full relative">
+                <div className="w-full overflow-hidden" style={{ clipPath: 'inset(0 0 10% 0)' }}>
+                  <img 
+                    src="/images/banner.png" 
+                    alt="YouTube Channel Banner" 
+                    className="w-full h-auto object-contain"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://placehold.co/1200x300?text=YouTube+Banner";
+                    }}
+                  />
+                </div>
+                <div className="absolute -bottom-20 left-6">
+                  <div className="rounded-full w-40 h-40 overflow-hidden border-4 border-card shadow-lg">
+                    <img 
+                      src="/images/pfp.png"
+                      alt="YouTube Profile Picture" 
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://placehold.co/200x200?text=Profile";
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+              
+              {/* Channel Info */}
+              <div className="p-6 pt-24">
+                <div className="flex flex-wrap justify-between items-start mb-6">
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">@qlintenFX</h3>
+                    <p className="text-muted-foreground mb-4">
+                      Custom cinematics for Assetto Corsa.
+                    </p>
+                    <SparkleButton 
+                      onClick={() => window.open('https://www.youtube.com/@qlintenFX', '_blank')}
+                      className="flex items-center"
+                    >
+                      <Youtube className="mr-2 h-4 w-4" />
+                      Visit Channel
+                    </SparkleButton>
+                  </div>
+                </div>
+                
+                {/* Video Embed */}
+                <div className="mt-6">
+                  <div className="relative">
+                    {/* Video container with animation */}
+                    <div className="relative rounded-lg overflow-hidden shadow-md" style={{ paddingBottom: '75%' }}>
+                      {videos.map((videoId, index) => (
+                        <motion.div
+                          key={videoId}
+                          initial={{ opacity: 0 }}
+                          animate={{ 
+                            opacity: currentVideoIndex === index ? 1 : 0,
+                            x: currentVideoIndex === index ? 0 : 
+                                currentVideoIndex > index ? '-100%' : '100%',
+                          }}
+                          transition={{ 
+                            duration: 0.7,
+                            ease: [0.4, 0.0, 0.2, 1]
+                          }}
+                          className="absolute inset-0"
+                          style={{ display: Math.abs(currentVideoIndex - index) <= 1 || 
+                                   (currentVideoIndex === 0 && index === videos.length - 1) || 
+                                   (currentVideoIndex === videos.length - 1 && index === 0) 
+                                   ? 'block' : 'none' }}
+                        >
+                          <iframe 
+                            width="100%" 
+                            height="100%" 
+                            src={`https://www.youtube.com/embed/${videoId}`}
+                            title={`YouTube video ${index + 1}`}
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen
+                            className="absolute inset-0"
+                          ></iframe>
+                        </motion.div>
+                      ))}
+                    </div>
+                    
+                    {/* Dot indicators */}
+                    <div className="flex justify-center mt-4 gap-2">
+                      {videos.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentVideoIndex(index)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            currentVideoIndex === index 
+                              ? 'bg-primary scale-125' 
+                              : 'bg-muted-foreground/40 hover:bg-muted-foreground/60'
+                          }`}
+                          aria-label={`View video ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <p className="mt-4 text-center text-muted-foreground">
+                    Featured videos from my channel
+                  </p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
       
-      {/* Call to Action Section */}
-      <section className="bg-accent text-accent-foreground py-16">
-        <div className="container text-center">
-          <h2 className="mb-4 text-accent-foreground">Explore My Journey</h2>
-          <p className="max-w-2xl mx-auto mb-8 text-lg opacity-90">
-            [Placeholder: Inviting text encouraging visitors to explore the different sections of the portfolio
-            to learn more about my projects, skills, and ambitions in the field of cybersecurity.]
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild variant="default" size="lg">
-              <Link to="/about">About Me</Link>
-            </Button>
-            <Button asChild variant="outline" size="lg" className="border-accent-foreground text-accent-foreground hover:bg-accent-foreground hover:text-accent">
-              <Link to="/projects">View Projects</Link>
-            </Button>
+      {/* Contact Section */}
+      <section className="py-24 relative z-[1]" id="contact">
+        <div className="container">
+          <div className="mb-16 relative">
+            <SparkleText className="inline-block">
+            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[2deg] relative z-10">Contact Me</h2>
+            </SparkleText>
+            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[0deg]">Contact Me</span>
+          </div>
+
+          <div className="max-w-2xl mx-auto bg-card p-8 rounded-lg shadow-lg">
+            <p className="text-lg mb-6">
+              I'm always open to new opportunities and collaborations. Feel free to reach out 
+              if you have any questions or would like to work together!
+            </p>
+            <div className="grid gap-4">
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"></path><polyline points="15,9 18,9 18,11"></polyline><path d="M6.5 5C9 5 11 7 11 9.5V17a2 2 0 0 1-2 2v0"></path><line x1="6" x2="7" y1="10" y2="10"></line></svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Email</h3>
+                  <button 
+                    onClick={revealEmail} 
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                    aria-label={emailVisible ? "Email address" : "Reveal email address"}
+                  >
+                    {emailVisible ? (
+                      <a href={`mailto:${emailParts[0]}@${emailParts[1]}`}>
+                        {emailParts[0]}@{emailParts[1]}
+                      </a>
+                    ) : (
+                      "Click to reveal email"
+                    )}
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">Resume</h3>
+                  <button 
+                    onClick={() => window.open('/files/CV_Quinten.pdf', '_blank')}
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    Download CV_Quinten.pdf
+                  </button>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">GitHub</h3>
+                  <a 
+                    href="https://github.com/qlintenFX/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    github.com/qlintenFX
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M19.42 5C16.5 2.1 11.55 2.08 8.35 5.28L5.53 8.1c-2.79 2.79-3.37 7.17-1.34 10.58m13.24-12.77c3.37 3.78 3.26 9.67-.35 13.29m-10.55 1c-2.62 0-5.1-1.18-6.82-2.95"/><path d="M21.48 16.86c.44 1 .68 2.04.44 2.93-.34 1.27-1.73 2.23-3.34 2.2-.5 0-1.26-.22-1.8-.55L9.82 18.7c-.7-.4-1.56-.26-2.4.3"/><path d="M3.75 9.95c-.98-1.66.6-3.13 2.13-3.13.5 0 .84.47 1.28.89"/></svg>
+                </div>
+                <div>
+                  <h3 className="font-semibold">YouTube</h3>
+                  <a 
+                    href="https://www.youtube.com/@qlintenFX" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    youtube.com/@qlintenFX
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8">
+              <form className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="name" className="block mb-1 text-sm font-medium">Name</label>
+                    <input 
+                      type="text" 
+                      id="name" 
+                      className="w-full px-4 py-2 rounded-md border border-input bg-background" 
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
+                    <input 
+                      type="email" 
+                      id="email" 
+                      className="w-full px-4 py-2 rounded-md border border-input bg-background" 
+                      placeholder="Your email"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="message" className="block mb-1 text-sm font-medium">Message</label>
+                  <textarea 
+                    id="message" 
+                    className="w-full px-4 py-2 rounded-md border border-input bg-background min-h-32" 
+                    placeholder="Your message"
+                  ></textarea>
+                </div>
+                <SparkleButton 
+                  className="w-full" 
+                  size="lg"
+                  onClick={() => {}}
+                >
+                  Send Message <ArrowUpRight className="ml-2 h-4 w-4" />
+                </SparkleButton>
+              </form>
+            </div>
           </div>
         </div>
       </section>
-    </>
+
+      {/* Project Details Modal */}
+      <Modal
+        isOpen={selectedProject !== null}
+        onClose={() => setSelectedProject(null)}
+        title={selectedProject ? projects[selectedProject].title : ''}
+      >
+        {selectedProject && (
+          <div className="space-y-6">
+            {projects[selectedProject].semester && (
+              <div className="mb-4">
+                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">
+                  {projects[selectedProject].semester}
+                </span>
+              </div>
+            )}
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <img 
+                  src={projects[selectedProject].image} 
+                  alt={projects[selectedProject].title}
+                  className="w-full rounded-lg shadow-md"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                  }}
+                />
+              </div>
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Context & Background</h3>
+                  <p className="text-muted-foreground">{projects[selectedProject].context}</p>
+                </div>
+                
+                {projects[selectedProject].contribution && (
+                  <div>
+                    <h3 className="text-lg font-semibold mb-2">My Contribution</h3>
+                    <p className="text-muted-foreground">{projects[selectedProject].contribution}</p>
+                  </div>
+                )}
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">What I Learned</h3>
+                  <p className="text-muted-foreground">{projects[selectedProject].learnings}</p>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-semibold mb-2">Technologies Used</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {projects[selectedProject].technologies.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 text-sm rounded-full bg-primary/10 text-primary"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </Modal>
+    </div>
   );
 };
 
