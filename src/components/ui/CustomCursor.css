@@ -5,11 +5,15 @@
 
 /* Base cursor styles */
 :root {
-  /* Primary cursor colors */
-  --cursor-primary: rgba(168, 85, 247, 0.8);
-  --cursor-secondary: rgba(192, 132, 252, 0.6);
-  --cursor-highlight: rgba(233, 213, 255, 0.9);
-  --cursor-shadow: rgba(107, 33, 168, 0.4);
+  /* Primary cursor colors - light mode defaults */
+  --cursor-primary: rgba(88, 28, 135, 1);         /* Strong purple-900 */
+  --cursor-secondary: rgba(107, 33, 168, 0.8);    /* purple-800 */
+  --cursor-highlight: rgba(126, 34, 206, 1);      /* purple-700 */
+  --cursor-shadow: rgba(88, 28, 135, 0.5);        /* purple-900 with opacity */
+  
+  /* Border contrast colors for visibility */
+  --cursor-border: rgba(255, 255, 255, 0.8);      /* White border for dark elements */
+  --cursor-glow: rgba(255, 255, 255, 0.4);        /* White glow */
   
   /* Cursor sizes */
   --cursor-dot-size: 8px;
@@ -53,10 +57,11 @@ body.has-custom-cursor .cursor-hover {
   width: var(--cursor-dot-size);
   height: var(--cursor-dot-size);
   background: var(--cursor-highlight);
-  box-shadow: 0 0 10px var(--cursor-primary);
+  box-shadow: 0 0 6px var(--cursor-primary), 0 0 10px var(--cursor-glow);
   transition: width 0.15s ease, height 0.15s ease;
   animation: cursorDotPulse 2s infinite alternate;
   transform: translate3d(-50%, -50%, 0);
+  border: 1px solid var(--cursor-border);
 }
 
 .cursor-dot::after {
@@ -66,19 +71,20 @@ body.has-custom-cursor .cursor-hover {
   height: 40%;
   top: 15%;
   left: 15%;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   border-radius: 50%;
-  opacity: 0.8;
+  opacity: 0.9;
   transform: translateZ(0);
 }
 
 .cursor-ring {
   width: var(--cursor-ring-size);
   height: var(--cursor-ring-size);
-  border: 1.5px solid var(--cursor-highlight);
+  border: 2.5px solid var(--cursor-highlight);
+  outline: 1px solid var(--cursor-border);
   background-color: transparent;
-  filter: drop-shadow(0 0 4px var(--cursor-highlight));
-  opacity: 0.7;
+  filter: drop-shadow(0 0 4px var(--cursor-highlight)) drop-shadow(0 0 6px var(--cursor-glow));
+  opacity: 0.95;
   transition: left 0.08s ease-out, top 0.08s ease-out, width 0.2s ease, height 0.2s ease;
   animation: cursorRingRotate 6s linear infinite;
   transform: translate3d(-50%, -50%, 0);
@@ -92,7 +98,7 @@ body.has-custom-cursor .cursor-hover {
     var(--cursor-secondary) 0%,
     transparent 70%
   );
-  opacity: 0.3;
+  opacity: 0.5;
   transition: left 0.12s ease-out, top 0.12s ease-out, width 0.3s ease, height 0.3s ease;
   transform: translate3d(-50%, -50%, 0);
   filter: blur(8px);
@@ -110,14 +116,14 @@ body.has-custom-cursor .cursor-hover {
   width: calc(var(--cursor-ring-size) * 1.2);
   height: calc(var(--cursor-ring-size) * 1.2);
   border-color: var(--cursor-highlight);
-  opacity: 0.8;
+  opacity: 0.9;
   animation: cursorRingRotate 3s linear infinite;
 }
 
 .cursor-shadow.hovering {
   width: calc(var(--cursor-shadow-size) * 1.4);
   height: calc(var(--cursor-shadow-size) * 1.4);
-  opacity: 0.4;
+  opacity: 0.6;
 }
 
 .cursor-dot.clicking {
@@ -133,13 +139,13 @@ body.has-custom-cursor .cursor-hover {
   height: calc(var(--cursor-ring-size) * 0.9);
   border-color: var(--cursor-highlight);
   background-color: rgba(168, 85, 247, 0.1);
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .cursor-shadow.clicking {
   width: calc(var(--cursor-shadow-size) * 1.6);
   height: calc(var(--cursor-shadow-size) * 1.6);
-  opacity: 0.5;
+  opacity: 0.6;
 }
 
 /* Canvas for particles */
@@ -156,19 +162,19 @@ body.has-custom-cursor .cursor-hover {
 /* Simplified animations */
 @keyframes cursorDotPulse {
   0% {
-    box-shadow: 0 0 5px var(--cursor-primary);
+    box-shadow: 0 0 5px var(--cursor-primary), 0 0 8px var(--cursor-glow);
   }
   100% {
-    box-shadow: 0 0 12px var(--cursor-primary);
+    box-shadow: 0 0 10px var(--cursor-primary), 0 0 15px var(--cursor-glow);
   }
 }
 
 @keyframes cursorDotHoverPulse {
   0% {
-    box-shadow: 0 0 10px var(--cursor-primary);
+    box-shadow: 0 0 8px var(--cursor-primary), 0 0 12px var(--cursor-glow);
   }
   100% {
-    box-shadow: 0 0 15px var(--cursor-primary);
+    box-shadow: 0 0 15px var(--cursor-primary), 0 0 20px var(--cursor-glow);
   }
 }
 
@@ -228,8 +234,15 @@ body.has-custom-cursor .cursor-hover {
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
   :root {
-    --cursor-primary: rgba(192, 132, 252, 0.8);   /* Brighter purple-400 for dark mode */
-    --cursor-highlight: rgba(233, 213, 255, 0.9); /* purple-200 */
+    /* Lighter colors for dark mode */
+    --cursor-primary: rgba(192, 132, 252, 1);     /* Brighter purple-400 */
+    --cursor-secondary: rgba(216, 180, 254, 0.8); /* purple-300 */
+    --cursor-highlight: rgba(233, 213, 255, 0.95); /* purple-200 */
+    --cursor-shadow: rgba(168, 85, 247, 0.5);     /* purple-500 with opacity */
+    
+    /* Border contrast for dark mode */
+    --cursor-border: rgba(0, 0, 0, 0.8);          /* Dark border for light elements */
+    --cursor-glow: rgba(88, 28, 135, 0.5);        /* Dark purple glow */
   }
 }
 
@@ -261,7 +274,7 @@ body.has-custom-cursor .cursor-hover {
   width: calc(var(--cursor-dot-size) * 1.5);
   height: calc(var(--cursor-dot-size) * 1.5);
   background: var(--cursor-highlight);
-  box-shadow: 0 0 15px 3px rgba(168, 85, 247, 0.6);
+  box-shadow: 0 0 15px 3px var(--cursor-primary), 0 0 8px var(--cursor-border);
 }
 
 .cursor-ring.hovering {
@@ -277,7 +290,7 @@ body.has-custom-cursor .cursor-hover {
 }
 
 .cursor-shadow.hovering {
-  opacity: 0.15;
+  opacity: 0.2;
   width: calc(var(--cursor-shadow-size) * 1.3);
   height: calc(var(--cursor-shadow-size) * 1.3);
   filter: blur(12px);
@@ -326,21 +339,5 @@ body.has-custom-cursor .cursor-hover {
   
   .chrome-particle {
     display: none;
-  }
-}
-
-/* Color scheme preferences */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --chrome-glow: 0 0 12px 3px rgba(168, 85, 247, 0.5);
-    --chrome-edge-glow: 0 0 7px rgba(168, 85, 247, 0.8);
-  }
-  
-  .cursor-dot {
-    background: var(--cursor-highlight);
-  }
-  
-  .cursor-shadow {
-    opacity: 0.12;
   }
 } 

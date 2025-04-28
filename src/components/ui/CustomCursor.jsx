@@ -197,7 +197,8 @@ const CustomCursor = () => {
       size = Math.random() * 8 + 4, // Smaller size
       life = Math.random() * 600 + 300, // Shorter lifespan
       isTrail = false,
-      color = purpleColors[Math.floor(Math.random() * purpleColors.length)]
+      color = purpleColors[Math.floor(Math.random() * purpleColors.length)],
+      isBubble = false
     } = options;
     
     // Create particle object for canvas rendering
@@ -213,7 +214,8 @@ const CustomCursor = () => {
       color,
       opacity: 0.8,
       rotation: Math.random() * 360,
-      rotationSpeed: (Math.random() - 0.5) * 0.5 // Reduced rotation speed
+      rotationSpeed: (Math.random() - 0.5) * 0.5, // Reduced rotation speed
+      isBubble
     };
     
     particles.current.push(particleObject);
@@ -222,33 +224,95 @@ const CustomCursor = () => {
   
   // Create a burst of particles when clicking
   const createParticleBurst = (x, y) => {
-    // Reduced particle count for better performance
-    const burstCount = Math.floor(Math.random() * 3) + 3;
-    const angleIncrement = (Math.PI * 2) / burstCount;
+    // Check if it's a button click
+    const isButtonClick = document.activeElement && 
+      (document.activeElement.tagName === "BUTTON" || document.activeElement.getAttribute('role') === 'button');
     
-    for (let i = 0; i < burstCount; i++) {
-      const angle = i * angleIncrement;
-      const speed = Math.random() * 1.5 + 0.5;
-      const distance = Math.random() * 20 + 5;
+    // If it's a button click, create bubbles instead of stars
+    if (isButtonClick) {
+      const burstCount = Math.floor(Math.random() * 5) + 5; // More bubbles for buttons
       
-      // Calculate the position slightly away from cursor
-      const burstX = x + Math.cos(angle) * (distance / 4);
-      const burstY = y + Math.sin(angle) * (distance / 4);
+      // Detect if we're in dark mode
+      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       
-      // Calculate the velocity to move radially outward
-      const velocityX = Math.cos(angle) * speed;
-      const velocityY = Math.sin(angle) * speed;
+      // Colors for bubbles based on mode
+      let bubbleColors;
+      if (isDarkMode) {
+        // Purple bubbles for dark mode
+        bubbleColors = [
+          'rgba(233, 213, 255, 0.9)', // purple-200
+          'rgba(216, 180, 254, 0.8)', // purple-300
+          'rgba(192, 132, 252, 0.8)', // purple-400
+          'rgba(168, 85, 247, 0.7)', // purple-500
+          'rgba(147, 51, 234, 0.7)'  // purple-600
+        ];
+      } else {
+        // Dark bubbles for light mode
+        bubbleColors = [
+          'rgba(88, 28, 135, 0.8)',   // purple-900
+          'rgba(107, 33, 168, 0.7)',  // purple-800
+          'rgba(126, 34, 206, 0.7)',  // purple-700
+          'rgba(147, 51, 234, 0.6)',  // purple-600
+          'rgba(67, 56, 202, 0.7)'    // indigo-700
+        ];
+      }
       
-      const size = Math.random() * 10 + 5;
-      const life = Math.random() * 500 + 200;
+      for (let i = 0; i < burstCount; i++) {
+        // Create bubble starting positions
+        const angle = Math.random() * Math.PI * 2;
+        const distance = Math.random() * 30 + 10;
+        
+        // Starting position
+        const burstX = x + Math.cos(angle) * (distance / 8);
+        const burstY = y + Math.sin(angle) * (distance / 8);
+        
+        // Slower upward and outward movement for bubbles
+        const velocityX = Math.cos(angle) * (Math.random() * 1 + 0.2);
+        const velocityY = Math.sin(angle) * (Math.random() * 1 + 0.2) - 0.8; // Upward bias
+        
+        // Random bubble size
+        const size = Math.random() * 15 + 8;
+        
+        // Longer life for bubbles
+        const life = Math.random() * 2000 + 1500;
+        
+        // Create bubble particle
+        createParticle(burstX, burstY, {
+          velocityX,
+          velocityY,
+          size,
+          life,
+          color: bubbleColors[Math.floor(Math.random() * bubbleColors.length)],
+          isBubble: true
+        });
+      }
+    } else {
+      // Regular click behavior - same as before
+      const burstCount = Math.floor(Math.random() * 3) + 3;
+      const angleIncrement = (Math.PI * 2) / burstCount;
       
-      createParticle(burstX, burstY, {
-        velocityX,
-        velocityY,
-        size,
-        life,
-        color: purpleColors[Math.floor(Math.random() * purpleColors.length)]
-      });
+      for (let i = 0; i < burstCount; i++) {
+        const angle = i * angleIncrement;
+        const speed = Math.random() * 1.5 + 0.5;
+        const distance = Math.random() * 20 + 5;
+        
+        const burstX = x + Math.cos(angle) * (distance / 4);
+        const burstY = y + Math.sin(angle) * (distance / 4);
+        
+        const velocityX = Math.cos(angle) * speed;
+        const velocityY = Math.sin(angle) * speed;
+        
+        const size = Math.random() * 10 + 5;
+        const life = Math.random() * 500 + 200;
+        
+        createParticle(burstX, burstY, {
+          velocityX,
+          velocityY,
+          size,
+          life,
+          color: purpleColors[Math.floor(Math.random() * purpleColors.length)]
+        });
+      }
     }
   };
   
@@ -507,29 +571,67 @@ const CustomCursor = () => {
   
   // Render a single particle on canvas with optimized rendering
   const renderParticle = (ctx, particle) => {
-    const { x, y, size, color, opacity, rotation } = particle;
+    const { x, y, size, color, opacity, rotation, isBubble } = particle;
     
     ctx.save();
     ctx.globalAlpha = opacity;
     ctx.translate(x, y);
-    ctx.rotate(rotation * Math.PI / 180);
     
-    // Draw bubble with lens glare effect
-    const gradient = ctx.createRadialGradient(0, -size/4, size/10, 0, 0, size/2);
-    gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
-    gradient.addColorStop(0.3, color);
-    gradient.addColorStop(1, 'rgba(126, 34, 206, 0.3)');
-    
-    ctx.beginPath();
-    ctx.arc(0, 0, size/2, 0, Math.PI * 2);
-    ctx.fillStyle = gradient;
-    ctx.fill();
-    
-    // Add highlight for lens glare
-    ctx.beginPath();
-    ctx.arc(-size/6, -size/6, size/6, 0, Math.PI * 2);
-    ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-    ctx.fill();
+    if (isBubble) {
+      // Draw bubble with different effect for button clicks
+      ctx.rotate((rotation * Math.PI / 180) * 0.2); // Less rotation for bubbles
+      
+      // Bubble gradient
+      const gradient = ctx.createRadialGradient(0, -size/5, 0, 0, 0, size/2);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+      gradient.addColorStop(0.5, color);
+      gradient.addColorStop(1, 'rgba(126, 34, 206, 0.1)');
+      
+      // Draw the bubble
+      ctx.beginPath();
+      ctx.arc(0, 0, size/2, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      
+      // Add highlight/refraction
+      ctx.beginPath();
+      ctx.arc(-size/5, -size/5, size/4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+      ctx.fill();
+      
+      // Add smaller highlight
+      ctx.beginPath();
+      ctx.arc(size/6, size/6, size/8, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+      ctx.fill();
+      
+      // Add thin bubble edge for realism
+      ctx.beginPath();
+      ctx.arc(0, 0, size/2, 0, Math.PI * 2);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    } else {
+      // Original particle rendering for normal clicks
+      ctx.rotate(rotation * Math.PI / 180);
+      
+      // Draw bubble with lens glare effect
+      const gradient = ctx.createRadialGradient(0, -size/4, size/10, 0, 0, size/2);
+      gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
+      gradient.addColorStop(0.3, color);
+      gradient.addColorStop(1, 'rgba(126, 34, 206, 0.3)');
+      
+      ctx.beginPath();
+      ctx.arc(0, 0, size/2, 0, Math.PI * 2);
+      ctx.fillStyle = gradient;
+      ctx.fill();
+      
+      // Add highlight for lens glare
+      ctx.beginPath();
+      ctx.arc(-size/6, -size/6, size/6, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.fill();
+    }
     
     ctx.restore();
   };
