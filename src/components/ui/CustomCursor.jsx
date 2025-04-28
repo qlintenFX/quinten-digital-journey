@@ -20,8 +20,12 @@ const CustomCursor = () => {
   const isVisible = useRef(true);
   const ctxRef = useRef(null);
   
+  // Ring and shadow position references
+  const ringPosRef = useRef({ x: 0, y: 0 });
+  const shadowPosRef = useRef({ x: 0, y: 0 });
+  
   // Reduced particles for better performance
-  const MAX_PARTICLES = 30;
+  const MAX_PARTICLES = 15;
   
   // Chrome purple colors - simplified for better performance
   const purpleColors = [
@@ -42,25 +46,33 @@ const CustomCursor = () => {
       
       // Set initial position directly first
       if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
+        const transform = 'translate3d(-50%, -50%, 0)';
+        cursorDotRef.current.style.transform = transform;
+        cursorRingRef.current.style.transform = transform;
+        cursorShadowRef.current.style.transform = transform;
+        
         cursorDotRef.current.style.left = `${initialX}px`;
         cursorDotRef.current.style.top = `${initialY}px`;
-        cursorDotRef.current.style.transform = 'translate(-50%, -50%)';
-        
         cursorRingRef.current.style.left = `${initialX}px`;
         cursorRingRef.current.style.top = `${initialY}px`;
-        cursorRingRef.current.style.transform = 'translate(-50%, -50%)';
-        
         cursorShadowRef.current.style.left = `${initialX}px`;
         cursorShadowRef.current.style.top = `${initialY}px`;
-        cursorShadowRef.current.style.transform = 'translate(-50%, -50%)';
+        
+        // Initialize position references
+        ringPosRef.current = { x: initialX, y: initialY };
+        shadowPosRef.current = { x: initialX, y: initialY };
       }
       
-      // Initialize canvas for particles
+      // Initialize canvas for particles with GPU acceleration
       if (canvasRef.current) {
         canvasRef.current.width = window.innerWidth;
         canvasRef.current.height = window.innerHeight;
-        ctxRef.current = canvasRef.current.style.display = 'block';
-        ctxRef.current = canvasRef.current.getContext('2d');
+        ctxRef.current = canvasRef.current.getContext('2d', { alpha: true });
+        
+        // Enable GPU acceleration for canvas
+        canvasRef.current.style.transform = 'translate3d(0, 0, 0)';
+        canvasRef.current.style.willChange = 'transform';
+        canvasRef.current.style.backfaceVisibility = 'hidden';
       }
       
       // Handle window resize for canvas
@@ -386,7 +398,7 @@ const CustomCursor = () => {
     }, 3000); // 3 seconds of inactivity to trigger idle state
   };
   
-  // Update cursor position with velocity calculation
+  // Update cursor position with velocity calculation and GPU acceleration
   const updateCursorPosition = (e) => {
     if (!cursorDotRef.current || !cursorRingRef.current || !cursorShadowRef.current) return;
     
@@ -404,43 +416,35 @@ const CustomCursor = () => {
       y: clientY - prevMousePosRef.current.y
     };
     
-    // Update dot immediately - this is the actual cursor point
+    // Update positions with GPU acceleration
+    const transform = `translate3d(-50%, -50%, 0)`;
+    
+    // Update dot immediately
+    cursorDotRef.current.style.transform = transform;
     cursorDotRef.current.style.left = `${clientX}px`;
     cursorDotRef.current.style.top = `${clientY}px`;
     
-    // Add delay to ring and shadow for smooth following effect
-    setTimeout(() => {
-      if (cursorRingRef.current) {
-        cursorRingRef.current.style.left = `${clientX}px`;
-        cursorRingRef.current.style.top = `${clientY}px`;
-      }
-    }, 70); // Delay for smoother trailing effect
-    
-    setTimeout(() => {
-      if (cursorShadowRef.current) {
-        cursorShadowRef.current.style.left = `${clientX}px`;
-        cursorShadowRef.current.style.top = `${clientY}px`;
-      }
-    }, 100); // Additional delay for shadow
+    // The ring and shadow positions will be updated in the animation loop
+    // using LERP for smooth transition
     
     // Clear any existing trail timer
     if (trailTimerRef.current) {
       clearInterval(trailTimerRef.current);
     }
     
-    // Create trail particles much less often
+    // Create trail particles much less often and only at higher speeds
     const speed = Math.sqrt(
       Math.pow(velocityRef.current.x, 2) + 
       Math.pow(velocityRef.current.y, 2)
     );
     
-    if (speed > 15) { // Much higher threshold for trails
+    if (speed > 15) { // Lowered threshold for trails
       createTrailParticles();
       
       // Create fewer trails with longer interval
       trailTimerRef.current = setInterval(() => {
         createTrailParticles();
-      }, 150);
+      }, 150); // Adjusted interval
       
       // Auto-clear the interval after a short time
       setTimeout(() => {
@@ -501,7 +505,7 @@ const CustomCursor = () => {
     clearTimeout(idleTimerRef.current);
   };
   
-  // Render a single particle on canvas
+  // Render a single particle on canvas with optimized rendering
   const renderParticle = (ctx, particle) => {
     const { x, y, size, color, opacity, rotation } = particle;
     
@@ -510,7 +514,7 @@ const CustomCursor = () => {
     ctx.translate(x, y);
     ctx.rotate(rotation * Math.PI / 180);
     
-    // Draw bubble
+    // Draw bubble with lens glare effect
     const gradient = ctx.createRadialGradient(0, -size/4, size/10, 0, 0, size/2);
     gradient.addColorStop(0, 'rgba(255, 255, 255, 0.9)');
     gradient.addColorStop(0.3, color);
@@ -521,7 +525,7 @@ const CustomCursor = () => {
     ctx.fillStyle = gradient;
     ctx.fill();
     
-    // Add highlight
+    // Add highlight for lens glare
     ctx.beginPath();
     ctx.arc(-size/6, -size/6, size/6, 0, Math.PI * 2);
     ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
@@ -543,6 +547,32 @@ const CustomCursor = () => {
       
       // Clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      // Update cursor ring and shadow with LERP for smooth following
+      if (cursorRingRef.current && cursorShadowRef.current) {
+        // LERP factors - adjust for different trailing speeds
+        const ringLerpFactor = 0.2; // Higher = faster following (0.1-0.3 range)
+        const shadowLerpFactor = 0.12; // Lower = slower following
+        
+        // Calculate new ring position with smooth interpolation
+        ringPosRef.current.x += (mousePosRef.current.x - ringPosRef.current.x) * ringLerpFactor;
+        ringPosRef.current.y += (mousePosRef.current.y - ringPosRef.current.y) * ringLerpFactor;
+        
+        // Calculate new shadow position with smoother interpolation
+        shadowPosRef.current.x += (mousePosRef.current.x - shadowPosRef.current.x) * shadowLerpFactor;
+        shadowPosRef.current.y += (mousePosRef.current.y - shadowPosRef.current.y) * shadowLerpFactor;
+        
+        // Apply positions
+        const transform = `translate3d(-50%, -50%, 0)`;
+        
+        cursorRingRef.current.style.transform = transform;
+        cursorRingRef.current.style.left = `${ringPosRef.current.x}px`;
+        cursorRingRef.current.style.top = `${ringPosRef.current.y}px`;
+        
+        cursorShadowRef.current.style.transform = transform;
+        cursorShadowRef.current.style.left = `${shadowPosRef.current.x}px`;
+        cursorShadowRef.current.style.top = `${shadowPosRef.current.y}px`;
+      }
       
       const currentTime = Date.now();
       const newParticles = [];
