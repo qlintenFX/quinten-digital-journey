@@ -1127,7 +1127,7 @@ const Home = () => {
               <div className="bg-card p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-bold mb-4 flex items-center">
                   <FileText className="mr-2 h-5 w-5 text-primary" />
-                  My Resume
+                  My CV
                 </h3>
                 <div className="mb-4 p-3 border rounded-md bg-background/50">
                   <div className="flex justify-between items-center mb-2">
@@ -1145,7 +1145,7 @@ const Home = () => {
                     onClick={() => window.open('/files/CV_Quinten.html', '_blank')}
                   >
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    View Resume Online
+                    View CV Online
                   </SparkleButton>
                   <SparkleButton 
                     variant="default" 
@@ -1160,7 +1160,7 @@ const Home = () => {
                     }}
                   >
                     <Download className="mr-2 h-4 w-4" />
-                    Download Resume
+                    Download CV
                   </SparkleButton>
                 </div>
               </div>
@@ -1635,7 +1635,7 @@ const Home = () => {
                 }}
               >
                 <Download className="mr-2 h-4 w-4" />
-                Download Resume
+                Download CV
               </SparkleButton>
             </div>
           </div>
