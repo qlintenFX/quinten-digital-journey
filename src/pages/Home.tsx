@@ -28,6 +28,124 @@ function isDarkMode() {
 }
 
 /**
+ * InteractiveTitleEffect Component
+ * Creates a title with hover effects using bubble PNGs
+ * @param {Object} props - Component properties
+ * @param {ReactNode} props.children - Title text content
+ * @param {string} props.className - Additional CSS classes
+ */
+const InteractiveTitleEffect = ({ children, className = "" }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [bubbles, setBubbles] = useState([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  useEffect(() => {
+    if (isHovered) {
+      // Generate 4-8 random bubble positions
+      const count = Math.floor(Math.random() * 5) + 4;
+      const newBubbles = Array(count).fill(0).map(() => ({
+        id: Math.random(),
+        x: Math.random() * 120 - 10, // -10% to 110% of element width
+        y: Math.random() * 120 - 10, // -10% to 110% of element height
+        size: Math.random() * 25 + 15, // 15-40px
+        delay: Math.random() * 0.3,
+        duration: Math.random() * 0.8 + 0.5,
+        opacity: Math.random() * 0.7 + 0.3
+      }));
+      setBubbles(newBubbles);
+    }
+  }, [isHovered]);
+  
+  return (
+    <div className="relative mb-16">
+      <div 
+        className={`inline-block relative ${className}`}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <motion.h2 
+          className="text-4xl md:text-5xl font-bold text-primary relative z-10"
+          animate={isHovered ? {
+            textShadow: [
+              "0 0 7px rgba(168,85,247,0.6)",
+              "0 0 15px rgba(168,85,247,0.8)",
+              "0 0 7px rgba(168,85,247,0.6)"
+            ],
+            color: [
+              "rgb(168,85,247)",
+              "rgb(192,132,252)",
+              "rgb(168,85,247)"
+            ]
+          } : {}}
+          transition={{
+            duration: 2,
+            repeat: isHovered ? Infinity : 0,
+            repeatType: "reverse"
+          }}
+        >
+          {children}
+        </motion.h2>
+        
+        <AnimatePresence>
+          {isHovered && bubbles.map(bubble => (
+            <motion.div
+              key={bubble.id}
+              className="absolute pointer-events-none"
+              style={{
+                left: `${bubble.x}%`,
+                top: `${bubble.y}%`,
+                width: `${bubble.size}px`,
+                height: `${bubble.size}px`,
+                zIndex: 20
+              }}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, bubble.opacity, 0],
+                scale: [0, 1, 0],
+                y: [0, -40, -80]
+              }}
+              exit={{ opacity: 0, scale: 0 }}
+              transition={{
+                duration: bubble.duration,
+                delay: bubble.delay,
+                ease: "easeOut"
+              }}
+            >
+              <img 
+                src={isDark ? "/images/dark-mode-bubble.png" : "/images/light-mode-bubble.png"}
+                alt=""
+                className="w-full h-full object-contain"
+              />
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
+/**
  * PurpleSparkle Component
  * Creates floating sparkle effects across the screen
  * @param {number} count - Number of sparkles to display
@@ -131,7 +249,7 @@ const PurpleSparkle = ({ count = 15 }) => {
           }}
         >
           <img 
-            src={isDark ? "/images-optimized/purple-star.png" : "/images-optimized/dark-star.png"} 
+            src={isDark ? "/images/dark-mode-star.png" : "/images/light-mode-star.png"} 
             alt=""
             className="w-full h-full object-contain"
           />
@@ -261,7 +379,7 @@ const SparkleText = ({ children, className }) => {
             }}
           >
             <img 
-              src={isDark ? "/images-optimized/purple-star.png" : "/images-optimized/dark-star.png"}
+              src={isDark ? "/images/dark-mode-star.png" : "/images/light-mode-star.png"}
               alt=""
               className="w-full h-full object-contain"
             />
@@ -367,7 +485,7 @@ const SparkleButton = ({ children, className, onClick, ...props }) => {
             }}
           >
             <img 
-              src={isDark ? "/images-optimized/purple-star.png" : "/images-optimized/dark-star.png"}
+              src={isDark ? "/images/dark-mode-star.png" : "/images/light-mode-star.png"}
               alt=""
               className="w-full h-full object-contain"
             />
@@ -460,7 +578,7 @@ const LensGlare = () => {
   };
   
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-2]">
+    <div className="fixed inset-0 pointer-events-none z-[5]">
       {/* Distant large background glows */}
       {distantGlows.map(glow => (
         <div
@@ -926,17 +1044,23 @@ const Home = () => {
 
   return (
     <div className="flex flex-col min-h-screen relative">
+      {/* Background tints layer - moved behind lens flares */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-background to-cyber-light/10" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.05)_0%,transparent_50%)]" />
+      </div>
+
       {/* Interactive grid background */}
       <GridDeformation />
-      
-      {/* Lens glares */}
-      <LensGlare />
       
       {/* Purple Sparkle Effects */}
       <PurpleSparkle count={10} />
       
+      {/* Lens glares - moved to top */}
+      <LensGlare />
+      
       {/* Hero Section */}
-      <header className="container relative z-[1]" id="home">
+      <header className="container relative z-[2]" id="home">
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] relative">
           <div className="max-w-3xl text-center">
             <motion.h1 
@@ -963,24 +1087,6 @@ const Home = () => {
             >
               I design and develop digital experiences with creativity and technical expertise. Welcome to my professional journey!
             </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-            >
-              <SparkleButton 
-                className="mt-6" 
-                size="lg"
-                onClick={() => {
-                  const contactSection = document.getElementById('contact');
-                  if (contactSection) {
-                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-              >
-                Contact Me <ArrowUpRight className="ml-2 h-4 w-4" />
-              </SparkleButton>
-            </motion.div>
           </div>
           <motion.div 
             initial={{ opacity: 0 }}
@@ -1000,15 +1106,10 @@ const Home = () => {
         </div>
       </header>
 
-      {/* About Me Section */}
-      <section className="py-24 bg-muted/30 relative z-[1]" id="about">
-        <div className="container">
-          <div className="mb-16 relative">
-            <SparkleText className="inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[-4deg] relative z-10">About Me</h2>
-            </SparkleText>
-            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[-6deg]">About Me</span>
-          </div>
+      {/* About Me Section - with alternating background */}
+      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-muted/30 dark:before:bg-muted/30 before:bg-gray-200/50 before:-z-[1]" id="about">
+        <div className="container relative">
+          <InteractiveTitleEffect>About Me</InteractiveTitleEffect>
 
           <div className="grid md:grid-cols-2 gap-16 items-start">
             <div>
@@ -1024,23 +1125,42 @@ const Home = () => {
                 />
               </div>
               <div className="bg-card p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold mb-4">My CV</h3>
+                <h3 className="text-xl font-bold mb-4 flex items-center">
+                  <FileText className="mr-2 h-5 w-5 text-primary" />
+                  My Resume
+                </h3>
+                <div className="mb-4 p-3 border rounded-md bg-background/50">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="font-medium">CV_Quinten.pdf</span>
+                    <span className="text-xs text-muted-foreground">Updated {new Date().toLocaleDateString()}</span>
+                  </div>
+                  <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                    <div className="h-full bg-primary" style={{ width: '100%' }}></div>
+                  </div>
+                </div>
                 <div className="flex flex-col space-y-4">
                   <SparkleButton 
                     variant="outline" 
                     className="flex items-center justify-center"
-                    onClick={() => window.open('/cv', '_blank')}
+                    onClick={() => window.open('/files/CV_Quinten.html', '_blank')}
                   >
-                    <FileText className="mr-2 h-4 w-4" />
-                    View CV Online
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    View Resume Online
                   </SparkleButton>
                   <SparkleButton 
                     variant="default" 
                     className="flex items-center justify-center"
-                    onClick={() => window.open('/files/CV_Quinten.pdf', '_blank')}
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = '/files/CV_Quinten.pdf';
+                      link.download = 'CV_Quinten.pdf';
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                    }}
                   >
                     <Download className="mr-2 h-4 w-4" />
-                    Download CV_Quinten.pdf
+                    Download Resume
                   </SparkleButton>
                 </div>
               </div>
@@ -1077,14 +1197,9 @@ const Home = () => {
       </section>
 
       {/* Projects Section */}
-      <section className="py-24 relative z-[1]" id="projects">
+      <section className="py-24 relative z-[2]" id="projects">
         <div className="container">
-          <div className="mb-16 relative">
-            <SparkleText className="inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[4deg] relative z-10">Projects / Achievements</h2>
-            </SparkleText>
-            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[2deg]">Projects / Achievements</span>
-          </div>
+          <InteractiveTitleEffect>Projects / Achievements</InteractiveTitleEffect>
 
           {/* Project 1: SKIL2 Semester 1 */}
           <motion.div 
@@ -1323,15 +1438,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* YouTube Channel Section */}
-      <section className="py-24 bg-muted/30 relative z-[1]" id="youtube">
-        <div className="container">
-          <div className="mb-16 relative">
-            <SparkleText className="inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[-2deg] relative z-10">YouTube Channel</h2>
-            </SparkleText>
-            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[-4deg]">YouTube Channel</span>
-          </div>
+      {/* YouTube Channel Section - with alternating background */}
+      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-muted/30 dark:before:bg-muted/30 before:bg-gray-200/50 before:-z-[1]" id="youtube">
+        <div className="container relative">
+          <InteractiveTitleEffect>YouTube Channel</InteractiveTitleEffect>
 
           <div className="max-w-3xl mx-auto">
             <div className="bg-card rounded-lg overflow-hidden shadow-lg">
@@ -1445,128 +1555,88 @@ const Home = () => {
         </div>
       </section>
       
-      {/* Contact Section */}
-      <section className="py-24 relative z-[1]" id="contact">
+      {/* Socials Section */}
+      <section className="py-24 relative z-[2]" id="contact">
         <div className="container">
-          <div className="mb-16 relative">
-            <SparkleText className="inline-block">
-            <h2 className="text-4xl md:text-5xl font-bold text-primary rotate-[2deg] relative z-10">Contact Me</h2>
-            </SparkleText>
-            <span className="text-4xl md:text-5xl font-semibold opacity-20 absolute -top-1 left-4 rotate-[0deg]">Contact Me</span>
-          </div>
+          <InteractiveTitleEffect>Socials</InteractiveTitleEffect>
 
           <div className="max-w-2xl mx-auto bg-card p-8 rounded-lg shadow-lg">
-            <p className="text-lg mb-6">
-              I'm always open to new opportunities and collaborations. Feel free to reach out 
-              if you have any questions or would like to work together!
+            <p className="text-lg mb-8 text-center">
+              Connect with me on these platforms or drop me a message!
             </p>
-            <div className="grid gap-4">
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4v8Z"></path><polyline points="15,9 18,9 18,11"></polyline><path d="M6.5 5C9 5 11 7 11 9.5V17a2 2 0 0 1-2 2v0"></path><line x1="6" x2="7" y1="10" y2="10"></line></svg>
+            
+            {/* iOS-style app grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
+              {/* GitHub */}
+              <a 
+                href="https://github.com/qlintenFX/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group"
+              >
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#333] to-[#111] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(80,80,80,0.6)] shadow-[0_0_10px_rgba(80,80,80,0.3)]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
                 </div>
-                <div>
-                  <h3 className="font-semibold">Email</h3>
-                  <button 
-                    onClick={revealEmail} 
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                    aria-label={emailVisible ? "Email address" : "Reveal email address"}
-                  >
-                    {emailVisible ? (
-                      <a href={`mailto:${emailParts[0]}@${emailParts[1]}`}>
-                        {emailParts[0]}@{emailParts[1]}
-                      </a>
-                    ) : (
-                      "Click to reveal email"
-                    )}
-                  </button>
+                <span className="text-sm font-medium">GitHub</span>
+              </a>
+              
+              {/* YouTube */}
+              <a 
+                href="https://www.youtube.com/@qlintenFX" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group"
+              >
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#FF0000] to-[#CC0000] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(255,0,0,0.7)] shadow-[0_0_10px_rgba(255,0,0,0.4)]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
                 </div>
-              </div>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><line x1="10" x2="8" y1="9" y2="9"></line></svg>
+                <span className="text-sm font-medium">YouTube</span>
+              </a>
+              
+              {/* LinkedIn */}
+              <a 
+                href="https://www.linkedin.com/in/quinten-de-meyer/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group"
+              >
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#0077B5] to-[#0056A3] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(0,119,181,0.7)] shadow-[0_0_10px_rgba(0,119,181,0.4)]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </div>
-                <div>
-                  <h3 className="font-semibold">Resume</h3>
-                  <button 
-                    onClick={() => window.open('/files/CV_Quinten.pdf', '_blank')}
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    Download CV_Quinten.pdf
-                  </button>
+                <span className="text-sm font-medium">LinkedIn</span>
+              </a>
+              
+              {/* Email */}
+              <button 
+                onClick={revealEmail}
+                className="flex flex-col items-center group"
+              >
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#34C759] to-[#27AE60] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(52,199,89,0.7)] shadow-[0_0_10px_rgba(52,199,89,0.4)]">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
                 </div>
-              </div>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold">GitHub</h3>
-                  <a 
-                    href="https://github.com/qlintenFX/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    github.com/qlintenFX
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mr-4">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary"><path d="M19.42 5C16.5 2.1 11.55 2.08 8.35 5.28L5.53 8.1c-2.79 2.79-3.37 7.17-1.34 10.58m13.24-12.77c3.37 3.78 3.26 9.67-.35 13.29m-10.55 1c-2.62 0-5.1-1.18-6.82-2.95"/><path d="M21.48 16.86c.44 1 .68 2.04.44 2.93-.34 1.27-1.73 2.23-3.34 2.2-.5 0-1.26-.22-1.8-.55L9.82 18.7c-.7-.4-1.56-.26-2.4.3"/><path d="M3.75 9.95c-.98-1.66.6-3.13 2.13-3.13.5 0 .84.47 1.28.89"/></svg>
-                </div>
-                <div>
-                  <h3 className="font-semibold">YouTube</h3>
-                  <a 
-                    href="https://www.youtube.com/@qlintenFX" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    youtube.com/@qlintenFX
-                  </a>
-                </div>
-              </div>
+                <span className="text-sm font-medium">
+                  {emailVisible ? `${emailParts[0]}@${emailParts[1]}` : "Email"}
+                </span>
+              </button>
             </div>
-            <div className="mt-8">
-              <form className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="name" className="block mb-1 text-sm font-medium">Name</label>
-                    <input 
-                      type="text" 
-                      id="name" 
-                      className="w-full px-4 py-2 rounded-md border border-input bg-background" 
-                      placeholder="Your name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block mb-1 text-sm font-medium">Email</label>
-                    <input 
-                      type="email" 
-                      id="email" 
-                      className="w-full px-4 py-2 rounded-md border border-input bg-background" 
-                      placeholder="Your email"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label htmlFor="message" className="block mb-1 text-sm font-medium">Message</label>
-                  <textarea 
-                    id="message" 
-                    className="w-full px-4 py-2 rounded-md border border-input bg-background min-h-32" 
-                    placeholder="Your message"
-                  ></textarea>
-                </div>
-                <SparkleButton 
-                  className="w-full" 
-                  size="lg"
-                  onClick={() => {}}
-                >
-                  Send Message <ArrowUpRight className="ml-2 h-4 w-4" />
-                </SparkleButton>
-              </form>
+            
+            {/* Download CV */}
+            <div className="flex justify-center">
+              <SparkleButton 
+                variant="outline"
+                className="flex items-center" 
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/files/CV_Quinten.pdf';
+                  link.download = 'CV_Quinten.pdf';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download Resume
+              </SparkleButton>
             </div>
           </div>
         </div>
