@@ -1124,46 +1124,6 @@ const Home = () => {
                   }}
                 />
               </div>
-              <div className="bg-card p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-bold mb-4 flex items-center">
-                  <FileText className="mr-2 h-5 w-5 text-primary" />
-                  My CV
-                </h3>
-                <div className="mb-4 p-3 border rounded-md bg-background/50">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="font-medium">CV_Quinten.pdf</span>
-                    <span className="text-xs text-muted-foreground">Updated {new Date().toLocaleDateString()}</span>
-                  </div>
-                  <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
-                    <div className="h-full bg-primary" style={{ width: '100%' }}></div>
-                  </div>
-                </div>
-                <div className="flex flex-col space-y-4">
-                  <SparkleButton 
-                    variant="outline" 
-                    className="flex items-center justify-center"
-                    onClick={() => window.open('/files/CV_Quinten.html', '_blank')}
-                  >
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    View CV Online
-                  </SparkleButton>
-                  <SparkleButton 
-                    variant="default" 
-                    className="flex items-center justify-center"
-                    onClick={() => {
-                      const link = document.createElement('a');
-                      link.href = '/files/CV_Quinten.pdf';
-                      link.download = 'CV_Quinten.pdf';
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
-                    }}
-                  >
-                    <Download className="mr-2 h-4 w-4" />
-                    Download CV
-                  </SparkleButton>
-                </div>
-              </div>
             </div>
 
             <div>
@@ -1618,25 +1578,6 @@ const Home = () => {
                   {emailVisible ? `${emailParts[0]}@${emailParts[1]}` : "Email"}
                 </span>
               </button>
-            </div>
-            
-            {/* Download CV */}
-            <div className="flex justify-center">
-              <SparkleButton 
-                variant="outline"
-                className="flex items-center" 
-                onClick={() => {
-                  const link = document.createElement('a');
-                  link.href = '/files/CV_Quinten.pdf';
-                  link.download = 'CV_Quinten.pdf';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                }}
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Download CV
-              </SparkleButton>
             </div>
           </div>
         </div>

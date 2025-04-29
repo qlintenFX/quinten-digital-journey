@@ -9,7 +9,6 @@ import CursorEffectsProvider from "./components/ui/CursorEffectsProvider";
 
 // Lazy load components
 const Index = lazy(() => import("./pages/Index"));
-const CV = lazy(() => import("./components/cv/CV"));
 
 const queryClient = new QueryClient();
 
@@ -23,7 +22,6 @@ const App = () => (
           <Suspense fallback={<div className="flex items-center justify-center h-screen">Loading...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path={routes.cv} element={<CV />} />
             </Routes>
           </Suspense>
         </BrowserRouter>

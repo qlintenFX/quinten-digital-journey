@@ -175,63 +175,6 @@ const About = () => {
           </Tabs>
         </div>
       </section>
-
-      {/* CV Section */}
-      <section className="py-24 bg-cyber-light">
-        <div className="container">
-          <h2 className="text-center mb-10">Curriculum Vitae</h2>
-
-          <div className="bg-card p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-            <div className="mb-6 p-4 border rounded-md bg-background/50">
-              <div className="flex justify-between items-center mb-2">
-                <h3 className="font-medium">CV_Quinten.pdf</h3>
-                <span className="text-xs text-muted-foreground">Updated {new Date().toLocaleDateString()}</span>
-              </div>
-              <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-primary" style={{ width: '100%' }}></div>
-              </div>
-            </div>
-            
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="outline" className="flex items-center justify-center">
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    View CV Online
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-4xl h-[80vh]">
-                  <DialogHeader>
-                    <DialogTitle>Curriculum Vitae</DialogTitle>
-                  </DialogHeader>
-                  <div className="overflow-y-auto p-4 h-full border rounded-md">
-                    <iframe 
-                      src="/files/CV_Quinten.html" 
-                      className="w-full h-full border-0" 
-                      title="Curriculum Vitae"
-                    ></iframe>
-                  </div>
-                </DialogContent>
-              </Dialog>
-              
-              <Button 
-                onClick={() => {
-                  const link = document.createElement('a');
-                  link.href = '/files/CV_Quinten.pdf';
-                  link.download = 'CV_Quinten.pdf';
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                }}
-                className="flex items-center justify-center"
-              >
-                <Download className="mr-2 h-4 w-4" />
-                Download CV
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 };
