@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -178,31 +177,27 @@ const About = () => {
       </section>
 
       {/* CV Section */}
-      <section className="bg-cyber-light py-16">
+      <section className="py-24 bg-cyber-light">
         <div className="container">
           <h2 className="text-center mb-10">Curriculum Vitae</h2>
 
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
-            <div className="mb-6 p-4 border rounded-md bg-gray-50">
-              <h3 className="mb-4">CV Preview</h3>
-              <div className="h-96 overflow-hidden bg-white border rounded-md p-4">
-                {/* This is where the embedded CV HTML would go */}
-                <div className="flex flex-col items-center justify-center h-full text-center">
-                  <p className="text-muted-foreground mb-4">
-                    [Placeholder: Embedded CV in HTML format will appear here]
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    The full CV content will be added here in HTML format
-                  </p>
-                </div>
+          <div className="bg-card p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+            <div className="mb-6 p-4 border rounded-md bg-background/50">
+              <div className="flex justify-between items-center mb-2">
+                <h3 className="font-medium">CV_Quinten.pdf</h3>
+                <span className="text-xs text-muted-foreground">Updated {new Date().toLocaleDateString()}</span>
+              </div>
+              <div className="w-full h-1 bg-muted rounded-full overflow-hidden">
+                <div className="h-full bg-primary" style={{ width: '100%' }}></div>
               </div>
             </div>
             
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline">
-                    View Full CV <ExternalLink className="ml-2 h-4 w-4" />
+                  <Button variant="outline" className="flex items-center justify-center">
+                    <ExternalLink className="mr-2 h-4 w-4" />
+                    View Online
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-4xl h-[80vh]">
@@ -210,21 +205,28 @@ const About = () => {
                     <DialogTitle>Curriculum Vitae</DialogTitle>
                   </DialogHeader>
                   <div className="overflow-y-auto p-4 h-full border rounded-md">
-                    {/* Full CV content would go here */}
-                    <div className="flex flex-col items-center justify-center h-full text-center">
-                      <p className="text-muted-foreground mb-4">
-                        [Placeholder: Full CV content will appear here]
-                      </p>
-                      <p className="text-sm text-muted-foreground">
-                        The complete CV will be displayed in this modal
-                      </p>
-                    </div>
+                    <iframe 
+                      src="/files/CV_Quinten.html" 
+                      className="w-full h-full border-0" 
+                      title="Curriculum Vitae"
+                    ></iframe>
                   </div>
                 </DialogContent>
               </Dialog>
               
-              <Button>
-                Download CV <Download className="ml-2 h-4 w-4" />
+              <Button 
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/files/CV_Quinten.pdf';
+                  link.download = 'CV_Quinten.pdf';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="flex items-center justify-center"
+              >
+                <Download className="mr-2 h-4 w-4" />
+                Download CV
               </Button>
             </div>
           </div>
