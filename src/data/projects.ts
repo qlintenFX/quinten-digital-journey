@@ -10,7 +10,7 @@ export const projectsData: ProjectData[] = [
   // Academic Projects
   {
     id: "semester1",
-    title: "Semester 1 Project (SKIL2)",
+    title: "[SKIL2 Semester 1 Project]",
     description: "[Placeholder: Brief description of the semester 1 project]",
     context: "[Placeholder: What subject (mention ECTS if applicable)? Who was involved? What was the purpose?]",
     contribution: "[Placeholder: What parts were you responsible for?]",
@@ -21,7 +21,7 @@ export const projectsData: ProjectData[] = [
   },
   {
     id: "semester2",
-    title: "Semester 2 Project (SKIL2)",
+    title: "[SKIL2 Semester 2 Project]",
     description: "[Placeholder: Brief description of the semester 2 project]",
     context: "[Placeholder: What subject (mention ECTS if applicable)? Who was involved? What was the purpose?]",
     contribution: "[Placeholder: What parts were you responsible for?]",
@@ -31,37 +31,37 @@ export const projectsData: ProjectData[] = [
     category: "academic"
   },
   {
-    id: "azure-infrastructure",
-    title: "Azure Infrastructure as Code",
-    description: "Assignment 2 - Implementation of infrastructure as code principles using Azure.",
-    context: "[Placeholder: Detailed information about the academic context, requirements and goals of this Azure project]",
-    contribution: "[Placeholder: Your specific contributions to the infrastructure code, deployment strategies, and problem-solving]",
-    lessons: "[Placeholder: Key takeaways about Azure services, IaC methodologies, and DevOps practices]",
-    realizations: "[Placeholder: Description of the Azure resources created, automation achieved, and problems solved]",
+    id: "academic-project3",
+    title: "[Academic Project 3]",
+    description: "[Placeholder: Brief description of the project]",
+    context: "[Placeholder: What subject (mention ECTS if applicable)? Who was involved? What was the purpose?]",
+    contribution: "[Placeholder: What parts were you responsible for?]",
+    lessons: "[Placeholder: Key technical or personal lessons from the project]",
+    realizations: "[Placeholder: What was specifically built, solved, or achieved?]",
     imageSrc: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    repoUrl: "https://github.com/yourusername/azure-infrastructure-as-code",
+    repoUrl: "https://github.com/yourusername/project-repository",
     category: "academic"
   },
   
   // Personal Projects
   {
-    id: "keyed-colors",
-    title: "KeyedColors",
-    description: "A Windows desktop application for color management and visualization.",
-    context: "KeyedColors is a personal project developed to provide an intuitive interface for color management in Windows applications.",
-    contribution: "Developed the entire application from concept to implementation, including the user interface and color manipulation functionality.",
-    lessons: "Gained deep understanding of color spaces, Windows desktop application development, and user interface design principles.",
-    realizations: "Successfully implemented a fully functional color management system with an intuitive user interface, supporting various color formats and providing real-time visualization.",
-    imageSrc: "/keyedcolorsapp.png",
-    repoUrl: "https://github.com/qlintenFX/KeyedColors",
-    demoUrl: "https://github.com/qlintenFX/KeyedColors/releases",
+    id: "personal-project1",
+    title: "[Personal Project 1]",
+    description: "[Placeholder: Brief description of personal project]",
+    context: "[Placeholder: Why did you create this project? What problem does it solve?]",
+    contribution: "[Placeholder: What technologies or methods did you use? What was your approach?]",
+    lessons: "[Placeholder: What skills did you gain or improve?]",
+    realizations: "[Placeholder: What was the end result? How does it function?]",
+    imageSrc: "/placeholder-image.png",
+    repoUrl: "https://github.com/yourusername/personal-project1",
+    demoUrl: "https://demo-link-here.com",
     category: "personal"
   },
   
   // Additional Projects
   {
     id: "additional1",
-    title: "[Placeholder: Additional Project 1]",
+    title: "[Additional Project 1]",
     description: "[Placeholder: Brief description of additional project]",
     context: "[Placeholder: Context and background information]",
     contribution: "[Placeholder: Your contribution to the project]",
@@ -72,7 +72,7 @@ export const projectsData: ProjectData[] = [
   },
   {
     id: "additional2",
-    title: "[Placeholder: Additional Project 2]",
+    title: "[Additional Project 2]",
     description: "[Placeholder: Brief description of additional project]",
     context: "[Placeholder: Context and background information]",
     contribution: "[Placeholder: Your contribution to the project]",

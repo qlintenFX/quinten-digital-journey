@@ -18,6 +18,7 @@ import {
   Plus
 } from 'lucide-react';
 import { Modal } from '@/components/ui/modal';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 /**
  * Function to check if the page is in dark mode by looking at the document element
@@ -881,6 +882,7 @@ const Home = () => {
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
   const [selectedProject, setSelectedProject] = useState(null);
   const [isDark, setIsDark] = useState(true);
+  const [showCVDialog, setShowCVDialog] = useState(false);
   
   // YouTube video IDs for the carousel - using direct embed only, no API
   const videos = [
@@ -948,35 +950,35 @@ const Home = () => {
   // Project data
   const projects = {
     project1: {
-      title: "Project Title 1",
-      semester: "SKIL2 Semester 1",
-      context: "Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.",
-      contribution: "Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.",
-      learnings: "Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.",
-      technologies: ["React", "TypeScript", "Node.js", "MongoDB"],
+      title: "[Project Title 1]",
+      semester: "[Semester/Course Code]",
+      context: "[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]",
+      contribution: "[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]",
+      learnings: "[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]",
+      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
       image: "/placeholder-project1.jpg"
     },
     project2: {
-      title: "Project Title 2",
-      semester: "SKIL2 Semester 2",
-      context: "Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.",
-      contribution: "Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.",
-      learnings: "Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.",
-      technologies: ["Python", "TensorFlow", "OpenCV", "Docker"],
+      title: "[Project Title 2]",
+      semester: "[Semester/Course Code]",
+      context: "[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]",
+      contribution: "[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]",
+      learnings: "[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]",
+      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
       image: "/placeholder-project2.jpg"
     },
     project3: {
-      title: "Additional Project 1",
-      context: "Brief description of the project and context.",
-      learnings: "Key skills and knowledge gained.",
-      technologies: ["JavaScript", "HTML", "CSS", "Firebase"],
+      title: "[Additional Project 1]",
+      context: "[Placeholder: Brief description of the project and context.]",
+      learnings: "[Placeholder: Key skills and knowledge gained.]",
+      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
       image: "/placeholder-project3.jpg"
     },
     project4: {
-      title: "Additional Project 2",
-      context: "Brief description of the project and context.",
-      learnings: "Key skills and knowledge gained.",
-      technologies: ["Java", "Spring Boot", "PostgreSQL", "Docker"],
+      title: "[Additional Project 2]",
+      context: "[Placeholder: Brief description of the project and context.]",
+      learnings: "[Placeholder: Key skills and knowledge gained.]",
+      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
       image: "/placeholder-project4.jpg"
     }
   };
@@ -1107,7 +1109,7 @@ const Home = () => {
       </header>
 
       {/* About Me Section - with alternating background */}
-      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-muted/30 dark:before:bg-muted/30 before:bg-gray-200/50 before:-z-[1]" id="about">
+      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-gray-200/50 dark:before:bg-muted/30 before:-z-[1]" id="about">
         <div className="container relative">
           <InteractiveTitleEffect>About Me</InteractiveTitleEffect>
 
@@ -1153,6 +1155,38 @@ const Home = () => {
               </div>
             </div>
           </div>
+
+          {/* Curriculum Vitae Section */}
+          <div className="mt-16">
+            <h3 className="text-2xl font-bold text-center mb-8">Curriculum Vitae</h3>
+            
+            <div className="max-w-3xl mx-auto bg-card shadow-lg rounded-lg overflow-hidden">
+              <div className="p-8">
+                <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                  <h4 className="text-xl font-bold mb-4 md:mb-0">My CV</h4>
+                  <div className="flex space-x-4">
+                    <Button 
+                      variant="outline" 
+                      className="flex items-center gap-2"
+                      onClick={() => setShowCVDialog(true)}
+                    >
+                      <FileText className="h-4 w-4" />
+                      Show CV
+                    </Button>
+                    
+                    <Button variant="default" className="flex items-center gap-2">
+                      <Download className="h-4 w-4" />
+                      <a href="/files/CV_Quinten.pdf" download>Download PDF</a>
+                    </Button>
+                  </div>
+                </div>
+                
+                <p className="text-muted-foreground mb-4">
+                  View my complete professional background, skills, and qualifications. Click the button to view my CV or download it as a PDF.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -1192,23 +1226,23 @@ const Home = () => {
               <div className="w-full h-full rounded-md border-2 border-secondary"></div>
             </motion.div>
 
-            <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+            <div className="bg-card rounded-lg overflow-hidden">
               <div className="grid md:grid-cols-2">
                 <div className="p-8">
                   <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Semester 1</span>
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">[Semester/Course Code]</span>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">Project Title 1</h3>
+                  <h3 className="text-2xl font-bold mb-4">[Project Title 1]</h3>
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.</p>
+                    <p>[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.</p>
+                    <p>[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.</p>
+                    <p>[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]</p>
                   </div>
                   
                   <SparkleButton 
@@ -1219,16 +1253,27 @@ const Home = () => {
                     View Project Details <ExternalLink className="ml-2 h-4 w-4" />
                   </SparkleButton>
                 </div>
-                <div className="bg-muted h-full">
-                  <img 
-                    src="/placeholder-project1.jpg" 
-                    alt="Project 1 Screenshot" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                    }}
-                  />
+                <div className="bg-muted lg:block hidden">
+                  {/* Project 1 Image */}
+                  <div className="relative h-full">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <img 
+                        src="/placeholder-project1.jpg" 
+                        alt="Project 1" 
+                        className="object-cover h-full w-full"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                        }}
+                      />
+                    </motion.div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1265,34 +1310,45 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-secondary/20"></div>
             </motion.div>
 
-            <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+            <div className="bg-card rounded-lg overflow-hidden">
               <div className="grid md:grid-cols-2">
-                <div className="bg-muted h-full order-2 md:order-1">
-                  <img 
-                    src="/placeholder-project2.jpg" 
-                    alt="Project 2 Screenshot" 
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                    }}
-                  />
-                </div>
-                <div className="p-8 order-1 md:order-2">
-                  <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Semester 2</span>
+                <div className="bg-muted lg:block hidden">
+                  {/* Project 2 Image */}
+                  <div className="relative h-full">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="absolute inset-0 flex items-center justify-center"
+                    >
+                      <img 
+                        src="/placeholder-project2.jpg" 
+                        alt="Project 2" 
+                        className="object-cover h-full w-full"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                        }}
+                      />
+                    </motion.div>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">Project Title 2</h3>
+                </div>
+                <div className="p-8">
+                  <div className="mb-6">
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">[Semester/Course Code]</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">[Project Title 2]</h3>
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.</p>
+                    <p>[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>Detailed explanation of my specific role and contributions to this project, including technologies used and challenges overcome.</p>
+                    <p>[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.</p>
+                    <p>[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]</p>
                   </div>
                   
                   <SparkleButton 
@@ -1336,13 +1392,13 @@ const Home = () => {
                 }}
               />
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Additional Project 1</h3>
+                <h3 className="text-xl font-bold mb-2">[Additional Project 1]</h3>
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold">Context & Background</h4>
-                  <p className="text-muted-foreground mb-2">Brief description of the project and context.</p>
+                  <p className="text-muted-foreground mb-2">[Placeholder: Brief description of the project and context.]</p>
                   
                   <h4 className="text-lg font-semibold">What I Learned</h4>
-                  <p className="text-muted-foreground">Key skills and knowledge gained.</p>
+                  <p className="text-muted-foreground">[Placeholder: Key skills and knowledge gained.]</p>
                 </div>
                 <SparkleButton 
                   variant="outline" 
@@ -1377,13 +1433,13 @@ const Home = () => {
                 }}
               />
               <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Additional Project 2</h3>
+                <h3 className="text-xl font-bold mb-2">[Additional Project 2]</h3>
                 <div className="mb-4">
                   <h4 className="text-lg font-semibold">Context & Background</h4>
-                  <p className="text-muted-foreground mb-2">Brief description of the project and context.</p>
+                  <p className="text-muted-foreground mb-2">[Placeholder: Brief description of the project and context.]</p>
                   
                   <h4 className="text-lg font-semibold">What I Learned</h4>
-                  <p className="text-muted-foreground">Key skills and knowledge gained.</p>
+                  <p className="text-muted-foreground">[Placeholder: Key skills and knowledge gained.]</p>
                 </div>
                 <SparkleButton 
                   variant="outline" 
@@ -1399,7 +1455,7 @@ const Home = () => {
       </section>
 
       {/* YouTube Channel Section - with alternating background */}
-      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-muted/30 dark:before:bg-muted/30 before:bg-gray-200/50 before:-z-[1]" id="youtube">
+      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-gray-200/50 dark:before:bg-muted/30 before:-z-[1]" id="youtube">
         <div className="container relative">
           <InteractiveTitleEffect>YouTube Channel</InteractiveTitleEffect>
 
@@ -1555,7 +1611,7 @@ const Home = () => {
               
               {/* LinkedIn */}
               <a 
-                href="https://www.linkedin.com/in/quinten-de-meyer/" 
+                href="https://www.linkedin.com/in/quinten-de-meyer-2336282a2/" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="flex flex-col items-center group"
@@ -1647,6 +1703,27 @@ const Home = () => {
           </div>
         )}
       </Modal>
+
+      {/* CV Dialog for viewing PDF */}
+      <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
+        <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
+          <DialogHeader className="p-2 pb-0 min-h-[32px] shrink-0">
+            <DialogTitle>Curriculum Vitae</DialogTitle>
+          </DialogHeader>
+          <div className="w-full h-[calc(100%-32px)] grow overflow-hidden">
+            <object
+              data="/files/CV_Quinten.pdf"
+              type="application/pdf"
+              className="w-full h-full"
+              style={{ margin: 0, padding: 0, border: 0 }}
+            >
+              <p>Your browser does not support PDFs. 
+                <a href="/files/CV_Quinten.pdf" download>Download the PDF</a> instead.
+              </p>
+            </object>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
