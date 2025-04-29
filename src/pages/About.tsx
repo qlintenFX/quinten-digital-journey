@@ -197,7 +197,7 @@ const About = () => {
                 <DialogTrigger asChild>
                   <Button variant="outline" className="flex items-center justify-center">
                     <ExternalLink className="mr-2 h-4 w-4" />
-                    View Online
+                    View CV Online
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="max-w-4xl h-[80vh]">

@@ -1568,12 +1568,12 @@ const Home = () => {
             {/* iOS-style app grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
               {/* GitHub */}
-              <a 
-                href="https://github.com/qlintenFX/" 
-                target="_blank" 
-                rel="noopener noreferrer"
+                  <a 
+                    href="https://github.com/qlintenFX/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                 className="flex flex-col items-center group"
-              >
+                  >
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#333] to-[#111] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(80,80,80,0.6)] shadow-[0_0_10px_rgba(80,80,80,0.3)]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
                 </div>
@@ -1581,10 +1581,10 @@ const Home = () => {
               </a>
               
               {/* YouTube */}
-              <a 
-                href="https://www.youtube.com/@qlintenFX" 
-                target="_blank" 
-                rel="noopener noreferrer"
+                  <a 
+                    href="https://www.youtube.com/@qlintenFX" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
                 className="flex flex-col items-center group"
               >
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#FF0000] to-[#CC0000] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(255,0,0,0.7)] shadow-[0_0_10px_rgba(255,0,0,0.4)]">
@@ -1613,7 +1613,7 @@ const Home = () => {
               >
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#34C759] to-[#27AE60] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(52,199,89,0.7)] shadow-[0_0_10px_rgba(52,199,89,0.4)]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                </div>
+              </div>
                 <span className="text-sm font-medium">
                   {emailVisible ? `${emailParts[0]}@${emailParts[1]}` : "Email"}
                 </span>
@@ -1659,7 +1659,7 @@ const Home = () => {
             )}
             
             <div className="grid md:grid-cols-2 gap-8">
-              <div>
+                  <div>
                 <img 
                   src={projects[selectedProject].image} 
                   alt={projects[selectedProject].title}
@@ -1668,19 +1668,19 @@ const Home = () => {
                     const target = e.target as HTMLImageElement;
                     target.src = "https://placehold.co/800x600?text=Project+Screenshot";
                   }}
-                />
-              </div>
+                    />
+                  </div>
               <div className="space-y-6">
-                <div>
+                  <div>
                   <h3 className="text-lg font-semibold mb-2">Context & Background</h3>
                   <p className="text-muted-foreground">{projects[selectedProject].context}</p>
-                </div>
+                  </div>
                 
                 {projects[selectedProject].contribution && (
                   <div>
                     <h3 className="text-lg font-semibold mb-2">My Contribution</h3>
                     <p className="text-muted-foreground">{projects[selectedProject].contribution}</p>
-                  </div>
+                </div>
                 )}
                 
                 <div>
@@ -1699,9 +1699,9 @@ const Home = () => {
                         {tech}
                       </span>
                     ))}
-                  </div>
-                </div>
-              </div>
+            </div>
+          </div>
+        </div>
             </div>
           </div>
         )}
