@@ -1179,27 +1179,26 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="mb-8 overflow-hidden rounded-lg flex items-center justify-center">
+              <div className="mb-8 overflow-hidden rounded-2xl flex items-start h-full">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
-                  className="relative"
+                  className="relative w-full h-full"
                 >
                   <img 
                     src="/images/profile-photo.png"
                     alt="Profile Photo" 
-                    className="w-full h-auto object-contain"
+                    className="w-full rounded-2xl object-cover h-[420px]"
                     style={{ 
-                      filter: "drop-shadow(0 0 15px rgba(168, 85, 247, 0.6))",
-                      maxHeight: "400px"
+                      filter: "drop-shadow(0 0 15px rgba(168, 85, 247, 0.6))"
                     }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = "https://placehold.co/600x600?text=Profile+Photo";
                     }}
                   />
-                  <div className="absolute inset-0 rounded-lg" style={{ 
+                  <div className="absolute inset-0 rounded-2xl" style={{ 
                     boxShadow: "0 0 20px rgba(168, 85, 247, 0.4)",
                     pointerEvents: "none" 
                   }}></div>
