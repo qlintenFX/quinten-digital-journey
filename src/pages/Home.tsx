@@ -1186,7 +1186,7 @@ const Home = () => {
                   transition={{ duration: 0.6 }}
                   className="relative w-full h-full"
                 >
-                  <div className="h-[430px] flex items-center justify-center">
+                  <div className="h-[490px] flex items-center justify-center">
                     <img 
                       src="/images/profile-photo.png"
                       alt="Profile Photo" 
