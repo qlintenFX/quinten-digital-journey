@@ -1190,9 +1190,10 @@ const Home = () => {
                     <img 
                       src="/images/profile-photo.png"
                       alt="Profile Photo" 
-                      className="w-full rounded-2xl object-cover h-[420px] z-10 relative"
+                      className="rounded-2xl object-contain max-h-[500px] z-10 relative mx-auto"
                       style={{ 
-                        filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))"
+                        filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))",
+                        maxWidth: "100%"
                       }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
