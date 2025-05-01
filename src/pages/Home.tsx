@@ -883,7 +883,28 @@ const Home = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [isDark, setIsDark] = useState(true);
   const [showCVDialog, setShowCVDialog] = useState(false);
+  const [currentProfileIndex, setCurrentProfileIndex] = useState(0);
   
+  // Profile images for cycling
+  const profileImages = [
+    "/images/profile-photo.png",
+    "/images/pfp-2.png"
+  ];
+
+  // Function to cycle to next profile image
+  const nextProfileImage = useCallback(() => {
+    setCurrentProfileIndex((prev) => (prev + 1) % profileImages.length);
+  }, [profileImages.length]);
+
+  // Auto cycle profile images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextProfileImage();
+    }, 5000); // Change image every 5 seconds
+    
+    return () => clearInterval(interval);
+  }, [nextProfileImage]);
+
   // YouTube video IDs for the carousel - using direct embed only, no API
   const videos = [
     "LAHGY-rWtbk",
@@ -1138,34 +1159,53 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="mb-8 overflow-hidden rounded-lg">
-                <img 
-                  src="/images/profile-photo.png" 
-                  alt="Profile Photo" 
-                  className="w-full object-cover rounded-lg shadow-lg shadow-primary/20"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "https://placehold.co/600x600?text=Profile+Photo";
-                  }}
-                />
+              <div className="relative mb-8 overflow-hidden rounded-lg">
+                {profileImages.map((img, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0 }}
+                    animate={{ 
+                      opacity: currentProfileIndex === index ? 1 : 0,
+                      scale: currentProfileIndex === index ? 1 : 0.9,
+                    }}
+                    transition={{ 
+                      duration: 0.7,
+                      ease: [0.4, 0.0, 0.2, 1]
+                    }}
+                    className="absolute inset-0"
+                    style={{ display: currentProfileIndex === index ? 'block' : 'none' }}
+                  >
+                    <img 
+                      src={img}
+                      alt="Profile Photo" 
+                      className="w-full h-full object-cover rounded-lg shadow-lg shadow-primary/20"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://placehold.co/600x600?text=Profile+Photo";
+                      }}
+                    />
+                  </motion.div>
+                ))}
+                
+                {/* Navigation dots */}
+                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
+                  {profileImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentProfileIndex(index)}
+                      className={`w-2 h-2 rounded-full transition-all ${
+                        currentProfileIndex === index 
+                          ? 'bg-primary scale-125' 
+                          : 'bg-muted-foreground/40 hover:bg-muted-foreground/60'
+                      }`}
+                      aria-label={`View profile image ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
             
             <div>
-              <div className="mb-8 overflow-hidden rounded-lg">
-                <img 
-                  src="/images/pfp-2.png" 
-                  alt="Profile Photo" 
-                  className="w-full object-cover rounded-lg shadow-lg shadow-primary/20"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "https://placehold.co/600x600?text=Profile+Photo";
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="md:col-span-2">
               <h3 className="text-2xl font-bold text-primary mb-6">Who Am I?</h3>
               
               <div className="space-y-6">
