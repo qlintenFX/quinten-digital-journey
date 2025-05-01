@@ -1240,16 +1240,16 @@ const Home = () => {
                 </div>
                 
                 <div>
-                  <h4 className="text-xl font-semibold mb-2">My Unique Hobbies</h4>
+                  <h4 className="text-xl font-semibold mb-2">My Creative Pursuits</h4>
                   <p className="text-lg">
-                    Beyond coding, I'm passionate about [Your unique hobby 1] which has taught me [lesson]. I also enjoy [Your unique hobby 2], which helps me develop [skill]. These activities complement my <KeywordHighlight>technical expertise</KeywordHighlight> by enhancing my [relevant skill].
+                    Outside of academics, I run a <KeywordHighlight>YouTube channel</KeywordHighlight> focused on creating custom cinematics for Assetto Corsa, which has sharpened my <KeywordHighlight>video editing</KeywordHighlight> and storytelling abilities. I also develop <KeywordHighlight>personal software projects</KeywordHighlight> like KeyedColors, which allows me to explore innovative solutions to everyday problems and continuously enhance my programming skills.
                   </p>
                 </div>
                 
                 <div>
-                  <h4 className="text-xl font-semibold mb-2">Future Dreams & Professional Ambitions</h4>
+                  <h4 className="text-xl font-semibold mb-2">Professional Ambitions</h4>
                   <p className="text-lg">
-                    I aspire to become a [career goal], specializing in [specialization]. My goal is to [professional ambition] while continuing to <KeywordHighlight>learn and adapt</KeywordHighlight> to emerging technologies. I'm particularly interested in [specific technology/field] and its potential to [benefit].
+                    My experiences with <KeywordHighlight>containerization</KeywordHighlight>, <KeywordHighlight>security systems</KeywordHighlight>, and <KeywordHighlight>application development</KeywordHighlight> have shaped my professional direction. I aim to specialize in creating robust, secure technological solutions while continuing to <KeywordHighlight>learn and adapt</KeywordHighlight> to emerging technologies that can positively impact users' experiences.
                   </p>
                 </div>
               </div>
