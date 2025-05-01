@@ -1159,7 +1159,7 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="relative mb-8 overflow-hidden rounded-lg shadow-lg shadow-primary/20" style={{ height: "400px" }}>
+              <div className="relative mb-8 overflow-hidden rounded-lg" style={{ height: "400px" }}>
                 {profileImages.map((img, index) => (
                   <motion.div
                     key={index}
@@ -1172,15 +1172,16 @@ const Home = () => {
                       duration: 0.7,
                       ease: [0.4, 0.0, 0.2, 1]
                     }}
-                    className="absolute inset-0 bg-card/5 backdrop-blur-[1px]"
+                    className="absolute inset-0"
                     style={{ display: currentProfileIndex === index ? 'block' : 'none' }}
                   >
                     <img 
                       src={img}
                       alt="Profile Photo" 
-                      className={`w-full h-full ${
-                        index === 0 ? 'object-contain' : 'object-cover object-top'
-                      }`}
+                      className={index === 0 
+                        ? "w-full h-full object-contain" 
+                        : "w-full h-full object-cover object-top rounded-lg shadow-lg shadow-primary/20"
+                      }
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "https://placehold.co/600x600?text=Profile+Photo";
