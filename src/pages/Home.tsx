@@ -1159,7 +1159,7 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="relative mb-8 overflow-hidden rounded-lg" style={{ height: "400px" }}>
+              <div className="relative mb-8 overflow-hidden rounded-lg shadow-lg shadow-primary/20" style={{ height: "400px" }}>
                 {profileImages.map((img, index) => (
                   <motion.div
                     key={index}
@@ -1172,13 +1172,13 @@ const Home = () => {
                       duration: 0.7,
                       ease: [0.4, 0.0, 0.2, 1]
                     }}
-                    className="absolute inset-0"
+                    className="absolute inset-0 bg-card/5 backdrop-blur-[1px]"
                     style={{ display: currentProfileIndex === index ? 'block' : 'none' }}
                   >
                     <img 
                       src={img}
                       alt="Profile Photo" 
-                      className={`w-full h-full rounded-lg shadow-lg shadow-primary/20 ${
+                      className={`w-full h-full ${
                         index === 0 ? 'object-contain' : 'object-cover object-top'
                       }`}
                       onError={(e) => {
