@@ -1186,22 +1186,30 @@ const Home = () => {
                   transition={{ duration: 0.6 }}
                   className="relative w-full h-full"
                 >
-                  <img 
-                    src="/images/profile-photo.png"
-                    alt="Profile Photo" 
-                    className="w-full rounded-2xl object-cover h-[420px]"
-                    style={{ 
-                      filter: "drop-shadow(0 0 15px rgba(168, 85, 247, 0.6)) drop-shadow(0 0 25px rgba(168, 85, 247, 0.4))"
-                    }}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = "https://placehold.co/600x600?text=Profile+Photo";
-                    }}
-                  />
-                  <div className="absolute inset-0 rounded-2xl" style={{ 
-                    boxShadow: "0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1)",
-                    pointerEvents: "none" 
-                  }}></div>
+                  <div className="relative">
+                    <img 
+                      src="/images/profile-photo.png"
+                      alt="Profile Photo" 
+                      className="w-full rounded-2xl object-cover h-[420px] z-10 relative"
+                      style={{ 
+                        filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))"
+                      }}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = "https://placehold.co/600x600?text=Profile+Photo";
+                      }}
+                    />
+                    {/* Multiple layers of glow for enhanced effect */}
+                    <div className="absolute inset-0 rounded-2xl z-0" style={{ 
+                      boxShadow: "0 0 30px 10px rgba(168, 85, 247, 0.6), 0 0 50px 15px rgba(168, 85, 247, 0.4)",
+                      pointerEvents: "none" 
+                    }}></div>
+                    {/* Inner glow */}
+                    <div className="absolute inset-0 rounded-2xl z-20" style={{ 
+                      boxShadow: "inset 0 0 20px rgba(168, 85, 247, 0.5)",
+                      pointerEvents: "none" 
+                    }}></div>
+                  </div>
                 </motion.div>
               </div>
             </div>
