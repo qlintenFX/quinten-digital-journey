@@ -1178,7 +1178,7 @@ const Home = () => {
                     <img 
                       src={img}
                       alt="Profile Photo" 
-                      className="w-full h-full object-cover rounded-lg shadow-lg shadow-primary/20"
+                      className="w-full h-full object-cover object-top rounded-lg shadow-lg shadow-primary/20"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "https://placehold.co/600x600?text=Profile+Photo";
