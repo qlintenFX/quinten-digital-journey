@@ -1136,11 +1136,25 @@ const Home = () => {
         <div className="container relative">
           <InteractiveTitleEffect>About Me</InteractiveTitleEffect>
 
-          <div className="grid md:grid-cols-2 gap-16 items-start">
+          <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
               <div className="mb-8 overflow-hidden rounded-lg">
                 <img 
-                  src="/images/profile-foto.png" 
+                  src="/images/profile-photo.png" 
+                  alt="Profile Photo" 
+                  className="w-full object-cover rounded-lg shadow-lg shadow-primary/20"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.src = "https://placehold.co/600x600?text=Profile+Photo";
+                  }}
+                />
+              </div>
+            </div>
+            
+            <div>
+              <div className="mb-8 overflow-hidden rounded-lg">
+                <img 
+                  src="/images/pfp-2.png" 
                   alt="Profile Photo" 
                   className="w-full object-cover rounded-lg shadow-lg shadow-primary/20"
                   onError={(e) => {
@@ -1151,7 +1165,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div>
+            <div className="md:col-span-2">
               <h3 className="text-2xl font-bold text-primary mb-6">Who Am I?</h3>
               
               <div className="space-y-6">
