@@ -33,7 +33,7 @@ endobj
 endobj
 5 0 obj
 <<
-/Length 2470
+/Length 2850
 >>
 stream
 q
@@ -43,7 +43,7 @@ f
 Q
 
 q
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 0 702 612 90 re
 f
 Q
@@ -55,7 +55,7 @@ f
 Q
 
 q
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 2 w
 40 702 180 65 re
 S
@@ -63,14 +63,14 @@ Q
 
 BT
 /F2 26 Tf
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 50 740 Td
 (QUINTEN) Tj
 ET
 
 BT
 /F2 26 Tf
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 50 710 Td
 (DE MEYER) Tj
 ET
@@ -111,14 +111,14 @@ BT
 ET
 
 q
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 40 630 532 2 re
 f
 Q
 
 BT
 /F4 18 Tf
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 40 600 Td
 (PROFESSIONAL SUMMARY) Tj
 ET
@@ -152,7 +152,7 @@ ET
 
 BT
 /F4 18 Tf
-0.2 0.2 0.2 rg
+0.2 0.4 0.8 rg
 40 505 Td
 (EDUCATION) Tj
 ET
@@ -186,7 +186,7 @@ ET
 
 BT
 /F3 11 Tf
-0.4 0.4 0.4 rg
+0.2 0.4 0.8 rg
 460 455 Td
 (2023 - Present) Tj
 ET
@@ -202,253 +202,211 @@ BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
 50 395 Td
-(\267 Core coursework: Application Security, Datacenter Technology, Linux Webservices,) Tj
-ET
-
-BT
-/F1 11 Tf
-0.2 0.2 0.2 rg
-53 375 Td
-(Networking Advanced, Windows Server, Cloud Platforms, Network & OS Security) Tj
+(\267 Relevant coursework: Web Development, Object-Oriented Programming, Database Systems) Tj
 ET
 
 BT
 /F4 18 Tf
-0.2 0.2 0.2 rg
-40 350 Td
+0.2 0.4 0.8 rg
+40 380 Td
 (TECHNICAL SKILLS) Tj
 ET
 
 q
 0.8 0.8 0.8 rg
-40 340 532 1 re
+40 370 532 1 re
 f
 Q
 
 q
 0.95 0.95 0.95 rg
-40 225 532 100 re
+40 285 532 70 re
 f
 Q
 
 BT
 /F2 12 Tf
 0.2 0.2 0.2 rg
-50 310 Td
-(Programming:) Tj
+50 340 Td
+(Programming Languages:) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-210 310 Td
-(HTML/CSS, JavaScript, TypeScript, React, Node.js, .NET) Tj
+210 340 Td
+(HTML/CSS, JavaScript, TypeScript, React, Node.js) Tj
 ET
 
 BT
 /F2 12 Tf
 0.2 0.2 0.2 rg
-50 285 Td
-(Systems:) Tj
+50 315 Td
+(Development Tools:) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-210 285 Td
-(Linux, Windows Server, AWS, Cloud Platforms, Network Security) Tj
+210 315 Td
+(Git, VS Code, Figma, Tailwind CSS) Tj
 ET
 
 BT
 /F2 12 Tf
 0.2 0.2 0.2 rg
-50 260 Td
-(Tools:) Tj
-ET
-
-BT
-/F1 11 Tf
-0.2 0.2 0.2 rg
-210 260 Td
-(Git, VS Code, Virtualization, Docker, Azure, Bicep) Tj
-ET
-
-BT
-/F2 12 Tf
-0.2 0.2 0.2 rg
-50 235 Td
+50 290 Td
 (Multimedia:) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-210 235 Td
-(Video Editing, Photo Editing, Adobe Creative Suite) Tj
+210 290 Td
+(Adobe Creative Suite, Video Editing, Content Creation) Tj
 ET
 
 BT
 /F4 18 Tf
-0.2 0.2 0.2 rg
-40 195 Td
+0.2 0.4 0.8 rg
+40 255 Td
 (PROJECTS) Tj
 ET
 
 q
 0.8 0.8 0.8 rg
-40 185 532 1 re
+40 245 532 1 re
 f
 Q
 
 BT
 /F2 14 Tf
 0.2 0.2 0.2 rg
-50 165 Td
-(IT Polis Voting System) Tj
+50 225 Td
+(Project Title 1) Tj
 ET
 
 BT
 /F3 11 Tf
-0.4 0.4 0.4 rg
-460 165 Td
-(2024) Tj
+0.2 0.4 0.8 rg
+460 225 Td
+(Date/Period) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-60 145 Td
-(\267 Developed NFC-based voting system with database management and real-time monitoring dashboard) Tj
+60 205 Td
+(\267 [Project description bullet point 1]) Tj
+ET
+
+BT
+/F1 11 Tf
+0.2 0.2 0.2 rg
+60 185 Td
+(\267 [Project description bullet point 2]) Tj
+ET
+
+BT
+/F1 11 Tf
+0.2 0.2 0.2 rg
+60 165 Td
+(\267 [Project description bullet point 3]) Tj
 ET
 
 BT
 /F2 14 Tf
 0.2 0.2 0.2 rg
-50 125 Td
-(App Hosting Platform for Clients) Tj
+50 145 Td
+(Project Title 2) Tj
 ET
 
 BT
 /F3 11 Tf
-0.4 0.4 0.4 rg
-460 125 Td
-(2024) Tj
+0.2 0.4 0.8 rg
+460 145 Td
+(Date/Period) Tj
+ET
+
+BT
+/F1 11 Tf
+0.2 0.2 0.2 rg
+60 125 Td
+(\267 [Project description bullet point 1]) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
 60 105 Td
-(\267 Created and managed Kubernetes cluster for hosting platform with high availability and security) Tj
-ET
-
-BT
-/F2 14 Tf
-0.2 0.2 0.2 rg
-50 85 Td
-(Security Awareness Campaign Movie) Tj
-ET
-
-BT
-/F3 11 Tf
-0.4 0.4 0.4 rg
-460 85 Td
-(2023) Tj
-ET
-
-BT
-/F1 11 Tf
-0.2 0.2 0.2 rg
-60 65 Td
-(\267 Directed and edited educational film about USB security threats using cinematic storytelling techniques) Tj
-ET
-
-BT
-/F2 14 Tf
-0.2 0.2 0.2 rg
-50 45 Td
-(KeyedColors Display Profile Manager) Tj
-ET
-
-BT
-/F3 11 Tf
-0.4 0.4 0.4 rg
-460 45 Td
-(2025) Tj
-ET
-
-BT
-/F1 11 Tf
-0.2 0.2 0.2 rg
-60 25 Td
-(\267 Developed Windows application to create custom display profiles with hotkey switching capability) Tj
+(\267 [Project description bullet point 2]) Tj
 ET
 
 BT
 /F4 18 Tf
-0.2 0.2 0.2 rg
-40 -5 Td
+0.2 0.4 0.8 rg
+40 70 Td
 (EXTRACURRICULAR ACTIVITIES) Tj
 ET
 
 q
 0.8 0.8 0.8 rg
-40 -15 532 1 re
+40 60 532 1 re
 f
 Q
 
 BT
 /F2 14 Tf
 0.2 0.2 0.2 rg
-50 -35 Td
+50 40 Td
 (YouTube Content Creator - @qlintenFX) Tj
 ET
 
 BT
 /F3 11 Tf
-0.4 0.4 0.4 rg
-460 -35 Td
-(2024 - Present) Tj
+0.2 0.4 0.8 rg
+460 40 Td
+(2022 - Present) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-60 -55 Td
+60 20 Td
 (\267 Create cinematics for Assetto Corsa (popular racing game)) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-60 -75 Td
+60 5 Td
 (\267 Develop and edit high-quality video content for a growing audience) Tj
 ET
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-60 -95 Td
+60 -10 Td
 (\267 Apply creative direction and technical skills to produce professional results) Tj
 ET
 
 BT
 /F4 18 Tf
-0.2 0.2 0.2 rg
-40 -135 Td
+0.2 0.4 0.8 rg
+40 -45 Td
 (LANGUAGES) Tj
 ET
 
 q
 0.8 0.8 0.8 rg
-40 -145 532 1 re
+40 -55 532 1 re
 f
 Q
 
 BT
 /F1 11 Tf
 0.2 0.2 0.2 rg
-40 -165 Td
+40 -75 Td
 (Dutch: Native     |     English: Professional working proficiency) Tj
 ET
 endstream
@@ -489,16 +447,16 @@ xref
 0000000115 00000 n
 0000000210 00000 n
 0000000291 00000 n
-0000002814 00000 n
-0000002881 00000 n
-0000002953 00000 n
-0000003028 00000 n
+0000003194 00000 n
+0000003261 00000 n
+0000003333 00000 n
+0000003408 00000 n
 trailer
 <<
 /Size 10
 /Root 1 0 R
 >>
 startxref
-3106
+3486
 %%EOF
 
