@@ -950,36 +950,59 @@ const Home = () => {
   // Project data
   const projects = {
     project1: {
-      title: "[Project Title 1]",
-      semester: "[Semester/Course Code]",
-      context: "[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]",
-      contribution: "[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]",
-      learnings: "[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]",
-      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
-      image: "/placeholder-project1.jpg"
+      title: "IT Polis Voting System",
+      semester: "SKIL2 Project",
+      context: "Developed a voting system for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could only vote once, track votes in real-time, and provide event organizers with administrative control.",
+      contribution: "I created and managed the database architecture, implemented data processing for the live leaderboard, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.",
+      learnings: "Gained practical experience in secure database design, NFC technology integration, and real-time data visualization. Developed skills in creating administrative dashboards and implementing user authentication systems.",
+      technologies: ["Database Design", "NFC Technology", "UI/UX", "Real-time Systems", "Admin Dashboard"],
+      image: "/images/project-1-Voting-System.png",
+      images: [
+        "/images/project-1-Voting-System.png",
+        "/images/project-1-group-picture.png"
+      ]
     },
     project2: {
-      title: "[Project Title 2]",
-      semester: "[Semester/Course Code]",
-      context: "[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]",
-      contribution: "[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]",
-      learnings: "[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]",
-      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
-      image: "/placeholder-project2.jpg"
+      title: "App Hosting Platform for Clients",
+      semester: "SKIL2.2 Project",
+      context: "Designed and implemented a hosting platform for PHP/Laravel applications within Thomas More's datacenter. The platform provides an automated deployment process for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.",
+      contribution: "I was responsible for creating and managing the Kubernetes cluster. My work involved setting up the infrastructure for container orchestration, ensuring high availability, and implementing automated scaling solutions for the hosted applications.",
+      learnings: "Gained practical experience in containerization technologies, Kubernetes administration, and implementing CIS security controls. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.",
+      technologies: ["Kubernetes", "Docker", "CI/CD", "GitLab", "Ansible", "Ubuntu Server", "Security Controls"],
+      image: "/images/project-2-hosting-platform.png",
+      images: [
+        "/images/project-2-hosting-platform.png",
+        "/images/project-2-hosting-platform-repository.png",
+        "/images/project-2-software-diagram.png",
+        "/images/project-2-hardware-diagram.png"
+      ]
     },
     project3: {
-      title: "[Additional Project 1]",
-      context: "[Placeholder: Brief description of the project and context.]",
-      learnings: "[Placeholder: Key skills and knowledge gained.]",
-      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
-      image: "/placeholder-project3.jpg"
+      title: "Security Awareness Campaign Movie",
+      semester: "Media Project",
+      context: "Created an educational movie about cybersecurity awareness, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.",
+      contribution: "I served as the main editor and creative director, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.",
+      learnings: "Strengthened my skills in narrative storytelling through visual media, technical video production in security contexts, and effectively communicating complex security concepts through engaging content.",
+      technologies: ["Video Editing", "Cinematography", "Storytelling", "Security Awareness", "Visual Effects"],
+      image: "/images/project-3-video-editing-awareness-movie.png",
+      images: [
+        "/images/project-3-video-editing-awareness-movie.png",
+        "/images/project-3-video-editing-awareness-movie-2.png"
+      ]
     },
     project4: {
-      title: "[Additional Project 2]",
-      context: "[Placeholder: Brief description of the project and context.]",
-      learnings: "[Placeholder: Key skills and knowledge gained.]",
-      technologies: ["Technology 1", "Technology 2", "Technology 3", "Technology 4"],
-      image: "/placeholder-project4.jpg"
+      title: "KeyedColors",
+      semester: "Personal Project",
+      context: "Developed a Windows application for creating custom display profiles with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using customizable hotkeys.",
+      contribution: "I identified a gap in the market for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.",
+      learnings: "Gained hands-on experience with Windows API for display settings manipulation, system tray integration, and global hotkey management. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.",
+      technologies: ["C#", ".NET", "Windows API", "UI/UX", "System Tray Integration", "Global Hotkeys"],
+      image: "/images/project-4-KeyedColors-logo.png",
+      images: [
+        "/images/project-4-KeyedColors-logo.png",
+        "/images/project-4-KeyedColors-profiles.png",
+        "/images/project-4-KeyedColors-dynamic-profile.png"
+      ]
     }
   };
 
@@ -1117,9 +1140,9 @@ const Home = () => {
             <div>
               <div className="mb-8 overflow-hidden rounded-lg">
                 <img 
-                  src="/placeholder-profile.jpg" 
+                  src="/images/profile-foto.png" 
                   alt="Profile Photo" 
-                  className="w-full object-cover rounded-lg"
+                  className="w-full object-cover rounded-lg shadow-lg shadow-primary/20"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.src = "https://placehold.co/600x600?text=Profile+Photo";
@@ -1195,7 +1218,7 @@ const Home = () => {
         <div className="container">
           <InteractiveTitleEffect>Projects / Achievements</InteractiveTitleEffect>
 
-          {/* Project 1: SKIL2 Semester 1 */}
+          {/* Project 1: IT Polis Voting System */}
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -1230,19 +1253,19 @@ const Home = () => {
               <div className="grid md:grid-cols-2">
                 <div className="p-8">
                   <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">[Semester/Course Code]</span>
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">[Project Title 1]</h3>
+                  <h3 className="text-2xl font-bold mb-4">IT Polis Voting System</h3>
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]</p>
+                    <p>Developed a voting system for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could only vote once, track votes in real-time, and provide event organizers with administrative control.</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]</p>
+                    <p>I created and managed the database architecture, implemented data processing for the live leaderboard, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]</p>
+                    <p>Gained practical experience in secure database design, NFC technology integration, and real-time data visualization. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
                   </div>
                   
                   <SparkleButton 
@@ -1250,23 +1273,23 @@ const Home = () => {
                     className="flex items-center"
                     onClick={() => setSelectedProject('project1')}
                   >
-                    View Project Details <ExternalLink className="ml-2 h-4 w-4" />
+                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
                   </SparkleButton>
                 </div>
                 <div className="bg-muted lg:block hidden">
                   {/* Project 1 Image */}
-                  <div className="relative h-full">
+                  <div className="relative h-full p-6 flex items-center justify-center">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: 0.2 }}
-                      className="absolute inset-0 flex items-center justify-center"
+                      className="w-full h-full flex items-center justify-center"
                     >
                       <img 
-                        src="/placeholder-project1.jpg" 
-                        alt="Project 1" 
-                        className="object-cover h-full w-full"
+                        src="/images/project-1-Voting-System.png" 
+                        alt="IT Polis Voting System" 
+                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.src = "https://placehold.co/800x600?text=Project+Screenshot";
@@ -1279,7 +1302,7 @@ const Home = () => {
             </div>
           </motion.div>
 
-          {/* Project 2: SKIL2 Semester 2 */}
+          {/* Project 2 */}
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -1314,18 +1337,18 @@ const Home = () => {
               <div className="grid md:grid-cols-2">
                 <div className="bg-muted lg:block hidden">
                   {/* Project 2 Image */}
-                  <div className="relative h-full">
+                  <div className="relative h-full p-6 flex items-center justify-center">
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       viewport={{ once: true }}
                       transition={{ duration: 0.5, delay: 0.2 }}
-                      className="absolute inset-0 flex items-center justify-center"
+                      className="w-full h-full flex items-center justify-center"
                     >
                       <img 
-                        src="/placeholder-project2.jpg" 
+                        src="/images/project-2-hosting-platform.png" 
                         alt="Project 2" 
-                        className="object-cover h-full w-full"
+                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
                           target.src = "https://placehold.co/800x600?text=Project+Screenshot";
@@ -1336,19 +1359,19 @@ const Home = () => {
                 </div>
                 <div className="p-8">
                   <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">[Semester/Course Code]</span>
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2.2 Project</span>
                   </div>
-                  <h3 className="text-2xl font-bold mb-4">[Project Title 2]</h3>
+                  <h3 className="text-2xl font-bold mb-4">App Hosting Platform for Clients</h3>
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>[Placeholder: Description of the project's context, objectives, and the problem it aimed to solve. Include information about the subject as stated in the ECTS sheet.]</p>
+                    <p>Designed and implemented a hosting platform for PHP/Laravel applications within Thomas More's datacenter. The platform provides an automated deployment process for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>[Placeholder: Detailed explanation of your specific role and contributions to this project, including technologies used and challenges overcome.]</p>
+                    <p>I was responsible for creating and managing the Kubernetes cluster. My work involved setting up the infrastructure for container orchestration, ensuring high availability, and implementing automated scaling solutions for the hosted applications.</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>[Placeholder: Key takeaways and skills acquired through this project, including technical knowledge and soft skills developed.]</p>
+                    <p>Gained practical experience in containerization technologies, Kubernetes administration, and implementing CIS security controls. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
                   </div>
                   
                   <SparkleButton 
@@ -1356,7 +1379,7 @@ const Home = () => {
                     className="flex items-center"
                     onClick={() => setSelectedProject('project2')}
                   >
-                    View Project Details <ExternalLink className="ml-2 h-4 w-4" />
+                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
                   </SparkleButton>
                 </div>
               </div>
@@ -1364,93 +1387,173 @@ const Home = () => {
           </motion.div>
 
           {/* Additional Projects */}
-          <div className="grid md:grid-cols-2 gap-8 mb-12 relative">
-            {/* Decorative connecting line between smaller project cards */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-primary/10 hidden md:block"></div>
-            <div className="absolute top-1/2 left-0 right-0 h-px bg-primary/10 hidden md:block"></div>
-            
-            {/* Project 3 */}
+          {/* Project 3 */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mb-20 relative"
+          >
+            {/* Decorative elements for project 3 */}
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="bg-card rounded-lg overflow-hidden shadow-md relative"
+              className="absolute -left-8 md:-left-16 top-1/4 w-14 h-14 opacity-10 pointer-events-none"
+              animate={{ 
+                rotate: [0, 45, 0],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ duration: 14, repeat: Infinity }}
             >
-              {/* Corner decoration */}
-              <div className="absolute top-0 right-0 w-12 h-12 overflow-hidden">
-                <div className="absolute top-0 right-0 transform translate-x-1/2 -translate-y-1/2 rotate-45 bg-primary/10 w-12 h-2"></div>
-              </div>
-              
-              <img 
-                src="/placeholder-project3.jpg" 
-                alt="Project 3" 
-                className="w-full h-48 object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "https://placehold.co/800x400?text=Project+3";
-                }}
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">[Additional Project 1]</h3>
-                <div className="mb-4">
-                  <h4 className="text-lg font-semibold">Context & Background</h4>
-                  <p className="text-muted-foreground mb-2">[Placeholder: Brief description of the project and context.]</p>
-                  
-                  <h4 className="text-lg font-semibold">What I Learned</h4>
-                  <p className="text-muted-foreground">[Placeholder: Key skills and knowledge gained.]</p>
-                </div>
-                <SparkleButton 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => setSelectedProject('project3')}
-                >
-                  View Details
-                </SparkleButton>
-              </div>
+              <div className="w-full h-full rounded-md border-2 border-primary transform rotate-45"></div>
             </motion.div>
-            
-            {/* Project 4 */}
+
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="bg-card rounded-lg overflow-hidden shadow-md relative"
+              className="absolute -right-10 md:-right-20 bottom-1/3 w-12 h-12 opacity-10 pointer-events-none"
+              animate={{ 
+                y: [0, 10, 0],
+                rotate: [0, 180, 360]
+              }}
+              transition={{ duration: 18, repeat: Infinity }}
             >
-              {/* Corner decoration */}
-              <div className="absolute top-0 left-0 w-12 h-12 overflow-hidden">
-                <div className="absolute top-0 left-0 transform -translate-x-1/2 -translate-y-1/2 rotate-45 bg-secondary/10 w-12 h-2"></div>
-              </div>
-              
-              <img 
-                src="/placeholder-project4.jpg" 
-                alt="Project 4" 
-                className="w-full h-48 object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "https://placehold.co/800x400?text=Project+4";
-                }}
-              />
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">[Additional Project 2]</h3>
-                <div className="mb-4">
-                  <h4 className="text-lg font-semibold">Context & Background</h4>
-                  <p className="text-muted-foreground mb-2">[Placeholder: Brief description of the project and context.]</p>
-                  
-                  <h4 className="text-lg font-semibold">What I Learned</h4>
-                  <p className="text-muted-foreground">[Placeholder: Key skills and knowledge gained.]</p>
-                </div>
-                <SparkleButton 
-                  variant="outline" 
-                  className="w-full"
-                  onClick={() => setSelectedProject('project4')}
-                >
-                  View Details
-                </SparkleButton>
-              </div>
+              <div className="w-full h-full rounded-full border-2 border-secondary"></div>
             </motion.div>
-          </div>
+
+            <div className="bg-card rounded-lg overflow-hidden">
+              <div className="grid md:grid-cols-2">
+                <div className="p-8">
+                  <div className="mb-6">
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">Security Awareness Campaign Movie</h3>
+                  
+                  <div className="space-y-4 mb-6">
+                    <h4 className="text-lg font-semibold">Context & Background</h4>
+                    <p>Created an educational movie about cybersecurity awareness, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
+                    
+                    <h4 className="text-lg font-semibold">My Contribution</h4>
+                    <p>I served as the main editor and creative director, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
+                    
+                    <h4 className="text-lg font-semibold">What I Learned</h4>
+                    <p>Strengthened my skills in narrative storytelling through visual media, technical video production in security contexts, and effectively communicating complex security concepts through engaging content.</p>
+                  </div>
+                  
+                  <SparkleButton 
+                    variant="outline" 
+                    className="flex items-center"
+                    onClick={() => setSelectedProject('project3')}
+                  >
+                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
+                  </SparkleButton>
+                </div>
+                <div className="bg-muted lg:block hidden">
+                  {/* Project 3 Image */}
+                  <div className="relative h-full p-6 flex items-center justify-center">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="w-full h-full flex items-center justify-center"
+                    >
+                      <img 
+                        src="/images/project-3-video-editing-awareness-movie.png" 
+                        alt="Security Awareness Campaign Movie" 
+                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                        }}
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Project 4 */}
+          <motion.div 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mb-20 relative"
+          >
+            {/* Decorative elements for project 4 */}
+            <motion.div 
+              className="absolute -left-6 md:-left-12 bottom-1/3 w-10 h-10 opacity-10 pointer-events-none"
+              animate={{ 
+                rotate: [0, 360],
+                x: [0, 10, 0]
+              }}
+              transition={{ duration: 16, repeat: Infinity }}
+            >
+              <div className="w-full h-full rounded-md border-2 border-secondary"></div>
+            </motion.div>
+
+            <motion.div 
+              className="absolute -right-8 md:-right-16 top-1/4 w-12 h-12 opacity-10 pointer-events-none"
+              animate={{ 
+                scale: [1, 1.2, 1],
+                y: [0, -15, 0]
+              }}
+              transition={{ duration: 12, repeat: Infinity }}
+            >
+              <div className="w-full h-full rounded-full border-2 border-primary"></div>
+            </motion.div>
+
+            <div className="bg-card rounded-lg overflow-hidden">
+              <div className="grid md:grid-cols-2">
+                <div className="bg-muted lg:block hidden">
+                  {/* Project 4 Image */}
+                  <div className="relative h-full p-6 flex items-center justify-center">
+                    <motion.div
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="w-full h-full flex items-center justify-center"
+                    >
+                      <img 
+                        src="/images/project-4-KeyedColors-logo.png" 
+                        alt="KeyedColors" 
+                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                        }}
+                      />
+                    </motion.div>
+                  </div>
+                </div>
+                <div className="p-8">
+                  <div className="mb-6">
+                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Personal Project</span>
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4">KeyedColors</h3>
+                  
+                  <div className="space-y-4 mb-6">
+                    <h4 className="text-lg font-semibold">Context & Background</h4>
+                    <p>Developed a Windows application for creating custom display profiles with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using customizable hotkeys.</p>
+                    
+                    <h4 className="text-lg font-semibold">My Contribution</h4>
+                    <p>I identified a gap in the market for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
+                    
+                    <h4 className="text-lg font-semibold">What I Learned</h4>
+                    <p>Gained hands-on experience with Windows API for display settings manipulation, system tray integration, and global hotkey management. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
+                  </div>
+                  
+                  <SparkleButton 
+                    variant="outline" 
+                    className="flex items-center"
+                    onClick={() => setSelectedProject('project4')}
+                  >
+                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
+                  </SparkleButton>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -1646,59 +1749,35 @@ const Home = () => {
         title={selectedProject ? projects[selectedProject].title : ''}
       >
         {selectedProject && (
-          <div className="space-y-6">
-            {projects[selectedProject].semester && (
-              <div className="mb-4">
-                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">
-                  {projects[selectedProject].semester}
-                </span>
-              </div>
-            )}
-            
-            <div className="grid md:grid-cols-2 gap-8">
-                  <div>
+          <div>
+            <div className="bg-card p-6 rounded-lg shadow-lg">
+              {(selectedProject === 'project1' || selectedProject === 'project2' || selectedProject === 'project3' || selectedProject === 'project4') ? (
+                <div className="space-y-6">
+                  {projects[selectedProject].images.map((img, index) => (
+                    <div key={index} className="mb-4">
+                      <img 
+                        src={img} 
+                        alt={`${projects[selectedProject].title} - Photo ${index + 1}`}
+                        className={`w-full rounded-lg shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''}`}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
                 <img 
                   src={projects[selectedProject].image} 
                   alt={projects[selectedProject].title}
-                  className="w-full rounded-lg shadow-md"
+                  className="w-full rounded-lg shadow-md object-contain max-h-[70vh]"
                   onError={(e) => {
                     const target = e.target as HTMLImageElement;
                     target.src = "https://placehold.co/800x600?text=Project+Screenshot";
                   }}
-                    />
-                  </div>
-              <div className="space-y-6">
-                  <div>
-                  <h3 className="text-lg font-semibold mb-2">Context & Background</h3>
-                  <p className="text-muted-foreground">{projects[selectedProject].context}</p>
-                  </div>
-                
-                {projects[selectedProject].contribution && (
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2">My Contribution</h3>
-                    <p className="text-muted-foreground">{projects[selectedProject].contribution}</p>
-                </div>
-                )}
-                
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">What I Learned</h3>
-                  <p className="text-muted-foreground">{projects[selectedProject].learnings}</p>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-semibold mb-2">Technologies Used</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {projects[selectedProject].technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1 text-sm rounded-full bg-primary/10 text-primary"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-            </div>
-          </div>
-        </div>
+                />
+              )}
             </div>
           </div>
         )}
