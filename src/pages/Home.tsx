@@ -1191,7 +1191,7 @@ const Home = () => {
                     alt="Profile Photo" 
                     className="w-full rounded-2xl object-cover h-[420px]"
                     style={{ 
-                      filter: "drop-shadow(0 0 15px rgba(168, 85, 247, 0.6))"
+                      filter: "drop-shadow(0 0 15px rgba(168, 85, 247, 0.6)) drop-shadow(0 0 25px rgba(168, 85, 247, 0.4))"
                     }}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
@@ -1199,7 +1199,7 @@ const Home = () => {
                     }}
                   />
                   <div className="absolute inset-0 rounded-2xl" style={{ 
-                    boxShadow: "0 0 20px rgba(168, 85, 247, 0.4)",
+                    boxShadow: "0 0 20px rgba(168, 85, 247, 0.5), 0 0 40px rgba(168, 85, 247, 0.3), 0 0 60px rgba(168, 85, 247, 0.1)",
                     pointerEvents: "none" 
                   }}></div>
                 </motion.div>
