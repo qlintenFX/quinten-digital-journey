@@ -19,28 +19,55 @@ const CursorEffectsProvider = ({ children }) => {
   const [cursorText, setCursorText] = useState('');
   const [cursorEnabled, setCursorEnabled] = useState(() => {
     // Check localStorage for saved preference
-    if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('cursorEnabled');
-      return stored === null ? true : stored === 'true';
+    try {
+      if (typeof window !== 'undefined') {
+        const stored = localStorage.getItem('cursorEnabled');
+        return stored === null ? true : stored === 'true';
+      }
+    } catch (error) {
+      console.error("Error reading cursor preference from localStorage:", error);
     }
     return true;
   });
 
   // Apply cursor enabled/disabled status to body
   useEffect(() => {
-    if (cursorEnabled) {
-      document.body.classList.add('has-custom-cursor');
-    } else {
-      document.body.classList.remove('has-custom-cursor');
-    }
-    // Save preference to localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('cursorEnabled', cursorEnabled.toString());
+    try {
+      if (typeof document !== 'undefined' && document.body) {
+        if (cursorEnabled) {
+          // Add with a slight delay to ensure proper initialization
+          setTimeout(() => {
+            try {
+              document.body.classList.add('has-custom-cursor');
+            } catch (error) {
+              console.error("Error adding cursor class to body:", error);
+            }
+          }, 50);
+        } else {
+          // Remove class immediately
+          document.body.classList.remove('has-custom-cursor');
+        }
+        
+        // Save preference to localStorage
+        if (typeof window !== 'undefined') {
+          try {
+            localStorage.setItem('cursorEnabled', cursorEnabled.toString());
+          } catch (error) {
+            console.error("Error saving cursor preference to localStorage:", error);
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error updating cursor state:", error);
     }
   }, [cursorEnabled]);
 
   const toggleCursor = () => {
-    setCursorEnabled(prev => !prev);
+    try {
+      setCursorEnabled(prev => !prev);
+    } catch (error) {
+      console.error("Error toggling cursor state:", error);
+    }
   };
 
   const contextValue = {
@@ -54,7 +81,7 @@ const CursorEffectsProvider = ({ children }) => {
 
   return (
     <CursorContext.Provider value={contextValue}>
-      {cursorEnabled && <CustomCursor />}
+      {cursorEnabled && <CustomCursor key="custom-cursor" />}
       {children}
     </CursorContext.Provider>
   );
@@ -73,34 +100,56 @@ export const CursorModifier = ({
   
   const handleMouseEnter = () => {
     if (cursorEnabled) {
-      setCursorType(type);
-      setCursorText(text);
+      try {
+        setCursorType(type);
+        setCursorText(text);
+      } catch (error) {
+        console.error("Error setting cursor type on mouse enter:", error);
+      }
     }
   };
   
   const handleMouseLeave = () => {
     if (cursorEnabled) {
-      setCursorType('default');
-      setCursorText('');
+      try {
+        setCursorType('default');
+        setCursorText('');
+      } catch (error) {
+        console.error("Error resetting cursor type on mouse leave:", error);
+      }
     }
   };
   
   if (magnetic && cursorEnabled) {
-    // Import MagneticElement dynamically to avoid circular dependencies
-    const MagneticElement = React.lazy(() => import('./MagneticElement'));
-    
-    return (
-      <React.Suspense fallback={children}>
-        <MagneticElement 
-          strength={strength} 
-          threshold={threshold}
+    try {
+      // Import MagneticElement dynamically to avoid circular dependencies
+      const MagneticElement = React.lazy(() => import('./MagneticElement'));
+      
+      return (
+        <React.Suspense fallback={children}>
+          <MagneticElement 
+            strength={strength} 
+            threshold={threshold}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {children}
+          </MagneticElement>
+        </React.Suspense>
+      );
+    } catch (error) {
+      console.error("Error rendering magnetic element:", error);
+      // Fallback to regular element if magnetic fails
+      return (
+        <div
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          style={{ display: 'inline-block' }}
         >
           {children}
-        </MagneticElement>
-      </React.Suspense>
-    );
+        </div>
+      );
+    }
   }
   
   return (

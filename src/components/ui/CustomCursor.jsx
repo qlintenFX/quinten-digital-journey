@@ -19,7 +19,8 @@ const CustomCursor = () => {
   const lastActivityRef = useRef(Date.now());
   const isVisible = useRef(true);
   const ctxRef = useRef(null);
-  const isMounted = useRef(true);
+  // Keep track of added event listeners
+  const interactiveElementsRef = useRef([]);
   
   // Ring and shadow position references
   const ringPosRef = useRef({ x: 0, y: 0 });
@@ -35,147 +36,149 @@ const CustomCursor = () => {
     'rgba(168, 85, 247, 0.6)', // Purple-500
   ];
   
+  // Hover detection handlers (defined outside useEffect for cleanup)
+  const handleElementMouseEnter = () => {
+    isHoveringRef.current = true;
+    if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
+      cursorDotRef.current.classList.add('hovering');
+      cursorRingRef.current.classList.add('hovering');
+      cursorShadowRef.current.classList.add('hovering');
+    }
+  };
+  
+  const handleElementMouseLeave = () => {
+    isHoveringRef.current = false;
+    if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
+      cursorDotRef.current.classList.remove('hovering');
+      cursorRingRef.current.classList.remove('hovering');
+      cursorShadowRef.current.classList.remove('hovering');
+    }
+  };
+  
+  // Resize handler
+  const handleResize = () => {
+    if (canvasRef.current) {
+      canvasRef.current.width = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
+    }
+  };
+  
   // Initialize cursor and add event listeners
   useEffect(() => {
-    // Set mounted state
-    isMounted.current = true;
+    let isComponentMounted = true;
     
-    // Wait for elements to be properly initialized in the DOM
-    setTimeout(() => {
-      if (!isMounted.current) return;
+    // If component unmounts during the timeout, we shouldn't continue
+    const initializeTimeout = setTimeout(() => {
+      if (!isComponentMounted) return;
       
-      // Note: The body class is now handled by CursorEffectsProvider
-      // document.body.classList.add('has-custom-cursor');
-
-      // Set initial position to center of screen to avoid cursor jump
-      const initialX = window.innerWidth / 2;
-      const initialY = window.innerHeight / 2;
-      
-      // Set initial position directly first
-      if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
-        const transform = 'translate3d(-50%, -50%, 0)';
-        cursorDotRef.current.style.transform = transform;
-        cursorRingRef.current.style.transform = transform;
-        cursorShadowRef.current.style.transform = transform;
+      try {
+        // Set initial position to center of screen to avoid cursor jump
+        const initialX = window.innerWidth / 2;
+        const initialY = window.innerHeight / 2;
         
-        cursorDotRef.current.style.left = `${initialX}px`;
-        cursorDotRef.current.style.top = `${initialY}px`;
-        cursorRingRef.current.style.left = `${initialX}px`;
-        cursorRingRef.current.style.top = `${initialY}px`;
-        cursorShadowRef.current.style.left = `${initialX}px`;
-        cursorShadowRef.current.style.top = `${initialY}px`;
+        // Set initial position directly first
+        if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
+          const transform = 'translate3d(-50%, -50%, 0)';
+          cursorDotRef.current.style.transform = transform;
+          cursorRingRef.current.style.transform = transform;
+          cursorShadowRef.current.style.transform = transform;
+          
+          cursorDotRef.current.style.left = `${initialX}px`;
+          cursorDotRef.current.style.top = `${initialY}px`;
+          cursorRingRef.current.style.left = `${initialX}px`;
+          cursorRingRef.current.style.top = `${initialY}px`;
+          cursorShadowRef.current.style.left = `${initialX}px`;
+          cursorShadowRef.current.style.top = `${initialY}px`;
+          
+          // Initialize position references
+          ringPosRef.current = { x: initialX, y: initialY };
+          shadowPosRef.current = { x: initialX, y: initialY };
+        }
         
-        // Initialize position references
-        ringPosRef.current = { x: initialX, y: initialY };
-        shadowPosRef.current = { x: initialX, y: initialY };
-      }
-      
-      // Initialize canvas for particles with GPU acceleration
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        ctxRef.current = canvasRef.current.getContext('2d', { alpha: true });
-        
-        // Enable GPU acceleration for canvas
-        canvasRef.current.style.transform = 'translate3d(0, 0, 0)';
-        canvasRef.current.style.willChange = 'transform';
-        canvasRef.current.style.backfaceVisibility = 'hidden';
-      }
-      
-      // Handle window resize for canvas
-      const handleResize = () => {
+        // Initialize canvas for particles with GPU acceleration
         if (canvasRef.current) {
           canvasRef.current.width = window.innerWidth;
           canvasRef.current.height = window.innerHeight;
+          ctxRef.current = canvasRef.current.getContext('2d', { alpha: true });
+          
+          // Enable GPU acceleration for canvas
+          canvasRef.current.style.transform = 'translate3d(0, 0, 0)';
+          canvasRef.current.style.willChange = 'transform';
+          canvasRef.current.style.backfaceVisibility = 'hidden';
         }
-      };
-      
-      window.addEventListener('resize', handleResize);
-      
-      // Initialize mouse position
-      mousePosRef.current = { x: initialX, y: initialY };
-      prevMousePosRef.current = { x: initialX, y: initialY };
-      
-      // Start animation loop
-      startAnimationLoop();
-      
-      // Idle detection
-      resetIdleTimer();
+        
+        window.addEventListener('resize', handleResize);
+        
+        // Initialize mouse position
+        mousePosRef.current = { x: initialX, y: initialY };
+        prevMousePosRef.current = { x: initialX, y: initialY };
+        
+        // Start animation loop
+        startAnimationLoop();
+        
+        // Idle detection
+        resetIdleTimer();
+
+        // Add hover and magnetic effects to interactive elements
+        try {
+          const interactiveElements = document.querySelectorAll('a, button, input[type="submit"], [role="button"], .cursor-hover');
+          
+          interactiveElements.forEach(el => {
+            try {
+              el.addEventListener('mouseenter', handleElementMouseEnter);
+              el.addEventListener('mouseleave', handleElementMouseLeave);
+              
+              // Add magnetic effect to buttons and links
+              if (el.tagName.toLowerCase() === 'button' || 
+                  el.tagName.toLowerCase() === 'a' || 
+                  el.getAttribute('role') === 'button' || 
+                  el.classList.contains('cursor-hover')) {
+                el.addEventListener('mousemove', magneticEffect);
+              }
+              
+              // Add to ref array for cleanup
+              interactiveElementsRef.current.push({
+                element: el,
+                listeners: {
+                  mouseenter: handleElementMouseEnter,
+                  mouseleave: handleElementMouseLeave,
+                  mousemove: el.tagName.toLowerCase() === 'button' || 
+                            el.tagName.toLowerCase() === 'a' || 
+                            el.getAttribute('role') === 'button' || 
+                            el.classList.contains('cursor-hover') ? magneticEffect : null
+                }
+              });
+            } catch (err) {
+              console.error("Error adding event listeners to element:", err);
+            }
+          });
+        } catch (err) {
+          console.error("Error setting up interactive elements:", err);
+        }
+      } catch (err) {
+        console.error("Error initializing custom cursor:", err);
+      }
     }, 100);
     
-    // Event Listeners
+    // Event Listeners for cursor movement
     window.addEventListener('mousemove', updateCursorPosition);
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mouseup', handleMouseUp);
     window.addEventListener('mouseenter', handleMouseEnter);
     window.addEventListener('mouseleave', handleMouseLeave);
     
-    // Hover detection
-    const handleElementMouseEnter = () => {
-      isHoveringRef.current = true;
-      if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
-        cursorDotRef.current.classList.add('hovering');
-        cursorRingRef.current.classList.add('hovering');
-        cursorShadowRef.current.classList.add('hovering');
-      }
-    };
-    
-    const handleElementMouseLeave = () => {
-      isHoveringRef.current = false;
-      if (cursorDotRef.current && cursorRingRef.current && cursorShadowRef.current) {
-        cursorDotRef.current.classList.remove('hovering');
-        cursorRingRef.current.classList.remove('hovering');
-        cursorShadowRef.current.classList.remove('hovering');
-      }
-    };
-    
-    // Add hover and magnetic effects to interactive elements
-    const interactiveElements = document.querySelectorAll('a, button, input[type="submit"], [role="button"], .cursor-hover');
-    
-    interactiveElements.forEach(el => {
-      el.addEventListener('mouseenter', handleElementMouseEnter);
-      el.addEventListener('mouseleave', handleElementMouseLeave);
-      
-      // Add magnetic effect to buttons and links
-      if (el.tagName.toLowerCase() === 'button' || 
-          el.tagName.toLowerCase() === 'a' || 
-          el.getAttribute('role') === 'button' || 
-          el.classList.contains('cursor-hover')) {
-        el.addEventListener('mousemove', magneticEffect);
-      }
-    });
-    
     // Add activity detection for idle state
-    ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+    const activityEvents = ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'];
+    activityEvents.forEach(event => {
       window.addEventListener(event, resetIdleTimer);
     });
     
-    // Cleanup
+    // Cleanup function
     return () => {
-      // Mark component as unmounted
-      isMounted.current = false;
+      isComponentMounted = false;
+      clearTimeout(initializeTimeout);
       
-      // Note: The body class is now handled by CursorEffectsProvider
-      // document.body.classList.remove('has-custom-cursor');
-      
-      // Cancel animation frame
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-        requestRef.current = null;
-      }
-      
-      // Clear any timers
-      if (trailTimerRef.current) {
-        clearInterval(trailTimerRef.current);
-        trailTimerRef.current = null;
-      }
-      
-      if (idleTimerRef.current) {
-        clearTimeout(idleTimerRef.current);
-        idleTimerRef.current = null;
-      }
-      
-      // Remove event listeners
+      // Remove window event listeners
       window.removeEventListener('mousemove', updateCursorPosition);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -183,21 +186,59 @@ const CustomCursor = () => {
       window.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('resize', handleResize);
       
-      interactiveElements.forEach(el => {
-        el.removeEventListener('mouseenter', handleElementMouseEnter);
-        el.removeEventListener('mouseleave', handleElementMouseLeave);
-        
-        if (el.tagName.toLowerCase() === 'button' || 
-            el.tagName.toLowerCase() === 'a' || 
-            el.getAttribute('role') === 'button' || 
-            el.classList.contains('cursor-hover')) {
-          el.removeEventListener('mousemove', magneticEffect);
-        }
-      });
+      // Clean up element event listeners
+      try {
+        interactiveElementsRef.current.forEach(item => {
+          try {
+            if (item.element) {
+              if (item.listeners.mouseenter) item.element.removeEventListener('mouseenter', item.listeners.mouseenter);
+              if (item.listeners.mouseleave) item.element.removeEventListener('mouseleave', item.listeners.mouseleave);
+              if (item.listeners.mousemove) item.element.removeEventListener('mousemove', item.listeners.mousemove);
+            }
+          } catch (err) {
+            console.error("Error removing event listeners from element:", err);
+          }
+        });
+      } catch (err) {
+        console.error("Error cleaning up interactive elements:", err);
+      }
       
-      ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'].forEach(event => {
+      // Clean up animation frame
+      if (requestRef.current) {
+        try {
+          cancelAnimationFrame(requestRef.current);
+          requestRef.current = null;
+        } catch (err) {
+          console.error("Error canceling animation frame:", err);
+        }
+      }
+      
+      // Clean up timers
+      if (trailTimerRef.current) {
+        try {
+          clearInterval(trailTimerRef.current);
+          trailTimerRef.current = null;
+        } catch (err) {
+          console.error("Error clearing trail timer:", err);
+        }
+      }
+      
+      // Remove activity event listeners
+      activityEvents.forEach(event => {
         window.removeEventListener(event, resetIdleTimer);
       });
+      
+      if (idleTimerRef.current) {
+        try {
+          clearTimeout(idleTimerRef.current);
+          idleTimerRef.current = null;
+        } catch (err) {
+          console.error("Error clearing idle timer:", err);
+        }
+      }
+      
+      // Clear particle array to free memory
+      particles.current = [];
     };
   }, []);
   
@@ -482,7 +523,7 @@ const CustomCursor = () => {
   
   // Update cursor position with velocity calculation and GPU acceleration
   const updateCursorPosition = (e) => {
-    if (!isMounted.current || !cursorDotRef.current || !cursorRingRef.current || !cursorShadowRef.current) return;
+    if (!cursorDotRef.current || !cursorRingRef.current || !cursorShadowRef.current) return;
     
     const { clientX, clientY } = e;
     
@@ -525,10 +566,6 @@ const CustomCursor = () => {
       
       // Create fewer trails with longer interval
       trailTimerRef.current = setInterval(() => {
-        if (!isMounted.current) {
-          clearInterval(trailTimerRef.current);
-          return;
-        }
         createTrailParticles();
       }, 150); // Adjusted interval
       
@@ -661,9 +698,6 @@ const CustomCursor = () => {
   // Animation loop for particles using canvas
   const startAnimationLoop = () => {
     const updateParticles = () => {
-      // Check if component is still mounted
-      if (!isMounted.current) return;
-      
       if (!canvasRef.current || !ctxRef.current) {
         requestRef.current = requestAnimationFrame(updateParticles);
         return;
@@ -676,7 +710,7 @@ const CustomCursor = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       // Update cursor ring and shadow with LERP for smooth following
-      if (cursorRingRef.current && cursorShadowRef.current && isMounted.current) {
+      if (cursorRingRef.current && cursorShadowRef.current) {
         // LERP factors - adjust for different trailing speeds
         const ringLerpFactor = 0.2; // Higher = faster following (0.1-0.3 range)
         const shadowLerpFactor = 0.12; // Lower = slower following
@@ -742,11 +776,7 @@ const CustomCursor = () => {
       }
       
       particles.current = newParticles;
-      
-      // Only request the next frame if the component is still mounted
-      if (isMounted.current) {
-        requestRef.current = requestAnimationFrame(updateParticles);
-      }
+      requestRef.current = requestAnimationFrame(updateParticles);
     };
     
     updateParticles();

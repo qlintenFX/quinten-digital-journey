@@ -1,6 +1,6 @@
-/* Reset default cursor */
+/* Reset default cursor only when custom cursor is enabled */
 body.has-custom-cursor * {
-  cursor: none;
+  cursor: none !important;
 }
 
 /* Base cursor styles */
@@ -36,10 +36,11 @@ body.has-custom-cursor .cursor-hover {
   cursor: none !important;
 }
 
-/* Custom cursor components */
+/* Custom cursor components - only visible when cursor is enabled */
 .cursor-dot,
 .cursor-ring,
-.cursor-shadow {
+.cursor-shadow,
+.particles-canvas {
   position: fixed;
   top: 0;
   left: 0;
@@ -54,12 +55,26 @@ body.has-custom-cursor .cursor-hover {
   perspective: 1000px;
 }
 
+/* Hide cursor components initially until positioned correctly */
+.cursor-dot,
+.cursor-ring,
+.cursor-shadow {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+body.has-custom-cursor .cursor-dot,
+body.has-custom-cursor .cursor-ring,
+body.has-custom-cursor .cursor-shadow {
+  opacity: 1;
+}
+
 .cursor-dot {
   width: var(--cursor-dot-size);
   height: var(--cursor-dot-size);
   background: var(--cursor-highlight);
   box-shadow: 0 0 6px var(--cursor-primary), 0 0 10px var(--cursor-glow);
-  transition: width 0.15s ease, height 0.15s ease;
+  transition: width 0.15s ease, height 0.15s ease, opacity 0.3s ease;
   animation: cursorDotPulse 2s infinite alternate;
   transform: translate3d(-50%, -50%, 0);
   border: 1px solid var(--cursor-border);
@@ -86,7 +101,7 @@ body.has-custom-cursor .cursor-hover {
   background-color: transparent;
   filter: drop-shadow(0 0 4px var(--cursor-highlight)) drop-shadow(0 0 6px var(--cursor-glow));
   opacity: 0.95;
-  transition: left 0.08s ease-out, top 0.08s ease-out, width 0.2s ease, height 0.2s ease;
+  transition: left 0.08s ease-out, top 0.08s ease-out, width 0.2s ease, height 0.2s ease, opacity 0.3s ease;
   animation: cursorRingRotate 6s linear infinite;
   transform: translate3d(-50%, -50%, 0);
 }
@@ -100,9 +115,26 @@ body.has-custom-cursor .cursor-hover {
     transparent 70%
   );
   opacity: 0.5;
-  transition: left 0.12s ease-out, top 0.12s ease-out, width 0.3s ease, height 0.3s ease;
+  transition: left 0.12s ease-out, top 0.12s ease-out, width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
   transform: translate3d(-50%, -50%, 0);
   filter: blur(8px);
+}
+
+/* Canvas for particles */
+.particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0; /* Start invisible */
+  transition: opacity 0.3s ease;
+}
+
+body.has-custom-cursor .particles-canvas {
+  opacity: 1;
 }
 
 /* Interactive states */
@@ -147,17 +179,6 @@ body.has-custom-cursor .cursor-hover {
   width: calc(var(--cursor-shadow-size) * 1.6);
   height: calc(var(--cursor-shadow-size) * 1.6);
   opacity: 0.6;
-}
-
-/* Canvas for particles */
-.particles-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9998;
 }
 
 /* Simplified animations */

@@ -1049,63 +1049,80 @@ const Home = () => {
 
   // Add cursor styles for light/dark mode
   useEffect(() => {
-    // Check initial theme
-    setIsDark(isDarkMode());
-    
-    // Setup observer to watch for class changes on html element
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          setIsDark(isDarkMode());
-        }
+    try {
+      // Check initial theme
+      setIsDark(isDarkMode());
+      
+      // Setup observer to watch for class changes on html element
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class') {
+            setIsDark(isDarkMode());
+          }
+        });
       });
-    });
-    
-    observer.observe(document.documentElement, { 
-      attributes: true,
-      attributeFilter: ['class'] 
-    });
-    
-    const cursorStyles = `
-      body.has-custom-cursor .cursor-follower {
-        background: ${!isDark
-          ? 'rgba(134, 39, 230, 0.3)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.15)'};
-        border: 1px solid ${!isDark
-          ? 'rgba(134, 39, 230, 0.5)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.3)'};
-        box-shadow: 0 0 20px ${!isDark
-          ? 'rgba(134, 39, 230, 0.4)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.2)'};
-      }
       
-      body.has-custom-cursor .cursor-follower::before {
-        background: ${!isDark
-          ? 'rgba(134, 39, 230, 0.25)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.1)'};
-        border: 1px solid ${!isDark
-          ? 'rgba(134, 39, 230, 0.4)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.2)'};
-      }
+      observer.observe(document.documentElement, { 
+        attributes: true,
+        attributeFilter: ['class'] 
+      });
       
-      body.has-custom-cursor .cursor-follower::after {
-        background: ${!isDark
-          ? 'rgba(134, 39, 230, 0.2)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.05)'};
-        border: 1px solid ${!isDark
-          ? 'rgba(134, 39, 230, 0.35)'  // More visible in light mode
-          : 'rgba(168, 85, 247, 0.15)'};
+      const cursorStyles = `
+        body.has-custom-cursor .cursor-follower {
+          background: ${!isDark
+            ? 'rgba(134, 39, 230, 0.3)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.15)'};
+          border: 1px solid ${!isDark
+            ? 'rgba(134, 39, 230, 0.5)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.3)'};
+          box-shadow: 0 0 20px ${!isDark
+            ? 'rgba(134, 39, 230, 0.4)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.2)'};
+        }
+        
+        body.has-custom-cursor .cursor-follower::before {
+          background: ${!isDark
+            ? 'rgba(134, 39, 230, 0.25)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.1)'};
+          border: 1px solid ${!isDark
+            ? 'rgba(134, 39, 230, 0.4)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.2)'};
+        }
+        
+        body.has-custom-cursor .cursor-follower::after {
+          background: ${!isDark
+            ? 'rgba(134, 39, 230, 0.2)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.05)'};
+          border: 1px solid ${!isDark
+            ? 'rgba(134, 39, 230, 0.35)'  // More visible in light mode
+            : 'rgba(168, 85, 247, 0.15)'};
+        }
+      `;
+      
+      // Create and append style element
+      try {
+        const styleElement = document.createElement('style');
+        styleElement.textContent = cursorStyles;
+        document.head.appendChild(styleElement);
+        
+        // Clean up function
+        return () => {
+          try {
+            document.head.removeChild(styleElement);
+            observer.disconnect();
+          } catch (err) {
+            console.error("Error cleaning up cursor styles:", err);
+          }
+        };
+      } catch (err) {
+        console.error("Error applying cursor styles:", err);
+        // Ensure observer is disconnected even if style application fails
+        return () => observer.disconnect();
       }
-    `;
-    
-    const styleElement = document.createElement('style');
-    styleElement.textContent = cursorStyles;
-    document.head.appendChild(styleElement);
-    
-    return () => {
-      document.head.removeChild(styleElement);
-      observer.disconnect();
-    };
+    } catch (err) {
+      console.error("Error setting up cursor style effect:", err);
+      return () => {}; // Empty cleanup function
+    }
   }, [isDark]);
 
   return (
