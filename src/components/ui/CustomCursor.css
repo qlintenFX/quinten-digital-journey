@@ -1,5 +1,5 @@
 /* Reset default cursor */
-* {
+body.has-custom-cursor * {
   cursor: none;
 }
 
@@ -21,6 +21,7 @@
   --cursor-shadow-size: 80px;
 }
 
+/* Apply only when custom cursor is enabled */
 body.has-custom-cursor {
   cursor: none !important;
 }

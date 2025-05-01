@@ -38,7 +38,8 @@ const CustomCursor = () => {
   useEffect(() => {
     // Wait for elements to be properly initialized in the DOM
     setTimeout(() => {
-      document.body.classList.add('has-custom-cursor');
+      // Note: The body class is now handled by CursorEffectsProvider
+      // document.body.classList.add('has-custom-cursor');
 
       // Set initial position to center of screen to avoid cursor jump
       const initialX = window.innerWidth / 2;
@@ -145,7 +146,9 @@ const CustomCursor = () => {
     
     // Cleanup
     return () => {
-      document.body.classList.remove('has-custom-cursor');
+      // Note: The body class is now handled by CursorEffectsProvider
+      // document.body.classList.remove('has-custom-cursor');
+      
       window.removeEventListener('mousemove', updateCursorPosition);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);

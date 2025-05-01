@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import CustomCursor from './CustomCursor';
 
 // Create cursor context
@@ -6,7 +6,9 @@ const CursorContext = createContext({
   cursorType: 'default',
   cursorText: '',
   setCursorType: () => {},
-  setCursorText: () => {}
+  setCursorText: () => {},
+  cursorEnabled: true,
+  toggleCursor: () => {}
 });
 
 // Custom hook to use cursor context
@@ -15,17 +17,44 @@ export const useCursor = () => useContext(CursorContext);
 const CursorEffectsProvider = ({ children }) => {
   const [cursorType, setCursorType] = useState('default');
   const [cursorText, setCursorText] = useState('');
+  const [cursorEnabled, setCursorEnabled] = useState(() => {
+    // Check localStorage for saved preference
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('cursorEnabled');
+      return stored === null ? true : stored === 'true';
+    }
+    return true;
+  });
+
+  // Apply cursor enabled/disabled status to body
+  useEffect(() => {
+    if (cursorEnabled) {
+      document.body.classList.add('has-custom-cursor');
+    } else {
+      document.body.classList.remove('has-custom-cursor');
+    }
+    // Save preference to localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cursorEnabled', cursorEnabled.toString());
+    }
+  }, [cursorEnabled]);
+
+  const toggleCursor = () => {
+    setCursorEnabled(prev => !prev);
+  };
 
   const contextValue = {
     cursorType,
     cursorText,
+    cursorEnabled,
     setCursorType,
-    setCursorText
+    setCursorText,
+    toggleCursor
   };
 
   return (
     <CursorContext.Provider value={contextValue}>
-      <CustomCursor />
+      {cursorEnabled && <CustomCursor />}
       {children}
     </CursorContext.Provider>
   );
@@ -40,19 +69,23 @@ export const CursorModifier = ({
   strength = 40,
   threshold = 100
 }) => {
-  const { setCursorType, setCursorText } = useCursor();
+  const { setCursorType, setCursorText, cursorEnabled } = useCursor();
   
   const handleMouseEnter = () => {
-    setCursorType(type);
-    setCursorText(text);
+    if (cursorEnabled) {
+      setCursorType(type);
+      setCursorText(text);
+    }
   };
   
   const handleMouseLeave = () => {
-    setCursorType('default');
-    setCursorText('');
+    if (cursorEnabled) {
+      setCursorType('default');
+      setCursorText('');
+    }
   };
   
-  if (magnetic) {
+  if (magnetic && cursorEnabled) {
     // Import MagneticElement dynamically to avoid circular dependencies
     const MagneticElement = React.lazy(() => import('./MagneticElement'));
     

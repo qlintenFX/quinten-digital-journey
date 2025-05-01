@@ -1067,7 +1067,7 @@ const Home = () => {
     });
     
     const cursorStyles = `
-      .cursor-follower {
+      body.has-custom-cursor .cursor-follower {
         background: ${!isDark
           ? 'rgba(134, 39, 230, 0.3)'  // More visible in light mode
           : 'rgba(168, 85, 247, 0.15)'};
@@ -1079,7 +1079,7 @@ const Home = () => {
           : 'rgba(168, 85, 247, 0.2)'};
       }
       
-      .cursor-follower::before {
+      body.has-custom-cursor .cursor-follower::before {
         background: ${!isDark
           ? 'rgba(134, 39, 230, 0.25)'  // More visible in light mode
           : 'rgba(168, 85, 247, 0.1)'};
@@ -1088,7 +1088,7 @@ const Home = () => {
           : 'rgba(168, 85, 247, 0.2)'};
       }
       
-      .cursor-follower::after {
+      body.has-custom-cursor .cursor-follower::after {
         background: ${!isDark
           ? 'rgba(134, 39, 230, 0.2)'  // More visible in light mode
           : 'rgba(168, 85, 247, 0.05)'};
@@ -1179,31 +1179,28 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="mb-8 overflow-hidden rounded-2xl flex items-start h-full">
+              <div className="mb-8 overflow-hidden rounded-xl flex items-center justify-center h-full">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6 }}
-                  className="relative w-full h-full"
+                  className="relative h-full"
                 >
-                  <div className="h-[490px] flex items-center justify-center">
-                    <img 
-                      src="/images/profile-photo.png"
-                      alt="Profile Photo" 
-                      className="w-full rounded-2xl object-contain h-full"
-                      style={{ 
-                        filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))"
-                      }}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://placehold.co/600x600?text=Profile+Photo";
-                      }}
-                    />
-                  </div>
-                  <div className="absolute inset-0 rounded-2xl" style={{ 
-                    boxShadow: "0 0 25px rgba(168, 85, 247, 0.6), 0 0 10px rgba(168, 85, 247, 0.4)",
-                    pointerEvents: "none" 
-                  }}></div>
+                  <img 
+                    src="/images/profile-photo.png"
+                    alt="Profile Photo" 
+                    className="w-full h-full object-contain rounded-xl"
+                    style={{ 
+                      filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.7))",
+                      maxHeight: "100%",
+                      border: "2px solid rgba(168, 85, 247, 0.3)",
+                      boxShadow: "0 0 25px 8px rgba(168, 85, 247, 0.5)"
+                    }}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://placehold.co/600x600?text=Profile+Photo";
+                    }}
+                  />
                 </motion.div>
               </div>
             </div>
