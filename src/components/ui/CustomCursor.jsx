@@ -19,6 +19,7 @@ const CustomCursor = () => {
   const lastActivityRef = useRef(Date.now());
   const isVisible = useRef(true);
   const ctxRef = useRef(null);
+  const isMounted = useRef(true);
   
   // Ring and shadow position references
   const ringPosRef = useRef({ x: 0, y: 0 });
@@ -36,8 +37,13 @@ const CustomCursor = () => {
   
   // Initialize cursor and add event listeners
   useEffect(() => {
+    // Set mounted state
+    isMounted.current = true;
+    
     // Wait for elements to be properly initialized in the DOM
     setTimeout(() => {
+      if (!isMounted.current) return;
+      
       // Note: The body class is now handled by CursorEffectsProvider
       // document.body.classList.add('has-custom-cursor');
 
@@ -146,9 +152,30 @@ const CustomCursor = () => {
     
     // Cleanup
     return () => {
+      // Mark component as unmounted
+      isMounted.current = false;
+      
       // Note: The body class is now handled by CursorEffectsProvider
       // document.body.classList.remove('has-custom-cursor');
       
+      // Cancel animation frame
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+        requestRef.current = null;
+      }
+      
+      // Clear any timers
+      if (trailTimerRef.current) {
+        clearInterval(trailTimerRef.current);
+        trailTimerRef.current = null;
+      }
+      
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+        idleTimerRef.current = null;
+      }
+      
+      // Remove event listeners
       window.removeEventListener('mousemove', updateCursorPosition);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
@@ -168,21 +195,9 @@ const CustomCursor = () => {
         }
       });
       
-      if (requestRef.current) {
-        cancelAnimationFrame(requestRef.current);
-      }
-      
-      if (trailTimerRef.current) {
-        clearInterval(trailTimerRef.current);
-      }
-      
       ['mousemove', 'mousedown', 'keydown', 'scroll', 'touchstart'].forEach(event => {
         window.removeEventListener(event, resetIdleTimer);
       });
-      
-      if (idleTimerRef.current) {
-        clearTimeout(idleTimerRef.current);
-      }
     };
   }, []);
   
@@ -467,7 +482,7 @@ const CustomCursor = () => {
   
   // Update cursor position with velocity calculation and GPU acceleration
   const updateCursorPosition = (e) => {
-    if (!cursorDotRef.current || !cursorRingRef.current || !cursorShadowRef.current) return;
+    if (!isMounted.current || !cursorDotRef.current || !cursorRingRef.current || !cursorShadowRef.current) return;
     
     const { clientX, clientY } = e;
     
@@ -510,6 +525,10 @@ const CustomCursor = () => {
       
       // Create fewer trails with longer interval
       trailTimerRef.current = setInterval(() => {
+        if (!isMounted.current) {
+          clearInterval(trailTimerRef.current);
+          return;
+        }
         createTrailParticles();
       }, 150); // Adjusted interval
       
@@ -642,6 +661,9 @@ const CustomCursor = () => {
   // Animation loop for particles using canvas
   const startAnimationLoop = () => {
     const updateParticles = () => {
+      // Check if component is still mounted
+      if (!isMounted.current) return;
+      
       if (!canvasRef.current || !ctxRef.current) {
         requestRef.current = requestAnimationFrame(updateParticles);
         return;
@@ -654,7 +676,7 @@ const CustomCursor = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       // Update cursor ring and shadow with LERP for smooth following
-      if (cursorRingRef.current && cursorShadowRef.current) {
+      if (cursorRingRef.current && cursorShadowRef.current && isMounted.current) {
         // LERP factors - adjust for different trailing speeds
         const ringLerpFactor = 0.2; // Higher = faster following (0.1-0.3 range)
         const shadowLerpFactor = 0.12; // Lower = slower following
@@ -720,7 +742,11 @@ const CustomCursor = () => {
       }
       
       particles.current = newParticles;
-      requestRef.current = requestAnimationFrame(updateParticles);
+      
+      // Only request the next frame if the component is still mounted
+      if (isMounted.current) {
+        requestRef.current = requestAnimationFrame(updateParticles);
+      }
     };
     
     updateParticles();
