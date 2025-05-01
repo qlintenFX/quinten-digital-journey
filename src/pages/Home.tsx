@@ -1179,52 +1179,31 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="relative mb-8 overflow-hidden rounded-lg" style={{ height: "400px" }}>
-                {profileImages.map((img, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0 }}
-                    animate={{ 
-                      opacity: currentProfileIndex === index ? 1 : 0,
-                      scale: currentProfileIndex === index ? 1 : 0.9,
+              <div className="mb-8 overflow-hidden rounded-lg flex items-center justify-center">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="relative"
+                >
+                  <img 
+                    src="/images/profile-photo.png"
+                    alt="Profile Photo" 
+                    className="w-full h-auto object-contain"
+                    style={{ 
+                      filter: "drop-shadow(0 0 15px rgba(168, 85, 247, 0.6))",
+                      maxHeight: "400px"
                     }}
-                    transition={{ 
-                      duration: 0.7,
-                      ease: [0.4, 0.0, 0.2, 1]
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://placehold.co/600x600?text=Profile+Photo";
                     }}
-                    className="absolute inset-0"
-                    style={{ display: currentProfileIndex === index ? 'block' : 'none' }}
-                  >
-                    <img 
-                      src={img}
-                      alt="Profile Photo" 
-                      className={index === 0 
-                        ? "w-full h-full object-contain" 
-                        : "w-full h-full object-cover object-top rounded-lg shadow-lg shadow-primary/20"
-                      }
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://placehold.co/600x600?text=Profile+Photo";
-                      }}
-                    />
-                  </motion.div>
-                ))}
-                
-                {/* Navigation dots */}
-                <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2">
-                  {profileImages.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentProfileIndex(index)}
-                      className={`w-2 h-2 rounded-full transition-all ${
-                        currentProfileIndex === index 
-                          ? 'bg-primary scale-125' 
-                          : 'bg-muted-foreground/40 hover:bg-muted-foreground/60'
-                      }`}
-                      aria-label={`View profile image ${index + 1}`}
-                    />
-                  ))}
-                </div>
+                  />
+                  <div className="absolute inset-0 rounded-lg" style={{ 
+                    boxShadow: "0 0 20px rgba(168, 85, 247, 0.4)",
+                    pointerEvents: "none" 
+                  }}></div>
+                </motion.div>
               </div>
             </div>
             
