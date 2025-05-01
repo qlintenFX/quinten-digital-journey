@@ -867,6 +867,26 @@ const GridDeformation = () => {
 };
 
 /**
+ * KeywordHighlight Component
+ * Creates a subtle glow effect for important keywords
+ * @param {Object} props - Component properties
+ * @param {ReactNode} props.children - Text content
+ * @param {string} props.className - Additional CSS classes
+ */
+const KeywordHighlight = ({ children, className = "" }) => {
+  return (
+    <span 
+      className={`relative font-semibold text-primary ${className}`}
+      style={{ 
+        textShadow: "0 0 8px rgba(168, 85, 247, 0.4)"
+      }}
+    >
+      {children}
+    </span>
+  );
+};
+
+/**
  * Home Component
  * Main page component containing all sections:
  * - Hero section with welcome message
@@ -1215,21 +1235,21 @@ const Home = () => {
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Why Applied Computer Science / Electronics - ICT?</h4>
                   <p className="text-lg">
-                    I've chosen Applied Computer Science / Electronics - ICT because I'm fascinated by how technology can solve real-world problems. The blend of theoretical knowledge and practical applications allows me to turn my creative ideas into functional solutions.
+                    I've chosen Applied Computer Science / Electronics - ICT because I'm fascinated by how technology can <KeywordHighlight>solve real-world problems</KeywordHighlight>. The blend of <KeywordHighlight>theoretical knowledge</KeywordHighlight> and <KeywordHighlight>practical applications</KeywordHighlight> allows me to turn my creative ideas into functional solutions.
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="text-xl font-semibold mb-2">My Unique Hobbies</h4>
                   <p className="text-lg">
-                    Beyond coding, I'm passionate about [Your unique hobby 1] which has taught me [lesson]. I also enjoy [Your unique hobby 2], which helps me develop [skill]. These activities complement my technical expertise by enhancing my [relevant skill].
+                    Beyond coding, I'm passionate about [Your unique hobby 1] which has taught me [lesson]. I also enjoy [Your unique hobby 2], which helps me develop [skill]. These activities complement my <KeywordHighlight>technical expertise</KeywordHighlight> by enhancing my [relevant skill].
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="text-xl font-semibold mb-2">Future Dreams & Professional Ambitions</h4>
                   <p className="text-lg">
-                    I aspire to become a [career goal], specializing in [specialization]. My goal is to [professional ambition] while continuing to learn and adapt to emerging technologies. I'm particularly interested in [specific technology/field] and its potential to [benefit].
+                    I aspire to become a [career goal], specializing in [specialization]. My goal is to [professional ambition] while continuing to <KeywordHighlight>learn and adapt</KeywordHighlight> to emerging technologies. I'm particularly interested in [specific technology/field] and its potential to [benefit].
                   </p>
                 </div>
               </div>
@@ -1316,13 +1336,13 @@ const Home = () => {
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Developed a voting system for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could only vote once, track votes in real-time, and provide event organizers with administrative control.</p>
+                    <p>Developed a <KeywordHighlight>voting system</KeywordHighlight> for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could <KeywordHighlight>only vote once</KeywordHighlight>, track votes in <KeywordHighlight>real-time</KeywordHighlight>, and provide event organizers with administrative control.</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I created and managed the database architecture, implemented data processing for the live leaderboard, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
+                    <p>I created and managed the <KeywordHighlight>database architecture</KeywordHighlight>, implemented data processing for the <KeywordHighlight>live leaderboard</KeywordHighlight>, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Gained practical experience in secure database design, NFC technology integration, and real-time data visualization. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
+                    <p>Gained practical experience in <KeywordHighlight>secure database design</KeywordHighlight>, <KeywordHighlight>NFC technology</KeywordHighlight> integration, and <KeywordHighlight>real-time data visualization</KeywordHighlight>. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
                   </div>
                   
                   <SparkleButton 
@@ -1422,13 +1442,13 @@ const Home = () => {
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Designed and implemented a hosting platform for PHP/Laravel applications within Thomas More's datacenter. The platform provides an automated deployment process for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
+                    <p>Designed and implemented a <KeywordHighlight>hosting platform</KeywordHighlight> for PHP/Laravel applications within Thomas More's datacenter. The platform provides an <KeywordHighlight>automated deployment process</KeywordHighlight> for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I was responsible for creating and managing the Kubernetes cluster. My work involved setting up the infrastructure for container orchestration, ensuring high availability, and implementing automated scaling solutions for the hosted applications.</p>
+                    <p>I was responsible for creating and managing the <KeywordHighlight>Kubernetes cluster</KeywordHighlight>. My work involved setting up the infrastructure for <KeywordHighlight>container orchestration</KeywordHighlight>, ensuring <KeywordHighlight>high availability</KeywordHighlight>, and implementing automated scaling solutions for the hosted applications.</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Gained practical experience in containerization technologies, Kubernetes administration, and implementing CIS security controls. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
+                    <p>Gained practical experience in <KeywordHighlight>containerization technologies</KeywordHighlight>, Kubernetes administration, and implementing <KeywordHighlight>CIS security controls</KeywordHighlight>. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
                   </div>
                   
                   <SparkleButton 
@@ -1485,13 +1505,13 @@ const Home = () => {
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Created an educational movie about cybersecurity awareness, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
+                    <p>Created an <KeywordHighlight>educational movie</KeywordHighlight> about <KeywordHighlight>cybersecurity awareness</KeywordHighlight>, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I served as the main editor and creative director, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
+                    <p>I served as the <KeywordHighlight>main editor</KeywordHighlight> and <KeywordHighlight>creative director</KeywordHighlight>, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Strengthened my skills in narrative storytelling through visual media, technical video production in security contexts, and effectively communicating complex security concepts through engaging content.</p>
+                    <p>Strengthened my skills in <KeywordHighlight>narrative storytelling</KeywordHighlight> through visual media, <KeywordHighlight>technical video production</KeywordHighlight> in security contexts, and effectively communicating complex security concepts through engaging content.</p>
                   </div>
                   
                   <SparkleButton 
@@ -1591,13 +1611,13 @@ const Home = () => {
                   
                   <div className="space-y-4 mb-6">
                     <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Developed a Windows application for creating custom display profiles with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using customizable hotkeys.</p>
+                    <p>Developed a Windows application for creating <KeywordHighlight>custom display profiles</KeywordHighlight> with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using <KeywordHighlight>customizable hotkeys</KeywordHighlight>.</p>
                     
                     <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I identified a gap in the market for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
+                    <p>I identified a <KeywordHighlight>gap in the market</KeywordHighlight> for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
                     
                     <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Gained hands-on experience with Windows API for display settings manipulation, system tray integration, and global hotkey management. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
+                    <p>Gained hands-on experience with <KeywordHighlight>Windows API</KeywordHighlight> for display settings manipulation, <KeywordHighlight>system tray integration</KeywordHighlight>, and <KeywordHighlight>global hotkey management</KeywordHighlight>. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
                   </div>
                   
                   <SparkleButton 
