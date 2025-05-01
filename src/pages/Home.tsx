@@ -1186,31 +1186,24 @@ const Home = () => {
                   transition={{ duration: 0.6 }}
                   className="relative w-full h-full"
                 >
-                  <div className="relative">
+                  <div className="h-[430px] flex items-center justify-center">
                     <img 
                       src="/images/profile-photo.png"
                       alt="Profile Photo" 
-                      className="rounded-2xl object-contain max-h-[500px] z-10 relative mx-auto"
+                      className="w-full rounded-2xl object-contain h-full"
                       style={{ 
-                        filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))",
-                        maxWidth: "100%"
+                        filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.8))"
                       }}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "https://placehold.co/600x600?text=Profile+Photo";
                       }}
                     />
-                    {/* Multiple layers of glow for enhanced effect */}
-                    <div className="absolute inset-0 rounded-2xl z-0" style={{ 
-                      boxShadow: "0 0 30px 10px rgba(168, 85, 247, 0.6), 0 0 50px 15px rgba(168, 85, 247, 0.4)",
-                      pointerEvents: "none" 
-                    }}></div>
-                    {/* Inner glow */}
-                    <div className="absolute inset-0 rounded-2xl z-20" style={{ 
-                      boxShadow: "inset 0 0 20px rgba(168, 85, 247, 0.5)",
-                      pointerEvents: "none" 
-                    }}></div>
                   </div>
+                  <div className="absolute inset-0 rounded-2xl" style={{ 
+                    boxShadow: "0 0 25px rgba(168, 85, 247, 0.6), 0 0 10px rgba(168, 85, 247, 0.4)",
+                    pointerEvents: "none" 
+                  }}></div>
                 </motion.div>
               </div>
             </div>
