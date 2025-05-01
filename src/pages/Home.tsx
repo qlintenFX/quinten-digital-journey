@@ -1159,7 +1159,7 @@ const Home = () => {
 
           <div className="grid md:grid-cols-2 gap-8 items-start">
             <div>
-              <div className="relative mb-8 overflow-hidden rounded-lg">
+              <div className="relative mb-8 overflow-hidden rounded-lg" style={{ height: "400px" }}>
                 {profileImages.map((img, index) => (
                   <motion.div
                     key={index}
