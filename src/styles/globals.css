@@ -4,17 +4,19 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
 }
-
-/* Remove CSS scroll-snap styles - fullpage.js will handle scrolling */
 
 body {
   height: 100%;
-  overflow-x: hidden; /* Prevent horizontal scrollbar */
+  overflow: auto;
 }
 
-#root {
-  height: 100%;
-}
-
-/* Remove section-specific scroll-snap styling */ 
+/* Make all main sections snap to viewport */
+section[id] {
+  scroll-snap-align: start;
+  min-height: 100vh;
+  scroll-snap-stop: always;
+} 
