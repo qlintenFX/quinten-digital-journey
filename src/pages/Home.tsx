@@ -1820,33 +1820,67 @@ const Home = () => {
       >
         {selectedProject && (
           <div>
-            <div className="bg-card p-6 rounded-lg shadow-lg">
+            <div className="bg-card p-6 rounded-lg">
               {(selectedProject === 'project1' || selectedProject === 'project2' || selectedProject === 'project3' || selectedProject === 'project4') ? (
-                <div className="space-y-6">
+                <div className="space-y-8">
                   {projects[selectedProject].images.map((img, index) => (
-                    <div key={index} className="mb-4">
-                      <img 
-                        src={img} 
-                        alt={`${projects[selectedProject].title} - Photo ${index + 1}`}
-                        className={`w-full rounded-lg shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''}`}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                        }}
-                      />
-                    </div>
+                    <motion.div 
+                      key={index} 
+                      className="mb-4"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ 
+                        duration: 0.5, 
+                        delay: index * 0.2,
+                        ease: "easeOut" 
+                      }}
+                    >
+                      <div className="relative overflow-hidden rounded-xl shadow-lg">
+                        <motion.img 
+                          src={img} 
+                          alt={`${projects[selectedProject].title} - Photo ${index + 1}`}
+                          className={`w-full rounded-xl shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''}`}
+                          initial={{ scale: 1.05 }}
+                          whileHover={{ 
+                            scale: 1.02,
+                            transition: { duration: 0.3 }
+                          }}
+                          transition={{ duration: 0.5 }}
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                          }}
+                        />
+                        <motion.div 
+                          className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"
+                          initial={{ opacity: 0 }}
+                          whileHover={{ opacity: 1 }}
+                        >
+                          <div className="p-4 text-white">
+                            <h4 className="font-semibold">{projects[selectedProject].title}</h4>
+                            <p className="text-sm opacity-90">Image {index + 1} of {projects[selectedProject].images.length}</p>
+                          </div>
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   ))}
                 </div>
               ) : (
-                <img 
-                  src={projects[selectedProject].image} 
-                  alt={projects[selectedProject].title}
-                  className="w-full rounded-lg shadow-md object-contain max-h-[70vh]"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                  }}
-                />
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <img 
+                    src={projects[selectedProject].image} 
+                    alt={projects[selectedProject].title}
+                    className="w-full rounded-lg shadow-md object-contain max-h-[70vh]"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                    }}
+                  />
+                </motion.div>
               )}
             </div>
           </div>
