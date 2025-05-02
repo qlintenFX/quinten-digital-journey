@@ -4,10 +4,9 @@
 
 html {
   scroll-behavior: smooth;
-  height: 100%;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
 }
+
+/* fullpage.js will handle scrolling instead of CSS snap */
 
 body {
   height: 100%;
