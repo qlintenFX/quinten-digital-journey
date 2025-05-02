@@ -1845,14 +1845,14 @@ const Home = () => {
                         <button
                           key={index}
                           onClick={() => setCurrentVideoIndex(index)}
-                          className={`w-5 h-5 p-5 rounded-full transition-all flex items-center justify-center ${
+                          className={`w-3 h-3 p-2 rounded-full transition-all flex items-center justify-center ${
                             currentVideoIndex === index 
-                              ? 'bg-primary scale-125' 
+                              ? 'bg-primary scale-110' 
                               : 'bg-muted-foreground/40 hover:bg-muted-foreground/60'
                           }`}
                           aria-label={`View video ${index + 1}`}
                         >
-                          <span className="w-2 h-2 rounded-full block"></span>
+                          <span className="w-1.5 h-1.5 rounded-full block"></span>
                         </button>
                       ))}
                     </div>
