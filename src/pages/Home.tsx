@@ -488,7 +488,7 @@ const SparkleButton = ({ children, className, onClick, ...props }) => {
             }}
           >
             <img 
-              src={isDark ? "/images/dark-mode-star.png" : "/images/light-mode-star.png"}
+              src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
               alt=""
               className="w-full h-full object-contain"
             />
@@ -1233,7 +1233,7 @@ const Home = () => {
                   className="relative h-full"
                 >
                   <img 
-                    src="/images/profile-photo.png"
+                    src="/images/optimized/profile-photo.webp"
                     alt="Profile Photo" 
                     className="w-full h-full object-contain rounded-xl"
                     style={{ 
@@ -1383,7 +1383,7 @@ const Home = () => {
                             className="w-full h-full flex items-center justify-center"
                           >
                             <img 
-                              src="/images/project-1-Voting-System.png" 
+                              src="/images/optimized/project-1-Voting-System.webp" 
                               alt="IT Polis Voting System" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
                               onError={(e) => {
@@ -1412,7 +1412,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1466,7 +1466,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1487,7 +1487,7 @@ const Home = () => {
                             className="w-full h-full flex items-center justify-center"
                           >
                             <img 
-                              src="/images/project-2-hosting-platform.png" 
+                              src="/images/optimized/project-2-hosting-platform.webp" 
                               alt="Project 2" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
                               onError={(e) => {
@@ -1587,7 +1587,7 @@ const Home = () => {
                             className="w-full h-full flex items-center justify-center"
                           >
                             <img 
-                              src="/images/project-3-video-editing-awareness-movie.png" 
+                              src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
                               alt="Security Awareness Campaign Movie" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
                               onError={(e) => {
@@ -1616,7 +1616,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1670,7 +1670,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1691,7 +1691,7 @@ const Home = () => {
                             className="w-full h-full flex items-center justify-center"
                           >
                             <img 
-                              src="/images/project-4-KeyedColors-logo.png" 
+                              src="/images/optimized/project-4-KeyedColors-logo.webp" 
                               alt="KeyedColors" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
                               onError={(e) => {
@@ -1739,7 +1739,7 @@ const Home = () => {
               <div className="w-full relative">
                 <div className="w-full overflow-hidden" style={{ clipPath: 'inset(0 0 10% 0)' }}>
                   <img 
-                    src="/images/banner.png" 
+                    src="/images/optimized/banner.webp" 
                     alt="YouTube Channel Banner" 
                     className="w-full h-auto object-contain"
                     onError={(e) => {
@@ -1751,7 +1751,7 @@ const Home = () => {
                 <div className="absolute -bottom-20 left-6">
                   <div className="rounded-full w-40 h-40 overflow-hidden border-4 border-card shadow-lg">
                     <img 
-                      src="/images/pfp.png"
+                      src="/images/optimized/pfp.webp"
                       alt="YouTube Profile Picture" 
                       className="w-full h-full object-cover"
                       onError={(e) => {
