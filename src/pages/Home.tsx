@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import { Modal } from '@/components/ui/modal';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import ReactFullpage from '@fullpage/react-fullpage';
 
 /**
  * Function to check if the page is in dark mode by looking at the document element
@@ -1155,190 +1156,241 @@ const Home = () => {
   }, [isDark]);
 
   return (
-    <div className="flex flex-col min-h-screen relative">
-      {/* Background tints layer - moved behind lens flares */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-background to-cyber-light/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.05)_0%,transparent_50%)]" />
-      </div>
-
-      {/* Interactive grid background */}
-      <GridDeformation />
-      
-      {/* Purple Sparkle Effects */}
-      <PurpleSparkle count={10} />
-      
-      {/* Lens glares - moved to top */}
-      <LensGlare />
-      
-      {/* Hero Section */}
-      <header className="container relative z-[2]" id="home">
-        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] relative">
-          <div className="max-w-3xl text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-bold mb-8"
-            >
-              Welcome to my <SparkleText className="text-primary">E-Portfolio</SparkleText> 👋
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl md:text-2xl"
-            >
-              Hi, I'm <span className="font-semibold text-primary">Quinten</span>, a passionate student in Applied Computer Science / Electronics - ICT.
-            </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-xl md:text-2xl mt-4 mb-8"
-            >
-              I design and develop digital experiences with creativity and technical expertise. Welcome to my professional journey!
-            </motion.p>
-          </div>
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 1 }}
-            className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center"
-            onClick={() => {
-              const aboutSection = document.getElementById('about');
-              if (aboutSection) {
-                aboutSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-          >
-            <p className="italic mb-2">learn more ✨</p>
-            <ChevronDown className="mx-auto animate-bounce" size={24} />
-          </motion.div>
-        </div>
-      </header>
-
-      {/* About Me Section - with alternating background */}
-      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-gray-200/50 dark:before:bg-muted/30 before:-z-[1]" id="about">
-        <div className="container relative">
-          <InteractiveTitleEffect>About Me</InteractiveTitleEffect>
-          {/* Keep existing about section content */}
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="py-24 relative z-[2]" id="projects">
-        <div className="container">
-          <InteractiveTitleEffect>Projects / Achievements</InteractiveTitleEffect>
-          {/* Keep existing projects section content */}
-        </div>
-      </section>
-
-      {/* YouTube Channel Section - with alternating background */}
-      <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-gray-200/50 dark:before:bg-muted/30 before:-z-[1]" id="youtube">
-        <div className="container relative">
-          <InteractiveTitleEffect>YouTube Channel</InteractiveTitleEffect>
-          {/* Keep existing YouTube section content */}
-        </div>
-      </section>
-      
-      {/* Socials Section */}
-      <section className="py-24 relative z-[2]" id="contact">
-        <div className="container">
-          <InteractiveTitleEffect>Socials</InteractiveTitleEffect>
-          {/* Keep existing contact section content */}
-        </div>
-        
-        {/* Project Details Modal */}
-        <Modal
-          isOpen={selectedProject !== null}
-          onClose={() => setSelectedProject(null)}
-          title={selectedProject ? projects[selectedProject].title : ''}
-        >
-          {selectedProject && (
-            <div>
-              <div className="bg-card p-6 rounded-lg">
-                {(selectedProject === 'project1' || selectedProject === 'project2' || selectedProject === 'project3' || selectedProject === 'project4') ? (
-                  <div className="space-y-8">
-                    {projects[selectedProject].images.map((img, index) => (
-                      <motion.div 
-                        key={index} 
-                        className="mb-4"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ 
-                          duration: 0.5, 
-                          delay: index * 0.2,
-                          ease: "easeOut" 
-                        }}
-                      >
-                        <div 
-                          className="relative overflow-hidden rounded-xl shadow-lg group"
-                        >
-                          <img 
-                            src={img} 
-                            alt={`${projects[selectedProject].title} - Photo ${index + 1}`}
-                            className={`w-full rounded-xl shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''} transition-transform duration-300 group-hover:scale-[1.015]`}
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                            }}
-                          />
-                          <div 
-                            className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          >
-                            <div className="p-4 text-white">
-                              <h4 className="font-semibold">{projects[selectedProject].title}</h4>
-                              <p className="text-sm opacity-90">Image {index + 1} of {projects[selectedProject].images.length}</p>
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
+    <ReactFullpage
+      licenseKey={''}
+      credits={{
+        enabled: true,
+        label: 'Made with fullPage.js',
+        position: 'right'
+      }}
+      scrollingSpeed={800}
+      navigation={true}
+      navigationPosition={'right'}
+      navigationTooltips={['Home', 'About', 'Projects', 'YouTube', 'Contact']}
+      showActiveTooltip={true}
+      anchors={['home', 'about', 'projects', 'youtube', 'contact']}
+      scrollOverflow={true}
+      normalScrollElements={'.dialog-content'}
+      responsiveWidth={800}
+      afterLoad={(origin, destination, direction) => {
+        console.log("Section loaded:", destination.index);
+      }}
+      render={({ state, fullpageApi }) => {
+        return (
+          <>
+            <div className="section" data-anchor="home">
+              <header className="container relative z-[2]" id="home">
+                <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] relative">
+                  {/* Background tints layer */}
+                  <div className="fixed inset-0 z-0">
+                    <div className="absolute inset-0 bg-gradient-to-b from-background to-cyber-light/10" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.05)_0%,transparent_50%)]" />
                   </div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
+
+                  {/* Interactive grid background */}
+                  <GridDeformation />
+                  
+                  {/* Purple Sparkle Effects */}
+                  <PurpleSparkle count={10} />
+                  
+                  {/* Lens glares */}
+                  <LensGlare />
+                  
+                  <div className="max-w-3xl text-center">
+                    <motion.h1 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6 }}
+                      className="text-5xl md:text-7xl font-bold mb-8"
+                    >
+                      Welcome to my <SparkleText className="text-primary">E-Portfolio</SparkleText> 👋
+                    </motion.h1>
+                    <motion.p 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
+                      className="text-xl md:text-2xl"
+                    >
+                      Hi, I'm <span className="font-semibold text-primary">Quinten</span>, a passionate student in Applied Computer Science / Electronics - ICT.
+                    </motion.p>
+                    <motion.p 
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.3 }}
+                      className="text-xl md:text-2xl mt-4 mb-8"
+                    >
+                      I design and develop digital experiences with creativity and technical expertise. Welcome to my professional journey!
+                    </motion.p>
+                  </div>
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 1 }}
+                    className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-center"
+                    onClick={() => fullpageApi.moveSectionDown()}
                   >
-                    <img 
-                      src={projects[selectedProject].image} 
-                      alt={projects[selectedProject].title}
-                      className="w-full rounded-lg shadow-md object-contain max-h-[70vh]"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                      }}
-                    />
+                    <p className="italic mb-2">learn more ✨</p>
+                    <ChevronDown className="mx-auto animate-bounce" size={24} />
                   </motion.div>
-                )}
-              </div>
+                </div>
+              </header>
             </div>
-          )}
-        </Modal>
-        
-        {/* CV Dialog for viewing PDF */}
-        <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
-          <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
-            <DialogHeader className="p-2 pb-0 min-h-[32px] shrink-0">
-              <DialogTitle>Curriculum Vitae</DialogTitle>
-            </DialogHeader>
-            <div className="w-full h-[calc(100%-32px)] grow overflow-hidden">
-              <object
-                data="/files/CV_Quinten.pdf"
-                type="application/pdf"
-                className="w-full h-full"
-                style={{ margin: 0, padding: 0, border: 0 }}
-              >
-                <p>Your browser does not support PDFs. 
-                  <a href="/files/CV_Quinten.pdf" download>Download the PDF</a> instead.
-                </p>
-              </object>
+
+            <div className="section" data-anchor="about">
+              <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-gray-200/50 dark:before:bg-muted/30 before:-z-[1]" id="about">
+                <div className="container relative">
+                  <InteractiveTitleEffect>About Me</InteractiveTitleEffect>
+                  {/* About section content - keeping existing content */}
+                  <div className="grid md:grid-cols-2 gap-8 items-start">
+                    {/* ... existing about section content ... */}
+                  </div>
+
+                  {/* Curriculum Vitae Section - keeping existing content */}
+                  <div className="mt-16">
+                    {/* ... existing CV section content ... */}
+                  </div>
+                </div>
+              </section>
             </div>
-          </DialogContent>
-        </Dialog>
-      </section>
-    </div>
+
+            <div className="section" data-anchor="projects">
+              <section className="py-24 relative z-[2]" id="projects">
+                <div className="container">
+                  <InteractiveTitleEffect>Projects / Achievements</InteractiveTitleEffect>
+                  {/* Projects content - keeping existing content */}
+                  {/* Project 1 */}
+                  {/* ... existing Project 1 content ... */}
+                  
+                  {/* Project 2 */}
+                  {/* ... existing Project 2 content ... */}
+                  
+                  {/* Project 3 */}
+                  {/* ... existing Project 3 content ... */}
+                  
+                  {/* Project 4 */}
+                  {/* ... existing Project 4 content ... */}
+                </div>
+              </section>
+            </div>
+
+            <div className="section" data-anchor="youtube">
+              <section className="py-24 relative z-[2] before:content-[''] before:absolute before:inset-0 before:bg-gray-200/50 dark:before:bg-muted/30 before:-z-[1]" id="youtube">
+                <div className="container relative">
+                  <InteractiveTitleEffect>YouTube Channel</InteractiveTitleEffect>
+                  {/* YouTube content - keeping existing content */}
+                  <div className="max-w-3xl mx-auto">
+                    {/* ... existing YouTube section content ... */}
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            <div className="section" data-anchor="contact">
+              <section className="py-24 relative z-[2]" id="contact">
+                <div className="container">
+                  <InteractiveTitleEffect>Socials</InteractiveTitleEffect>
+                  {/* Contact content - keeping existing content */}
+                  <div className="max-w-2xl mx-auto bg-card p-8 rounded-lg shadow-lg">
+                    {/* ... existing socials section content ... */}
+                  </div>
+                </div>
+                
+                {/* Project Details Modal - keeping existing modal */}
+                <Modal
+                  isOpen={selectedProject !== null}
+                  onClose={() => setSelectedProject(null)}
+                  title={selectedProject ? projects[selectedProject].title : ''}
+                >
+                  {selectedProject && (
+                    <div>
+                      <div className="bg-card p-6 rounded-lg">
+                        {(selectedProject === 'project1' || selectedProject === 'project2' || selectedProject === 'project3' || selectedProject === 'project4') ? (
+                          <div className="space-y-8">
+                            {projects[selectedProject].images.map((img, index) => (
+                              <motion.div 
+                                key={index} 
+                                className="mb-4"
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ 
+                                  duration: 0.5, 
+                                  delay: index * 0.2,
+                                  ease: "easeOut" 
+                                }}
+                              >
+                                <div 
+                                  className="relative overflow-hidden rounded-xl shadow-lg group"
+                                >
+                                  <img 
+                                    src={img} 
+                                    alt={`${projects[selectedProject].title} - Photo ${index + 1}`}
+                                    className={`w-full rounded-xl shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''} transition-transform duration-300 group-hover:scale-[1.015]`}
+                                    onError={(e) => {
+                                      const target = e.target as HTMLImageElement;
+                                      target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                                    }}
+                                  />
+                                  <div 
+                                    className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                  >
+                                    <div className="p-4 text-white">
+                                      <h4 className="font-semibold">{projects[selectedProject].title}</h4>
+                                      <p className="text-sm opacity-90">Image {index + 1} of {projects[selectedProject].images.length}</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            ))}
+                          </div>
+                        ) : (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                          >
+                            <img 
+                              src={projects[selectedProject].image} 
+                              alt={projects[selectedProject].title}
+                              className="w-full rounded-lg shadow-md object-contain max-h-[70vh]"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                              }}
+                            />
+                          </motion.div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </Modal>
+                
+                {/* CV Dialog for viewing PDF - keeping existing dialog */}
+                <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
+                  <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col dialog-content">
+                    <DialogHeader className="p-2 pb-0 min-h-[32px] shrink-0">
+                      <DialogTitle>Curriculum Vitae</DialogTitle>
+                    </DialogHeader>
+                    <div className="w-full h-[calc(100%-32px)] grow overflow-hidden">
+                      <object
+                        data="/files/CV_Quinten.pdf"
+                        type="application/pdf"
+                        className="w-full h-full"
+                        style={{ margin: 0, padding: 0, border: 0 }}
+                      >
+                        <p>Your browser does not support PDFs. 
+                          <a href="/files/CV_Quinten.pdf" download>Download the PDF</a> instead.
+                        </p>
+                      </object>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </section>
+            </div>
+          </>
+        );
+      }}
+    />
   );
 };
+
+export default Home;
