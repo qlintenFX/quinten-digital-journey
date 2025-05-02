@@ -1319,8 +1319,40 @@ const Home = () => {
               <div className="w-full h-full rounded-md border-2 border-secondary"></div>
             </motion.div>
 
-            <div className="bg-card rounded-lg overflow-hidden">
-              <div className="grid md:grid-cols-2">
+            <div 
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                
+                // Calculate rotation based on mouse position
+                const rotateY = 10 * (0.5 - x);
+                const rotateX = 10 * (y - 0.5);
+                
+                // Apply the rotation transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Update position of shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget;
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                
+                // Reset shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
+                }
+              }}
+            >
+              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div className="grid md:grid-cols-2 relative z-10">
                 <div className="p-8">
                   <div className="mb-6">
                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
@@ -1403,8 +1435,40 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-secondary/20"></div>
             </motion.div>
 
-            <div className="bg-card rounded-lg overflow-hidden">
-              <div className="grid md:grid-cols-2">
+            <div 
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                
+                // Calculate rotation based on mouse position
+                const rotateY = 10 * (0.5 - x);
+                const rotateX = 10 * (y - 0.5);
+                
+                // Apply the rotation transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Update position of shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget;
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                
+                // Reset shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
+                }
+              }}
+            >
+              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div className="grid md:grid-cols-2 relative z-10">
                 <div className="bg-muted lg:block hidden">
                   {/* Project 2 Image */}
                   <div className="relative h-full p-6 flex items-center justify-center">
@@ -1488,8 +1552,40 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-secondary"></div>
             </motion.div>
 
-            <div className="bg-card rounded-lg overflow-hidden">
-              <div className="grid md:grid-cols-2">
+            <div 
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                
+                // Calculate rotation based on mouse position
+                const rotateY = 10 * (0.5 - x);
+                const rotateX = 10 * (y - 0.5);
+                
+                // Apply the rotation transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Update position of shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget;
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                
+                // Reset shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
+                }
+              }}
+            >
+              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div className="grid md:grid-cols-2 relative z-10">
                 <div className="p-8">
                   <div className="mb-6">
                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
@@ -1572,8 +1668,40 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-primary"></div>
             </motion.div>
 
-            <div className="bg-card rounded-lg overflow-hidden">
-              <div className="grid md:grid-cols-2">
+            <div 
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
+              onMouseMove={(e) => {
+                const card = e.currentTarget;
+                const rect = card.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width;
+                const y = (e.clientY - rect.top) / rect.height;
+                
+                // Calculate rotation based on mouse position
+                const rotateY = 10 * (0.5 - x);
+                const rotateX = 10 * (y - 0.5);
+                
+                // Apply the rotation transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                
+                // Update position of shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
+                }
+              }}
+              onMouseLeave={(e) => {
+                const card = e.currentTarget;
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                
+                // Reset shine effect
+                const shine = card.querySelector('.shine-effect') as HTMLElement;
+                if (shine) {
+                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
+                }
+              }}
+            >
+              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div className="grid md:grid-cols-2 relative z-10">
                 <div className="bg-muted lg:block hidden">
                   {/* Project 4 Image */}
                   <div className="relative h-full p-6 flex items-center justify-center">
@@ -1761,12 +1889,19 @@ const Home = () => {
                     href="https://github.com/qlintenFX/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                className="flex flex-col items-center group"
+                    className="flex flex-col items-center group"
                   >
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#333] to-[#111] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(80,80,80,0.6)] shadow-[0_0_10px_rgba(80,80,80,0.3)]">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#333] to-[#111] flex items-center justify-center shadow-lg mb-3 
+                    group-hover:scale-110 transition-all duration-300 
+                    group-hover:shadow-[0_0_15px_rgba(80,80,80,0.6)] shadow-[0_0_10px_rgba(80,80,80,0.3)]
+                    relative overflow-hidden
+                    before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                    group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
                 </div>
-                <span className="text-sm font-medium">GitHub</span>
+                <span className="text-sm font-medium group-hover:text-primary transition-colors">GitHub</span>
               </a>
               
               {/* YouTube */}
@@ -1774,12 +1909,19 @@ const Home = () => {
                     href="https://www.youtube.com/@qlintenFX" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                className="flex flex-col items-center group"
-              >
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#FF0000] to-[#CC0000] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(255,0,0,0.7)] shadow-[0_0_10px_rgba(255,0,0,0.4)]">
+                    className="flex flex-col items-center group"
+                  >
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#FF0000] to-[#CC0000] flex items-center justify-center shadow-lg mb-3 
+                    group-hover:scale-110 transition-all duration-300 
+                    group-hover:shadow-[0_0_15px_rgba(255,0,0,0.7)] shadow-[0_0_10px_rgba(255,0,0,0.4)]
+                    relative overflow-hidden animate-pulse-gentle
+                    before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                    group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
                 </div>
-                <span className="text-sm font-medium">YouTube</span>
+                <span className="text-sm font-medium group-hover:text-primary transition-colors">YouTube</span>
               </a>
               
               {/* LinkedIn */}
@@ -1789,10 +1931,17 @@ const Home = () => {
                 rel="noopener noreferrer"
                 className="flex flex-col items-center group"
               >
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#0077B5] to-[#0056A3] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(0,119,181,0.7)] shadow-[0_0_10px_rgba(0,119,181,0.4)]">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#0077B5] to-[#0056A3] flex items-center justify-center shadow-lg mb-3 
+                    group-hover:scale-110 transition-all duration-300 
+                    group-hover:shadow-[0_0_15px_rgba(0,119,181,0.7)] shadow-[0_0_10px_rgba(0,119,181,0.4)]
+                    relative overflow-hidden animate-float
+                    before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                    group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </div>
-                <span className="text-sm font-medium">LinkedIn</span>
+                <span className="text-sm font-medium group-hover:text-primary transition-colors">LinkedIn</span>
               </a>
               
               {/* Email */}
@@ -1800,10 +1949,17 @@ const Home = () => {
                 onClick={revealEmail}
                 className="flex flex-col items-center group"
               >
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#34C759] to-[#27AE60] flex items-center justify-center shadow-lg mb-3 group-hover:scale-110 transition-all duration-300 group-hover:shadow-[0_0_15px_rgba(52,199,89,0.7)] shadow-[0_0_10px_rgba(52,199,89,0.4)]">
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#34C759] to-[#27AE60] flex items-center justify-center shadow-lg mb-3 
+                    group-hover:scale-110 transition-all duration-300 
+                    group-hover:shadow-[0_0_15px_rgba(52,199,89,0.7)] shadow-[0_0_10px_rgba(52,199,89,0.4)]
+                    relative overflow-hidden animate-pulse-gentle
+                    before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                    group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-              </div>
-                <span className="text-sm font-medium">
+                </div>
+                <span className="text-sm font-medium group-hover:text-primary transition-colors">
                   {emailVisible ? `${emailParts[0]}@${emailParts[1]}` : "Email"}
                 </span>
               </button>

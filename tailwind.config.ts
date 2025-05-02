@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -101,6 +100,42 @@ export default {
           "0%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-15px)" },
           "100%": { transform: "translateY(0)" }
+        },
+        "ripple": {
+          "0%": { 
+            transform: "scale(0)",
+            opacity: "0.7"
+          },
+          "100%": { 
+            transform: "scale(4)",
+            opacity: "0"
+          }
+        },
+        "card-hover": {
+          "0%": {
+            transform: "perspective(1000px) rotateY(0deg) scale(1) translateZ(0)"
+          },
+          "100%": {
+            transform: "perspective(1000px) rotateY(-15deg) scale(1.05) translateZ(10px)"
+          }
+        },
+        "float": {
+          "0%, 100%": {
+            transform: "translateY(0)"
+          },
+          "50%": {
+            transform: "translateY(-10px)"
+          }
+        },
+        "pulse-gentle": {
+          "0%, 100%": {
+            transform: "scale(1)",
+            opacity: "1"
+          },
+          "50%": {
+            transform: "scale(1.05)",
+            opacity: "0.9"
+          }
         }
       },
       animation: {
@@ -110,7 +145,12 @@ export default {
         "fade-up": "fade-up 0.5s ease-out forwards",
         "parallax-slow": "parallax-slow 8s ease-in-out infinite",
         "parallax-medium": "parallax-medium 6s ease-in-out infinite",
-        "parallax-fast": "parallax-fast 4s ease-in-out infinite"
+        "parallax-fast": "parallax-fast 4s ease-in-out infinite",
+        "ripple": "ripple 0.7s ease-out forwards",
+        "card-hover": "card-hover 0.5s forwards",
+        "card-unhover": "card-hover 0.5s reverse forwards",
+        "float": "float 3s ease-in-out infinite",
+        "pulse-gentle": "pulse-gentle 2s ease-in-out infinite"
       },
     },
   },
