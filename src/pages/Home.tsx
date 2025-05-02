@@ -886,63 +886,36 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
-// Add this utility function before the Home component
+// Update the useTiltEffect function to provide immediate feedback
 const useTiltEffect = () => {
   const tiltRef = useRef<HTMLDivElement>(null);
-  const animationRef = useRef<number | null>(null);
-  const mousePositionRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
-  const cardRectRef = useRef<DOMRect | null>(null);
   const shineRef = useRef<HTMLDivElement>(null);
   
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!tiltRef.current) return;
     
     const card = tiltRef.current;
-    if (!cardRectRef.current) {
-      cardRectRef.current = card.getBoundingClientRect();
-    }
+    const rect = card.getBoundingClientRect();
     
-    const rect = cardRectRef.current;
-    mousePositionRef.current = {
-      x: (e.clientX - rect.left) / rect.width,
-      y: (e.clientY - rect.top) / rect.height
-    };
+    // Calculate cursor position relative to the card (0 to 1)
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
     
-    if (!animationRef.current) {
-      animationRef.current = requestAnimationFrame(updateTilt);
-    }
-  };
-  
-  const updateTilt = () => {
-    animationRef.current = null;
-    if (!tiltRef.current) return;
-    
-    const card = tiltRef.current;
-    const { x, y } = mousePositionRef.current;
-    
-    // Calculate rotation based on mouse position
+    // Calculate rotation based on mouse position (directly apply without animation frame)
     const rotateY = 10 * (0.5 - x);
     const rotateX = 10 * (y - 0.5);
     
-    // Apply the rotation transform
+    // Apply the rotation transform immediately
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
     
-    // Update shine effect
+    // Update shine effect immediately
     if (shineRef.current) {
       shineRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
     }
-    
-    // Continue animation if still moving
-    animationRef.current = requestAnimationFrame(updateTilt);
   };
   
   const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!tiltRef.current) return;
-    
-    if (animationRef.current) {
-      cancelAnimationFrame(animationRef.current);
-      animationRef.current = null;
-    }
     
     const card = tiltRef.current;
     card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
@@ -951,14 +924,11 @@ const useTiltEffect = () => {
     if (shineRef.current) {
       shineRef.current.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
     }
-    
-    // Reset card rect reference
-    cardRectRef.current = null;
   };
   
   const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    // No need to do anything special on enter, just ensure the element has proper initial styles
     if (!tiltRef.current) return;
-    cardRectRef.current = tiltRef.current.getBoundingClientRect();
   };
   
   return { tiltRef, shineRef, handleMouseMove, handleMouseLeave, handleMouseEnter };
