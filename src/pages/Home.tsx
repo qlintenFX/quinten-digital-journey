@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { motion, useScroll, useAnimation, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useScroll, useAnimation, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowUpRight, 
@@ -886,64 +886,123 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
-// Replace the useTiltEffect hook with this improved implementation
+// Replace the TiltCard component with this enhanced implementation
 const TiltCard = ({ children }: { children: React.ReactNode }) => {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const [rotateXaxis, setRotateXaxis] = useState(0);
+  const [rotateYaxis, setRotateYaxis] = useState(0);
+  const cardRef = useRef<HTMLDivElement>(null);
   
-  // Transform mouse position into rotation values
-  const rotateX = useTransform(y, [-300, 300], [10, -10]);
-  const rotateY = useTransform(x, [-300, 300], [-10, 10]);
+  // Use spring animation for smooth transitions
+  const springConfig = { damping: 25, stiffness: 300, mass: 0.8 };
+  const rotateX = useSpring(0, springConfig);
+  const rotateY = useSpring(0, springConfig);
   
-  // Define the shine position based on mouse coordinates
-  const shineX = useTransform(x, [-300, 300], ["0%", "100%"]);
-  const shineY = useTransform(y, [-300, 300], ["0%", "100%"]);
-  
-  function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
-    const rect = event.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = event.clientX - rect.left; 
-    const mouseY = event.clientY - rect.top;
-    
-    // Calculate the mouse position relative to the center of the card
-    const xPos = mouseX - width / 2;
-    const yPos = mouseY - height / 2;
-    
-    x.set(xPos);
-    y.set(yPos);
-  }
+  // For shine effect positioning
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isHovered, setIsHovered] = useState(false);
 
-  function handleMouseLeave() {
-    // Animate back to the initial position
-    x.set(0);
-    y.set(0);
-  }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    
+    const element = cardRef.current;
+    const elementRect = element.getBoundingClientRect();
+    const elementWidth = elementRect.width;
+    const elementHeight = elementRect.height;
+    const elementCenterX = elementWidth / 2;
+    const elementCenterY = elementHeight / 2;
+    
+    // Calculate mouse position relative to the center of the card
+    const mouseX = e.clientX - elementRect.left - elementCenterX;
+    const mouseY = e.clientY - elementRect.top - elementCenterY;
+    
+    // Calculate rotation angles (stronger effect with factor 25)
+    const degreeX = (mouseY / elementHeight) * 25;
+    const degreeY = (mouseX / elementWidth) * 25;
+    
+    // Update states for rotation and mouse position
+    setRotateXaxis(-degreeX);
+    setRotateYaxis(degreeY);
+    setMousePosition({
+      x: (e.clientX - elementRect.left) / elementRect.width * 100,
+      y: (e.clientY - elementRect.top) / elementRect.height * 100
+    });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setRotateXaxis(0);
+    setRotateYaxis(0);
+    setIsHovered(false);
+  };
+
+  // Update springs when rotation changes
+  useEffect(() => {
+    rotateX.set(rotateXaxis);
+    rotateY.set(rotateYaxis);
+  }, [rotateXaxis, rotateYaxis]);
 
   return (
     <motion.div
+      className="group perspective-1200"
       style={{
-        position: "relative",
+        perspective: "1200px",
         transformStyle: "preserve-3d",
-        rotateX,
-        rotateY,
-        perspective: 1000,
-        willChange: "transform",
-        transition: "transform 0.2s ease-out"
       }}
-      whileHover={{ scale: 1.02 }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
     >
-      {/* Shine effect layer */}
-      <motion.div 
-        className="absolute inset-0 pointer-events-none z-20 opacity-0 group-hover:opacity-100"
+      <motion.div
+        ref={cardRef}
+        onMouseMove={handleMouseMove}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         style={{
-          background: `radial-gradient(circle at ${shineX} ${shineY}, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%)`,
-          transition: "opacity 0.2s"
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          transformStyle: "preserve-3d",
+          transition: "transform 0.05s ease-out",
+          rotateX: rotateX,
+          rotateY: rotateY,
+          z: 0,
         }}
-      />
-      {children}
+        whileHover={{ z: 50, scale: 1.03 }}
+      >
+        {/* Shine effect that follows cursor */}
+        {isHovered && (
+          <motion.div
+            className="absolute inset-0 pointer-events-none z-20 rounded-lg opacity-0 group-hover:opacity-100"
+            style={{
+              background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%)`,
+              transition: "opacity 0.3s ease",
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: isHovered ? 1 : 0 }}
+          />
+        )}
+        
+        {/* Enhanced shadow effect on hover */}
+        <motion.div
+          className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-purple-500/20 to-primary/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ 
+            transformStyle: "preserve-3d",
+            transform: "translateZ(-10px)",
+            zIndex: -1
+          }}
+        />
+        
+        {/* Main content */}
+        <motion.div
+          style={{
+            transformStyle: "preserve-3d",
+            width: "100%",
+            height: "100%",
+          }}
+        >
+          {children}
+        </motion.div>
+      </motion.div>
     </motion.div>
   );
 };
@@ -1385,7 +1444,7 @@ const Home = () => {
               <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
                 <div className="shine-effect absolute inset-0 pointer-events-none"></div>
                 <div className="grid md:grid-cols-2 relative z-10">
-                  <div className="p-8">
+                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
                     <div className="mb-6">
                       <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
                     </div>
@@ -1411,7 +1470,7 @@ const Home = () => {
                     </SparkleButton>
                   </div>
                   <div className="bg-muted lg:block hidden">
-                    {/* Project 1 Image */}
+                    {/* Project 1 Image with enhanced 3D transform */}
                     <div className="relative h-full p-6 flex items-center justify-center">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -1419,7 +1478,7 @@ const Home = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(40px)" }}
+                        style={{ transform: "translateZ(60px)" }}
                       >
                         <img 
                           src="/images/project-1-Voting-System.png" 
@@ -1471,10 +1530,9 @@ const Home = () => {
 
             <TiltCard>
               <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
                 <div className="grid md:grid-cols-2 relative z-10">
                   <div className="bg-muted lg:block hidden">
-                    {/* Project 2 Image */}
+                    {/* Project 2 Image with enhanced 3D transform */}
                     <div className="relative h-full p-6 flex items-center justify-center">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -1482,7 +1540,7 @@ const Home = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(40px)" }}
+                        style={{ transform: "translateZ(60px)" }}
                       >
                         <img 
                           src="/images/project-2-hosting-platform.png" 
@@ -1496,7 +1554,7 @@ const Home = () => {
                       </motion.div>
                     </div>
                   </div>
-                  <div className="p-8">
+                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
                     <div className="mb-6">
                       <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2.2 Project</span>
                     </div>
@@ -1560,9 +1618,8 @@ const Home = () => {
 
             <TiltCard>
               <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
                 <div className="grid md:grid-cols-2 relative z-10">
-                  <div className="p-8">
+                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
                     <div className="mb-6">
                       <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
                     </div>
@@ -1588,7 +1645,7 @@ const Home = () => {
                     </SparkleButton>
                   </div>
                   <div className="bg-muted lg:block hidden">
-                    {/* Project 3 Image */}
+                    {/* Project 3 Image with enhanced 3D transform */}
                     <div className="relative h-full p-6 flex items-center justify-center">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -1596,7 +1653,7 @@ const Home = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(40px)" }}
+                        style={{ transform: "translateZ(60px)" }}
                       >
                         <img 
                           src="/images/project-3-video-editing-awareness-movie.png" 
@@ -1648,10 +1705,9 @@ const Home = () => {
 
             <TiltCard>
               <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
                 <div className="grid md:grid-cols-2 relative z-10">
                   <div className="bg-muted lg:block hidden">
-                    {/* Project 4 Image */}
+                    {/* Project 4 Image with enhanced 3D transform */}
                     <div className="relative h-full p-6 flex items-center justify-center">
                       <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
@@ -1659,7 +1715,7 @@ const Home = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(40px)" }}
+                        style={{ transform: "translateZ(60px)" }}
                       >
                         <img 
                           src="/images/project-4-KeyedColors-logo.png" 
@@ -1673,7 +1729,7 @@ const Home = () => {
                       </motion.div>
                     </div>
                   </div>
-                  <div className="p-8">
+                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
                     <div className="mb-6">
                       <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Personal Project</span>
                     </div>
