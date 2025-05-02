@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { motion, useScroll, useAnimation, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useAnimation, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
   ArrowUpRight, 
@@ -886,71 +886,66 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
-// Add this improved implementation using framer-motion directly
-const useSmoothTiltEffect = () => {
-  const [rotateXY, setRotateXY] = useState({ x: 0, y: 0 });
-  const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50 });
-  const cardRef = useRef<HTMLDivElement>(null);
-  const glareRef = useRef<HTMLDivElement>(null);
+// Replace the useTiltEffect hook with this improved implementation
+const TiltCard = ({ children }: { children: React.ReactNode }) => {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
   
-  // This is necessary to get a smooth return to the default position
-  const controls = useAnimation();
+  // Transform mouse position into rotation values
+  const rotateX = useTransform(y, [-300, 300], [10, -10]);
+  const rotateY = useTransform(x, [-300, 300], [-10, 10]);
   
-  // Function to handle mouse movement over the card
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    
-    // Get card boundaries
-    const rect = cardRef.current.getBoundingClientRect();
-    
-    // Calculate cursor position relative to card (0 to 1)
-    const x = (e.clientX - rect.left) / rect.width;
-    const y = (e.clientY - rect.top) / rect.height;
-    
-    // Calculate rotation angles based on mouse position
-    // Use a smaller value (e.g., 10) for subtler effect, larger for more pronounced effect
-    const rotateY = (0.5 - x) * 10; // negative when mouse is on right side
-    const rotateX = (y - 0.5) * 10; // positive when mouse is on bottom side
-    
-    // Update state for rotation
-    setRotateXY({ x: rotateX, y: rotateY });
-    
-    // Update glare position
-    setGlarePosition({ x: x * 100, y: y * 100 });
-    
-    // Animate to new position smoothly
-    controls.start({
-      rotateX: rotateX,
-      rotateY: rotateY,
-      transition: { type: "spring", stiffness: 300, damping: 30, mass: 0.5 }
-    });
-  };
+  // Define the shine position based on mouse coordinates
+  const shineX = useTransform(x, [-300, 300], ["0%", "100%"]);
+  const shineY = useTransform(y, [-300, 300], ["0%", "100%"]);
   
-  // Function to handle mouse leave event
-  const handleMouseLeave = () => {
-    // Animate back to default position
-    controls.start({
-      rotateX: 0,
-      rotateY: 0,
-      transition: { type: "spring", stiffness: 200, damping: 30 }
-    });
+  function handleMouseMove(event: React.MouseEvent<HTMLDivElement>) {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = event.clientX - rect.left; 
+    const mouseY = event.clientY - rect.top;
     
-    // Reset glare position
-    setGlarePosition({ x: 50, y: 50 });
+    // Calculate the mouse position relative to the center of the card
+    const xPos = mouseX - width / 2;
+    const yPos = mouseY - height / 2;
     
-    // Reset state
-    setRotateXY({ x: 0, y: 0 });
-  };
-  
-  // Function to handle mouse enter event
-  const handleMouseEnter = () => {
-    // Ensure we have a fresh rect for accurate calculations
-    if (cardRef.current) {
-      cardRef.current.getBoundingClientRect();
-    }
-  };
-  
-  return { cardRef, glareRef, glarePosition, rotateXY, controls, handleMouseMove, handleMouseLeave, handleMouseEnter };
+    x.set(xPos);
+    y.set(yPos);
+  }
+
+  function handleMouseLeave() {
+    // Animate back to the initial position
+    x.set(0);
+    y.set(0);
+  }
+
+  return (
+    <motion.div
+      style={{
+        position: "relative",
+        transformStyle: "preserve-3d",
+        rotateX,
+        rotateY,
+        perspective: 1000,
+        willChange: "transform",
+        transition: "transform 0.2s ease-out"
+      }}
+      whileHover={{ scale: 1.02 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {/* Shine effect layer */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none z-20 opacity-0 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(circle at ${shineX} ${shineY}, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 50%)`,
+          transition: "opacity 0.2s"
+        }}
+      />
+      {children}
+    </motion.div>
+  );
 };
 
 /**
@@ -1191,47 +1186,6 @@ const Home = () => {
     }
   }, [isDark]);
 
-  // Add these refs to your Home component function - REMOVE OLD REFS
-  const { 
-    cardRef: tiltRef1, 
-    glareRef: glareRef1,
-    glarePosition: glarePosition1,
-    controls: controls1,
-    handleMouseMove: handleMouseMove1, 
-    handleMouseLeave: handleMouseLeave1,
-    handleMouseEnter: handleMouseEnter1 
-  } = useSmoothTiltEffect();
-
-  const { 
-    cardRef: tiltRef2, 
-    glareRef: glareRef2,
-    glarePosition: glarePosition2,
-    controls: controls2,
-    handleMouseMove: handleMouseMove2, 
-    handleMouseLeave: handleMouseLeave2,
-    handleMouseEnter: handleMouseEnter2 
-  } = useSmoothTiltEffect();
-
-  const { 
-    cardRef: tiltRef3, 
-    glareRef: glareRef3,
-    glarePosition: glarePosition3,
-    controls: controls3,
-    handleMouseMove: handleMouseMove3, 
-    handleMouseLeave: handleMouseLeave3,
-    handleMouseEnter: handleMouseEnter3 
-  } = useSmoothTiltEffect();
-
-  const { 
-    cardRef: tiltRef4, 
-    glareRef: glareRef4,
-    glarePosition: glarePosition4,
-    controls: controls4,
-    handleMouseMove: handleMouseMove4, 
-    handleMouseLeave: handleMouseLeave4,
-    handleMouseEnter: handleMouseEnter4 
-  } = useSmoothTiltEffect();
-
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Background tints layer - moved behind lens flares */}
@@ -1427,78 +1381,61 @@ const Home = () => {
               <div className="w-full h-full rounded-md border-2 border-secondary"></div>
             </motion.div>
 
-            <motion.div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
-              ref={tiltRef1}
-              onMouseMove={handleMouseMove1}
-              onMouseEnter={handleMouseEnter1}
-              onMouseLeave={handleMouseLeave1}
-              animate={controls1}
-              style={{ 
-                transformStyle: "preserve-3d",
-                transformOrigin: "center center"
-              }}
-              whileHover={{ scale: 1.01 }}
-            >
-              <div 
-                ref={glareRef1} 
-                className="shine-effect absolute inset-0 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at ${glarePosition1.x}% ${glarePosition1.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
-                  opacity: 1,
-                  transition: "background 0.1s ease-out"
-                }}
-              />
-              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
-                <div className="p-8">
-                  <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">IT Polis Voting System</h3>
-                  
-                  <div className="space-y-4 mb-6">
-                    <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Developed a <KeywordHighlight>voting system</KeywordHighlight> for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could <KeywordHighlight>only vote once</KeywordHighlight>, track votes in <KeywordHighlight>real-time</KeywordHighlight>, and provide event organizers with administrative control.</p>
+            <TiltCard>
+              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+                <div className="grid md:grid-cols-2 relative z-10">
+                  <div className="p-8">
+                    <div className="mb-6">
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">IT Polis Voting System</h3>
                     
-                    <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I created and managed the <KeywordHighlight>database architecture</KeywordHighlight>, implemented data processing for the <KeywordHighlight>live leaderboard</KeywordHighlight>, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
+                    <div className="space-y-4 mb-6">
+                      <h4 className="text-lg font-semibold">Context & Background</h4>
+                      <p>Developed a <KeywordHighlight>voting system</KeywordHighlight> for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could <KeywordHighlight>only vote once</KeywordHighlight>, track votes in <KeywordHighlight>real-time</KeywordHighlight>, and provide event organizers with administrative control.</p>
+                      
+                      <h4 className="text-lg font-semibold">My Contribution</h4>
+                      <p>I created and managed the <KeywordHighlight>database architecture</KeywordHighlight>, implemented data processing for the <KeywordHighlight>live leaderboard</KeywordHighlight>, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
+                      
+                      <h4 className="text-lg font-semibold">What I Learned</h4>
+                      <p>Gained practical experience in <KeywordHighlight>secure database design</KeywordHighlight>, <KeywordHighlight>NFC technology</KeywordHighlight> integration, and <KeywordHighlight>real-time data visualization</KeywordHighlight>. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
+                    </div>
                     
-                    <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Gained practical experience in <KeywordHighlight>secure database design</KeywordHighlight>, <KeywordHighlight>NFC technology</KeywordHighlight> integration, and <KeywordHighlight>real-time data visualization</KeywordHighlight>. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
-                  </div>
-                  
-                  <SparkleButton 
-                    variant="outline" 
-                    className="flex items-center"
-                    onClick={() => setSelectedProject('project1')}
-                  >
-                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                  </SparkleButton>
-                </div>
-                <div className="bg-muted lg:block hidden">
-                  {/* Project 1 Image */}
-                  <div className="relative h-full p-6 flex items-center justify-center">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="w-full h-full flex items-center justify-center"
+                    <SparkleButton 
+                      variant="outline" 
+                      className="flex items-center"
+                      onClick={() => setSelectedProject('project1')}
                     >
-                      <img 
-                        src="/images/project-1-Voting-System.png" 
-                        alt="IT Polis Voting System" 
-                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                        }}
-                      />
-                    </motion.div>
+                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
+                    </SparkleButton>
+                  </div>
+                  <div className="bg-muted lg:block hidden">
+                    {/* Project 1 Image */}
+                    <div className="relative h-full p-6 flex items-center justify-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ transform: "translateZ(40px)" }}
+                      >
+                        <img 
+                          src="/images/project-1-Voting-System.png" 
+                          alt="IT Polis Voting System" 
+                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                          }}
+                        />
+                      </motion.div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           </motion.div>
 
           {/* Project 2 */}
@@ -1532,78 +1469,61 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-secondary/20"></div>
             </motion.div>
 
-            <motion.div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
-              ref={tiltRef2}
-              onMouseMove={handleMouseMove2}
-              onMouseEnter={handleMouseEnter2}
-              onMouseLeave={handleMouseLeave2}
-              animate={controls2}
-              style={{ 
-                transformStyle: "preserve-3d",
-                transformOrigin: "center center"
-              }}
-              whileHover={{ scale: 1.01 }}
-            >
-              <div 
-                ref={glareRef2} 
-                className="shine-effect absolute inset-0 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at ${glarePosition2.x}% ${glarePosition2.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
-                  opacity: 1,
-                  transition: "background 0.1s ease-out"
-                }}
-              />
-              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
-                <div className="bg-muted lg:block hidden">
-                  {/* Project 2 Image */}
-                  <div className="relative h-full p-6 flex items-center justify-center">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="w-full h-full flex items-center justify-center"
+            <TiltCard>
+              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+                <div className="grid md:grid-cols-2 relative z-10">
+                  <div className="bg-muted lg:block hidden">
+                    {/* Project 2 Image */}
+                    <div className="relative h-full p-6 flex items-center justify-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ transform: "translateZ(40px)" }}
+                      >
+                        <img 
+                          src="/images/project-2-hosting-platform.png" 
+                          alt="Project 2" 
+                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                          }}
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <div className="mb-6">
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2.2 Project</span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">App Hosting Platform for Clients</h3>
+                    
+                    <div className="space-y-4 mb-6">
+                      <h4 className="text-lg font-semibold">Context & Background</h4>
+                      <p>Designed and implemented a <KeywordHighlight>hosting platform</KeywordHighlight> for PHP/Laravel applications within Thomas More's datacenter. The platform provides an <KeywordHighlight>automated deployment process</KeywordHighlight> for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
+                      
+                      <h4 className="text-lg font-semibold">My Contribution</h4>
+                      <p>I was responsible for creating and managing the <KeywordHighlight>Kubernetes cluster</KeywordHighlight>. My work involved setting up the infrastructure for <KeywordHighlight>container orchestration</KeywordHighlight>, ensuring <KeywordHighlight>high availability</KeywordHighlight>, and implementing automated scaling solutions for the hosted applications.</p>
+                      
+                      <h4 className="text-lg font-semibold">What I Learned</h4>
+                      <p>Gained practical experience in <KeywordHighlight>containerization technologies</KeywordHighlight>, Kubernetes administration, and implementing <KeywordHighlight>CIS security controls</KeywordHighlight>. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
+                    </div>
+                    
+                    <SparkleButton 
+                      variant="outline" 
+                      className="flex items-center"
+                      onClick={() => setSelectedProject('project2')}
                     >
-                      <img 
-                        src="/images/project-2-hosting-platform.png" 
-                        alt="Project 2" 
-                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                        }}
-                      />
-                    </motion.div>
+                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
+                    </SparkleButton>
                   </div>
-                </div>
-                <div className="p-8">
-                  <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2.2 Project</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">App Hosting Platform for Clients</h3>
-                  
-                  <div className="space-y-4 mb-6">
-                    <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Designed and implemented a <KeywordHighlight>hosting platform</KeywordHighlight> for PHP/Laravel applications within Thomas More's datacenter. The platform provides an <KeywordHighlight>automated deployment process</KeywordHighlight> for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
-                    
-                    <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I was responsible for creating and managing the <KeywordHighlight>Kubernetes cluster</KeywordHighlight>. My work involved setting up the infrastructure for <KeywordHighlight>container orchestration</KeywordHighlight>, ensuring <KeywordHighlight>high availability</KeywordHighlight>, and implementing automated scaling solutions for the hosted applications.</p>
-                    
-                    <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Gained practical experience in <KeywordHighlight>containerization technologies</KeywordHighlight>, Kubernetes administration, and implementing <KeywordHighlight>CIS security controls</KeywordHighlight>. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
-                  </div>
-                  
-                  <SparkleButton 
-                    variant="outline" 
-                    className="flex items-center"
-                    onClick={() => setSelectedProject('project2')}
-                  >
-                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                  </SparkleButton>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           </motion.div>
 
           {/* Additional Projects */}
@@ -1638,78 +1558,61 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-secondary"></div>
             </motion.div>
 
-            <motion.div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
-              ref={tiltRef3}
-              onMouseMove={handleMouseMove3}
-              onMouseEnter={handleMouseEnter3}
-              onMouseLeave={handleMouseLeave3}
-              animate={controls3}
-              style={{ 
-                transformStyle: "preserve-3d",
-                transformOrigin: "center center"
-              }}
-              whileHover={{ scale: 1.01 }}
-            >
-              <div 
-                ref={glareRef3} 
-                className="shine-effect absolute inset-0 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at ${glarePosition3.x}% ${glarePosition3.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
-                  opacity: 1,
-                  transition: "background 0.1s ease-out"
-                }}
-              />
-              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
-                <div className="p-8">
-                  <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">Security Awareness Campaign Movie</h3>
-                  
-                  <div className="space-y-4 mb-6">
-                    <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Created an <KeywordHighlight>educational movie</KeywordHighlight> about <KeywordHighlight>cybersecurity awareness</KeywordHighlight>, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
+            <TiltCard>
+              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+                <div className="grid md:grid-cols-2 relative z-10">
+                  <div className="p-8">
+                    <div className="mb-6">
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">Security Awareness Campaign Movie</h3>
                     
-                    <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I served as the <KeywordHighlight>main editor</KeywordHighlight> and <KeywordHighlight>creative director</KeywordHighlight>, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
+                    <div className="space-y-4 mb-6">
+                      <h4 className="text-lg font-semibold">Context & Background</h4>
+                      <p>Created an <KeywordHighlight>educational movie</KeywordHighlight> about <KeywordHighlight>cybersecurity awareness</KeywordHighlight>, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
+                      
+                      <h4 className="text-lg font-semibold">My Contribution</h4>
+                      <p>I served as the <KeywordHighlight>main editor</KeywordHighlight> and <KeywordHighlight>creative director</KeywordHighlight>, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
+                      
+                      <h4 className="text-lg font-semibold">What I Learned</h4>
+                      <p>Strengthened my skills in <KeywordHighlight>narrative storytelling</KeywordHighlight> through visual media, <KeywordHighlight>technical video production</KeywordHighlight> in security contexts, and effectively communicating complex security concepts through engaging content.</p>
+                    </div>
                     
-                    <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Strengthened my skills in <KeywordHighlight>narrative storytelling</KeywordHighlight> through visual media, <KeywordHighlight>technical video production</KeywordHighlight> in security contexts, and effectively communicating complex security concepts through engaging content.</p>
-                  </div>
-                  
-                  <SparkleButton 
-                    variant="outline" 
-                    className="flex items-center"
-                    onClick={() => setSelectedProject('project3')}
-                  >
-                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                  </SparkleButton>
-                </div>
-                <div className="bg-muted lg:block hidden">
-                  {/* Project 3 Image */}
-                  <div className="relative h-full p-6 flex items-center justify-center">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="w-full h-full flex items-center justify-center"
+                    <SparkleButton 
+                      variant="outline" 
+                      className="flex items-center"
+                      onClick={() => setSelectedProject('project3')}
                     >
-                      <img 
-                        src="/images/project-3-video-editing-awareness-movie.png" 
-                        alt="Security Awareness Campaign Movie" 
-                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                        }}
-                      />
-                    </motion.div>
+                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
+                    </SparkleButton>
+                  </div>
+                  <div className="bg-muted lg:block hidden">
+                    {/* Project 3 Image */}
+                    <div className="relative h-full p-6 flex items-center justify-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ transform: "translateZ(40px)" }}
+                      >
+                        <img 
+                          src="/images/project-3-video-editing-awareness-movie.png" 
+                          alt="Security Awareness Campaign Movie" 
+                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                          }}
+                        />
+                      </motion.div>
+                    </div>
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           </motion.div>
 
           {/* Project 4 */}
@@ -1743,78 +1646,61 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-primary"></div>
             </motion.div>
 
-            <motion.div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
-              ref={tiltRef4}
-              onMouseMove={handleMouseMove4}
-              onMouseEnter={handleMouseEnter4}
-              onMouseLeave={handleMouseLeave4}
-              animate={controls4}
-              style={{ 
-                transformStyle: "preserve-3d",
-                transformOrigin: "center center"
-              }}
-              whileHover={{ scale: 1.01 }}
-            >
-              <div 
-                ref={glareRef4} 
-                className="shine-effect absolute inset-0 pointer-events-none"
-                style={{
-                  background: `radial-gradient(circle at ${glarePosition4.x}% ${glarePosition4.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
-                  opacity: 1,
-                  transition: "background 0.1s ease-out"
-                }}
-              />
-              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
-                <div className="bg-muted lg:block hidden">
-                  {/* Project 4 Image */}
-                  <div className="relative h-full p-6 flex items-center justify-center">
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.5, delay: 0.2 }}
-                      className="w-full h-full flex items-center justify-center"
+            <TiltCard>
+              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+                <div className="grid md:grid-cols-2 relative z-10">
+                  <div className="bg-muted lg:block hidden">
+                    {/* Project 4 Image */}
+                    <div className="relative h-full p-6 flex items-center justify-center">
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="w-full h-full flex items-center justify-center"
+                        style={{ transform: "translateZ(40px)" }}
+                      >
+                        <img 
+                          src="/images/project-4-KeyedColors-logo.png" 
+                          alt="KeyedColors" 
+                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                          }}
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
+                  <div className="p-8">
+                    <div className="mb-6">
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Personal Project</span>
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">KeyedColors</h3>
+                    
+                    <div className="space-y-4 mb-6">
+                      <h4 className="text-lg font-semibold">Context & Background</h4>
+                      <p>Developed a Windows application for creating <KeywordHighlight>custom display profiles</KeywordHighlight> with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using <KeywordHighlight>customizable hotkeys</KeywordHighlight>.</p>
+                      
+                      <h4 className="text-lg font-semibold">My Contribution</h4>
+                      <p>I identified a <KeywordHighlight>gap in the market</KeywordHighlight> for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
+                      
+                      <h4 className="text-lg font-semibold">What I Learned</h4>
+                      <p>Gained hands-on experience with <KeywordHighlight>Windows API</KeywordHighlight> for display settings manipulation, <KeywordHighlight>system tray integration</KeywordHighlight>, and <KeywordHighlight>global hotkey management</KeywordHighlight>. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
+                    </div>
+                    
+                    <SparkleButton 
+                      variant="outline" 
+                      className="flex items-center"
+                      onClick={() => setSelectedProject('project4')}
                     >
-                      <img 
-                        src="/images/project-4-KeyedColors-logo.png" 
-                        alt="KeyedColors" 
-                        className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                        }}
-                      />
-                    </motion.div>
+                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
+                    </SparkleButton>
                   </div>
-                </div>
-                <div className="p-8">
-                  <div className="mb-6">
-                    <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Personal Project</span>
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4">KeyedColors</h3>
-                  
-                  <div className="space-y-4 mb-6">
-                    <h4 className="text-lg font-semibold">Context & Background</h4>
-                    <p>Developed a Windows application for creating <KeywordHighlight>custom display profiles</KeywordHighlight> with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using <KeywordHighlight>customizable hotkeys</KeywordHighlight>.</p>
-                    
-                    <h4 className="text-lg font-semibold">My Contribution</h4>
-                    <p>I identified a <KeywordHighlight>gap in the market</KeywordHighlight> for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
-                    
-                    <h4 className="text-lg font-semibold">What I Learned</h4>
-                    <p>Gained hands-on experience with <KeywordHighlight>Windows API</KeywordHighlight> for display settings manipulation, <KeywordHighlight>system tray integration</KeywordHighlight>, and <KeywordHighlight>global hotkey management</KeywordHighlight>. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
-                  </div>
-                  
-                  <SparkleButton 
-                    variant="outline" 
-                    className="flex items-center"
-                    onClick={() => setSelectedProject('project4')}
-                  >
-                    View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                  </SparkleButton>
                 </div>
               </div>
-            </motion.div>
+            </TiltCard>
           </motion.div>
         </div>
       </section>
