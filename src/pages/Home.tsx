@@ -886,52 +886,71 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
-// Update the useTiltEffect function to provide immediate feedback
-const useTiltEffect = () => {
-  const tiltRef = useRef<HTMLDivElement>(null);
-  const shineRef = useRef<HTMLDivElement>(null);
+// Add this improved implementation using framer-motion directly
+const useSmoothTiltEffect = () => {
+  const [rotateXY, setRotateXY] = useState({ x: 0, y: 0 });
+  const [glarePosition, setGlarePosition] = useState({ x: 50, y: 50 });
+  const cardRef = useRef<HTMLDivElement>(null);
+  const glareRef = useRef<HTMLDivElement>(null);
   
+  // This is necessary to get a smooth return to the default position
+  const controls = useAnimation();
+  
+  // Function to handle mouse movement over the card
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tiltRef.current) return;
+    if (!cardRef.current) return;
     
-    const card = tiltRef.current;
-    const rect = card.getBoundingClientRect();
+    // Get card boundaries
+    const rect = cardRef.current.getBoundingClientRect();
     
-    // Calculate cursor position relative to the card (0 to 1)
+    // Calculate cursor position relative to card (0 to 1)
     const x = (e.clientX - rect.left) / rect.width;
     const y = (e.clientY - rect.top) / rect.height;
     
-    // Calculate rotation based on mouse position (directly apply without animation frame)
-    const rotateY = 10 * (0.5 - x);
-    const rotateX = 10 * (y - 0.5);
+    // Calculate rotation angles based on mouse position
+    // Use a smaller value (e.g., 10) for subtler effect, larger for more pronounced effect
+    const rotateY = (0.5 - x) * 10; // negative when mouse is on right side
+    const rotateX = (y - 0.5) * 10; // positive when mouse is on bottom side
     
-    // Apply the rotation transform immediately
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    // Update state for rotation
+    setRotateXY({ x: rotateX, y: rotateY });
     
-    // Update shine effect immediately
-    if (shineRef.current) {
-      shineRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
+    // Update glare position
+    setGlarePosition({ x: x * 100, y: y * 100 });
+    
+    // Animate to new position smoothly
+    controls.start({
+      rotateX: rotateX,
+      rotateY: rotateY,
+      transition: { type: "spring", stiffness: 300, damping: 30, mass: 0.5 }
+    });
+  };
+  
+  // Function to handle mouse leave event
+  const handleMouseLeave = () => {
+    // Animate back to default position
+    controls.start({
+      rotateX: 0,
+      rotateY: 0,
+      transition: { type: "spring", stiffness: 200, damping: 30 }
+    });
+    
+    // Reset glare position
+    setGlarePosition({ x: 50, y: 50 });
+    
+    // Reset state
+    setRotateXY({ x: 0, y: 0 });
+  };
+  
+  // Function to handle mouse enter event
+  const handleMouseEnter = () => {
+    // Ensure we have a fresh rect for accurate calculations
+    if (cardRef.current) {
+      cardRef.current.getBoundingClientRect();
     }
   };
   
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!tiltRef.current) return;
-    
-    const card = tiltRef.current;
-    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-    
-    // Reset shine effect
-    if (shineRef.current) {
-      shineRef.current.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
-    }
-  };
-  
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
-    // No need to do anything special on enter, just ensure the element has proper initial styles
-    if (!tiltRef.current) return;
-  };
-  
-  return { tiltRef, shineRef, handleMouseMove, handleMouseLeave, handleMouseEnter };
+  return { cardRef, glareRef, glarePosition, rotateXY, controls, handleMouseMove, handleMouseLeave, handleMouseEnter };
 };
 
 /**
@@ -1172,38 +1191,46 @@ const Home = () => {
     }
   }, [isDark]);
 
-  // Add these refs to your Home component function
+  // Add these refs to your Home component function - REMOVE OLD REFS
   const { 
-    tiltRef: tiltRef1, 
-    shineRef: shineRef1,
+    cardRef: tiltRef1, 
+    glareRef: glareRef1,
+    glarePosition: glarePosition1,
+    controls: controls1,
     handleMouseMove: handleMouseMove1, 
     handleMouseLeave: handleMouseLeave1,
     handleMouseEnter: handleMouseEnter1 
-  } = useTiltEffect();
+  } = useSmoothTiltEffect();
 
   const { 
-    tiltRef: tiltRef2, 
-    shineRef: shineRef2,
+    cardRef: tiltRef2, 
+    glareRef: glareRef2,
+    glarePosition: glarePosition2,
+    controls: controls2,
     handleMouseMove: handleMouseMove2, 
     handleMouseLeave: handleMouseLeave2,
     handleMouseEnter: handleMouseEnter2 
-  } = useTiltEffect();
+  } = useSmoothTiltEffect();
 
   const { 
-    tiltRef: tiltRef3, 
-    shineRef: shineRef3,
+    cardRef: tiltRef3, 
+    glareRef: glareRef3,
+    glarePosition: glarePosition3,
+    controls: controls3,
     handleMouseMove: handleMouseMove3, 
     handleMouseLeave: handleMouseLeave3,
     handleMouseEnter: handleMouseEnter3 
-  } = useTiltEffect();
+  } = useSmoothTiltEffect();
 
   const { 
-    tiltRef: tiltRef4, 
-    shineRef: shineRef4,
+    cardRef: tiltRef4, 
+    glareRef: glareRef4,
+    glarePosition: glarePosition4,
+    controls: controls4,
     handleMouseMove: handleMouseMove4, 
     handleMouseLeave: handleMouseLeave4,
     handleMouseEnter: handleMouseEnter4 
-  } = useTiltEffect();
+  } = useSmoothTiltEffect();
 
   return (
     <div className="flex flex-col min-h-screen relative">
@@ -1400,15 +1427,29 @@ const Home = () => {
               <div className="w-full h-full rounded-md border-2 border-secondary"></div>
             </motion.div>
 
-            <div 
+            <motion.div 
               className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
               ref={tiltRef1}
               onMouseMove={handleMouseMove1}
               onMouseEnter={handleMouseEnter1}
               onMouseLeave={handleMouseLeave1}
+              animate={controls1}
+              style={{ 
+                transformStyle: "preserve-3d",
+                transformOrigin: "center center"
+              }}
+              whileHover={{ scale: 1.01 }}
             >
-              <div ref={shineRef1} className="shine-effect absolute inset-0 pointer-events-none"></div>
-              <div className="grid md:grid-cols-2 relative z-10">
+              <div 
+                ref={glareRef1} 
+                className="shine-effect absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at ${glarePosition1.x}% ${glarePosition1.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
+                  opacity: 1,
+                  transition: "background 0.1s ease-out"
+                }}
+              />
+              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
                 <div className="p-8">
                   <div className="mb-6">
                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
@@ -1457,7 +1498,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Project 2 */}
@@ -1491,15 +1532,29 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-secondary/20"></div>
             </motion.div>
 
-            <div 
+            <motion.div 
               className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
               ref={tiltRef2}
               onMouseMove={handleMouseMove2}
               onMouseEnter={handleMouseEnter2}
               onMouseLeave={handleMouseLeave2}
+              animate={controls2}
+              style={{ 
+                transformStyle: "preserve-3d",
+                transformOrigin: "center center"
+              }}
+              whileHover={{ scale: 1.01 }}
             >
-              <div ref={shineRef2} className="shine-effect absolute inset-0 pointer-events-none"></div>
-              <div className="grid md:grid-cols-2 relative z-10">
+              <div 
+                ref={glareRef2} 
+                className="shine-effect absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at ${glarePosition2.x}% ${glarePosition2.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
+                  opacity: 1,
+                  transition: "background 0.1s ease-out"
+                }}
+              />
+              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
                 <div className="bg-muted lg:block hidden">
                   {/* Project 2 Image */}
                   <div className="relative h-full p-6 flex items-center justify-center">
@@ -1548,7 +1603,7 @@ const Home = () => {
                   </SparkleButton>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Additional Projects */}
@@ -1583,15 +1638,29 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-secondary"></div>
             </motion.div>
 
-            <div 
+            <motion.div 
               className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
               ref={tiltRef3}
               onMouseMove={handleMouseMove3}
               onMouseEnter={handleMouseEnter3}
               onMouseLeave={handleMouseLeave3}
+              animate={controls3}
+              style={{ 
+                transformStyle: "preserve-3d",
+                transformOrigin: "center center"
+              }}
+              whileHover={{ scale: 1.01 }}
             >
-              <div ref={shineRef3} className="shine-effect absolute inset-0 pointer-events-none"></div>
-              <div className="grid md:grid-cols-2 relative z-10">
+              <div 
+                ref={glareRef3} 
+                className="shine-effect absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at ${glarePosition3.x}% ${glarePosition3.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
+                  opacity: 1,
+                  transition: "background 0.1s ease-out"
+                }}
+              />
+              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
                 <div className="p-8">
                   <div className="mb-6">
                     <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
@@ -1640,7 +1709,7 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Project 4 */}
@@ -1674,15 +1743,29 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-primary"></div>
             </motion.div>
 
-            <div 
+            <motion.div 
               className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
               ref={tiltRef4}
               onMouseMove={handleMouseMove4}
               onMouseEnter={handleMouseEnter4}
               onMouseLeave={handleMouseLeave4}
+              animate={controls4}
+              style={{ 
+                transformStyle: "preserve-3d",
+                transformOrigin: "center center"
+              }}
+              whileHover={{ scale: 1.01 }}
             >
-              <div ref={shineRef4} className="shine-effect absolute inset-0 pointer-events-none"></div>
-              <div className="grid md:grid-cols-2 relative z-10">
+              <div 
+                ref={glareRef4} 
+                className="shine-effect absolute inset-0 pointer-events-none"
+                style={{
+                  background: `radial-gradient(circle at ${glarePosition4.x}% ${glarePosition4.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`,
+                  opacity: 1,
+                  transition: "background 0.1s ease-out"
+                }}
+              />
+              <div className="grid md:grid-cols-2 relative z-10" style={{ transform: "translateZ(10px)" }}>
                 <div className="bg-muted lg:block hidden">
                   {/* Project 4 Image */}
                   <div className="relative h-full p-6 flex items-center justify-center">
@@ -1731,7 +1814,7 @@ const Home = () => {
                   </SparkleButton>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
         </div>
       </section>
