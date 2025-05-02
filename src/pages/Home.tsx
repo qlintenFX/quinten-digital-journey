@@ -1528,12 +1528,9 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex flex-col items-center">
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
-                    </div>
+                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
               </div>
             </div>
@@ -1585,12 +1582,9 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex flex-col items-center">
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
-                    </div>
+                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
               </div>
               
@@ -1741,12 +1735,9 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex flex-col items-center">
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
-                    </div>
+                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
               </div>
             </div>
@@ -1798,12 +1789,9 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex flex-col items-center">
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
-                    </div>
+                    <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
               </div>
               
