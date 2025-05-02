@@ -889,86 +889,114 @@ const KeywordHighlight = ({ children, className = "" }) => {
 
 // Modify the TiltCard component to improve hitbox accuracy and tilt response
 const TiltCard = ({ children }: { children: React.ReactNode }) => {
-  const [rotateXaxis, setRotateXaxis] = useState(0);
-  const [rotateYaxis, setRotateYaxis] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
-  
-  // Use spring animation with gentler physics for smoother transitions
-  const springConfig = { damping: 15, stiffness: 150, mass: 1 };
-  const rotateX = useSpring(0, springConfig);
-  const rotateY = useSpring(0, springConfig);
+  const mousePositionRef = useRef({ x: 0, y: 0 });
+  const rotateXRef = useRef(0);
+  const rotateYRef = useRef(0);
+  const isHoveredRef = useRef(false);
   
   // For shine effect positioning
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
   
-  // Use a ref to track if mouse is over the card
-  const isMouseOverRef = useRef(false);
+  // Use spring animation with gentler physics for smoother transitions
+  const springConfig = { damping: 15, stiffness: 150, mass: 1 };
+  const rotateX = useSpring(0, springConfig);
+  const rotateY = useSpring(0, springConfig);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    
-    const element = cardRef.current;
-    const elementRect = element.getBoundingClientRect();
-    
-    // Create a smaller buffer zone to avoid edge jitter but maintain response
-    const buffer = 5;
-    if (
-      e.clientX < elementRect.left + buffer ||
-      e.clientX > elementRect.right - buffer ||
-      e.clientY < elementRect.top + buffer ||
-      e.clientY > elementRect.bottom - buffer
-    ) {
-      return;
-    }
-    
-    const elementWidth = elementRect.width;
-    const elementHeight = elementRect.height;
-    const elementCenterX = elementWidth / 2;
-    const elementCenterY = elementHeight / 2;
-    
-    // Calculate mouse position relative to the center of the card
-    const mouseX = e.clientX - elementRect.left - elementCenterX;
-    const mouseY = e.clientY - elementRect.top - elementCenterY;
-    
-    // Calculate rotation angles with consistent intensity
-    const tiltFactor = 12;
-    const degreeX = (mouseY / elementHeight) * tiltFactor;
-    const degreeY = (mouseX / elementWidth) * tiltFactor;
-    
-    // Update states for rotation and mouse position
-    setRotateXaxis(-degreeX);
-    setRotateYaxis(degreeY);
-    setMousePosition({
-      x: (e.clientX - elementRect.left) / elementRect.width * 100,
-      y: (e.clientY - elementRect.top) / elementRect.height * 100
-    });
-    
-    isMouseOverRef.current = true;
-    if (!isHovered) {
-      setIsHovered(true);
-    }
-  };
-
-  const handleMouseEnter = () => {
-    isMouseOverRef.current = true;
-    setIsHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    isMouseOverRef.current = false;
-    
-    // Reset rotation immediately to avoid lingering tilt
-    setRotateXaxis(0);
-    setRotateYaxis(0);
-    setIsHovered(false);
-  };
-
-  // Update springs when rotation changes
   useEffect(() => {
-    rotateX.set(rotateXaxis);
-    rotateY.set(rotateYaxis);
-  }, [rotateXaxis, rotateYaxis]);
+    const card = cardRef.current;
+    if (!card) return;
+    
+    const updateTilt = () => {
+      if (!isHoveredRef.current) {
+        // Reset tilt when not hovered
+        rotateX.set(0);
+        rotateY.set(0);
+        return;
+      }
+      
+      const element = cardRef.current;
+      if (!element) return;
+      
+      const elementRect = element.getBoundingClientRect();
+      const elementWidth = elementRect.width;
+      const elementHeight = elementRect.height;
+      const elementCenterX = elementWidth / 2;
+      const elementCenterY = elementHeight / 2;
+      
+      // Calculate rotation angles with consistent intensity
+      const tiltFactor = 12;
+      const mouseX = mousePositionRef.current.x - elementRect.left;
+      const mouseY = mousePositionRef.current.y - elementRect.top;
+      
+      // Calculate normalized position (-1 to 1) from center
+      const normalizedX = (mouseX - elementCenterX) / elementCenterX;
+      const normalizedY = (mouseY - elementCenterY) / elementCenterY;
+      
+      // Apply tilt factor
+      rotateXRef.current = -normalizedY * tiltFactor;
+      rotateYRef.current = normalizedX * tiltFactor;
+      
+      // Update springs
+      rotateX.set(rotateXRef.current);
+      rotateY.set(rotateYRef.current);
+      
+      // Update shine effect position
+      setMousePosition({
+        x: (mouseX / elementWidth) * 100,
+        y: (mouseY / elementHeight) * 100
+      });
+    };
+    
+    // Use requestAnimationFrame for smoother updates
+    let animationId: number;
+    const animate = () => {
+      updateTilt();
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    // Handle mouse events
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePositionRef.current = { x: e.clientX, y: e.clientY };
+    };
+    
+    const handleMouseEnter = () => {
+      isHoveredRef.current = true;
+      setIsHovered(true);
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    const handleMouseLeave = () => {
+      isHoveredRef.current = false;
+      setIsHovered(false);
+      
+      // Smoothly reset tilt
+      rotateX.set(0);
+      rotateY.set(0);
+      
+      // Cancel animation loop
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+    
+    // Add event listeners
+    card.addEventListener('mousemove', handleMouseMove);
+    card.addEventListener('mouseenter', handleMouseEnter);
+    card.addEventListener('mouseleave', handleMouseLeave);
+    
+    return () => {
+      // Clean up event listeners and animation
+      card.removeEventListener('mousemove', handleMouseMove);
+      card.removeEventListener('mouseenter', handleMouseEnter);
+      card.removeEventListener('mouseleave', handleMouseLeave);
+      
+      if (animationId) {
+        cancelAnimationFrame(animationId);
+      }
+    };
+  }, []);
 
   return (
     <motion.div
@@ -980,9 +1008,6 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     >
       <motion.div
         ref={cardRef}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
         style={{
           width: "100%",
           height: "100%",
