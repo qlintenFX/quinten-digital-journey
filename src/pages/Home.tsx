@@ -1835,32 +1835,26 @@ const Home = () => {
                         ease: "easeOut" 
                       }}
                     >
-                      <div className="relative overflow-hidden rounded-xl shadow-lg">
-                        <motion.img 
+                      <div 
+                        className="relative overflow-hidden rounded-xl shadow-lg group"
+                      >
+                        <img 
                           src={img} 
                           alt={`${projects[selectedProject].title} - Photo ${index + 1}`}
-                          className={`w-full rounded-xl shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''}`}
-                          initial={{ scale: 1.05 }}
-                          whileHover={{ 
-                            scale: 1.02,
-                            transition: { duration: 0.3 }
-                          }}
-                          transition={{ duration: 0.5 }}
+                          className={`w-full rounded-xl shadow-md object-contain max-h-[70vh] ${img.includes('diagram') ? 'bg-white' : ''} transition-transform duration-300 group-hover:scale-[1.015]`}
                           onError={(e) => {
                             const target = e.target as HTMLImageElement;
                             target.src = "https://placehold.co/800x600?text=Project+Screenshot";
                           }}
                         />
-                        <motion.div 
-                          className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"
-                          initial={{ opacity: 0 }}
-                          whileHover={{ opacity: 1 }}
+                        <div 
+                          className="absolute inset-0 bg-gradient-to-b from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                         >
                           <div className="p-4 text-white">
                             <h4 className="font-semibold">{projects[selectedProject].title}</h4>
                             <p className="text-sm opacity-90">Image {index + 1} of {projects[selectedProject].images.length}</p>
                           </div>
-                        </motion.div>
+                        </div>
                       </div>
                     </motion.div>
                   ))}
