@@ -1040,7 +1040,6 @@ const Home = () => {
       technologies: ["C#", ".NET", "Windows API", "UI/UX", "System Tray Integration", "Global Hotkeys"],
       image: "/images/project-4-KeyedColors-logo.png",
       images: [
-        "/images/project-4-KeyedColors-logo.png",
         "/images/project-4-KeyedColors-profiles.png",
         "/images/project-4-KeyedColors-dynamic-profile.png"
       ]
