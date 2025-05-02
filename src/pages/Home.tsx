@@ -15,7 +15,8 @@ import {
   Circle,
   Triangle,
   Square,
-  Plus
+  Plus,
+  ArrowUpLeft
 } from 'lucide-react';
 import { Modal } from '@/components/ui/modal';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -1464,7 +1465,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+            <div className="flex flex-row gap-6">
               <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
@@ -1514,12 +1515,12 @@ const Home = () => {
                 </TiltCard>
               </div>
               
-              {/* Button positioned outside the card */}
-              <div className="self-stretch flex flex-col justify-center md:w-auto md:ml-4">
-                <div className="group h-full flex flex-col items-center justify-center">
+              {/* Button positioned outside the card, full height */}
+              <div className="flex items-stretch w-20">
+                <div className="group flex flex-col w-full">
                   <button
                     onClick={() => setSelectedProject('project1')}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
                       group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
                       relative overflow-hidden transform group-hover:translate-z-5
@@ -1528,9 +1529,9 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex items-center">
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
-                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white ml-1 -mt-1" />
+                    <div className="flex flex-col items-center">
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
+                      <ArrowUpRight className="h-5 w-5 text-white animate-pulse" />
                     </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
@@ -1571,12 +1572,13 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-              <div className="order-2 md:order-1 self-stretch flex flex-col justify-center md:w-auto md:mr-4">
-                <div className="group h-full flex flex-col items-center justify-center">
+            <div className="flex flex-row gap-6">
+              {/* Button positioned outside the card, full height */}
+              <div className="flex items-stretch w-20">
+                <div className="group flex flex-col w-full">
                   <button
                     onClick={() => setSelectedProject('project2')}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
                       group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
                       relative overflow-hidden transform group-hover:translate-z-5
@@ -1585,16 +1587,16 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex items-center">
-                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white mr-1 -mt-1 -scale-x-100" />
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <div className="flex flex-col items-center">
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
+                      <ArrowUpLeft className="h-5 w-5 text-white animate-pulse" />
                     </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
                 </div>
               </div>
               
-              <div className="order-1 md:order-2 flex-grow">
+              <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
                     <div className="grid md:grid-cols-2 relative z-10">
@@ -1678,7 +1680,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+            <div className="flex flex-row gap-6">
               <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
@@ -1728,12 +1730,12 @@ const Home = () => {
                 </TiltCard>
               </div>
               
-              {/* Button positioned outside the card */}
-              <div className="self-stretch flex flex-col justify-center md:w-auto md:ml-4">
-                <div className="group h-full flex flex-col items-center justify-center">
+              {/* Button positioned outside the card, full height */}
+              <div className="flex items-stretch w-20">
+                <div className="group flex flex-col w-full">
                   <button
                     onClick={() => setSelectedProject('project3')}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
                       group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
                       relative overflow-hidden transform group-hover:translate-z-5
@@ -1742,9 +1744,9 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex items-center">
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
-                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white ml-1 -mt-1" />
+                    <div className="flex flex-col items-center">
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
+                      <ArrowUpRight className="h-5 w-5 text-white animate-pulse" />
                     </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
@@ -1785,12 +1787,13 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-              <div className="order-2 md:order-1 self-stretch flex flex-col justify-center md:w-auto md:mr-4">
-                <div className="group h-full flex flex-col items-center justify-center">
+            <div className="flex flex-row gap-6">
+              {/* Button positioned outside the card, full height */}
+              <div className="flex items-stretch w-20">
+                <div className="group flex flex-col w-full">
                   <button
                     onClick={() => setSelectedProject('project4')}
-                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
                       group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
                       relative overflow-hidden transform group-hover:translate-z-5
@@ -1799,16 +1802,16 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <div className="flex items-center">
-                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white mr-1 -mt-1 -scale-x-100" />
-                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <div className="flex flex-col items-center">
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
+                      <ArrowUpLeft className="h-5 w-5 text-white animate-pulse" />
                     </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
                 </div>
               </div>
               
-              <div className="order-1 md:order-2 flex-grow">
+              <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
                     <div className="grid md:grid-cols-2 relative z-10">
