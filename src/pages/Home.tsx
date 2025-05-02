@@ -886,26 +886,78 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
-// Replace the TiltCard component with this enhanced implementation
+// Replace the TiltCard component with this improved version
 const TiltCard = ({ children }: { children: React.ReactNode }) => {
   const [rotateXaxis, setRotateXaxis] = useState(0);
   const [rotateYaxis, setRotateYaxis] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
   
-  // Use spring animation for smooth transitions
-  const springConfig = { damping: 25, stiffness: 300, mass: 0.8 };
+  // Create a reference to detect buttons for creating deadzones
+  const interactiveElementsRef = useRef<HTMLElement[]>([]);
+  
+  // Use spring animation with gentler physics for smoother transitions
+  const springConfig = { damping: 15, stiffness: 150, mass: 1 };
   const rotateX = useSpring(0, springConfig);
   const rotateY = useSpring(0, springConfig);
   
   // For shine effect positioning
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
+  
+  // Use a ref to track if mouse is over the card - more reliable than hover state
+  const isMouseOverRef = useRef(false);
+
+  // Function to check if the mouse is over any interactive element
+  const isOverInteractiveElement = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Get all buttons and links inside the card
+    if (!cardRef.current) return false;
+    
+    const elements = cardRef.current.querySelectorAll('button, a, [role="button"]');
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+    
+    // Check if mouse is over any interactive element with a small margin
+    for (const element of Array.from(elements)) {
+      const rect = element.getBoundingClientRect();
+      // Add a 10px margin around interactive elements
+      if (
+        mouseX >= rect.left - 10 &&
+        mouseX <= rect.right + 10 &&
+        mouseY >= rect.top - 10 &&
+        mouseY <= rect.bottom + 10
+      ) {
+        return true;
+      }
+    }
+    
+    return false;
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
     
     const element = cardRef.current;
     const elementRect = element.getBoundingClientRect();
+    
+    // Check if we're far enough inside the element to avoid edge jitter
+    // Create a 15px edge buffer zone
+    const buffer = 15;
+    if (
+      e.clientX < elementRect.left + buffer ||
+      e.clientX > elementRect.right - buffer ||
+      e.clientY < elementRect.top + buffer ||
+      e.clientY > elementRect.bottom - buffer
+    ) {
+      // If near the edge, use reduced tilt or return early
+      // This prevents flickering at the edges
+      isMouseOverRef.current = true;
+      return;
+    }
+    
+    // Check if we're hovering over an interactive element
+    // If so, reduce tilt effect significantly to make clicking easier
+    const overInteractive = isOverInteractiveElement(e);
+    
     const elementWidth = elementRect.width;
     const elementHeight = elementRect.height;
     const elementCenterX = elementWidth / 2;
@@ -915,9 +967,10 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     const mouseX = e.clientX - elementRect.left - elementCenterX;
     const mouseY = e.clientY - elementRect.top - elementCenterY;
     
-    // Calculate rotation angles (stronger effect with factor 25)
-    const degreeX = (mouseY / elementHeight) * 25;
-    const degreeY = (mouseX / elementWidth) * 25;
+    // Calculate rotation angles with reduced intensity near interactive elements
+    const tiltFactor = overInteractive ? 3 : 12; // Reduce tilt by 75% when over buttons
+    const degreeX = (mouseY / elementHeight) * tiltFactor;
+    const degreeY = (mouseX / elementWidth) * tiltFactor;
     
     // Update states for rotation and mouse position
     setRotateXaxis(-degreeX);
@@ -926,13 +979,28 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
       x: (e.clientX - elementRect.left) / elementRect.width * 100,
       y: (e.clientY - elementRect.top) / elementRect.height * 100
     });
+    
+    isMouseOverRef.current = true;
+    if (!isHovered) {
+      setIsHovered(true);
+    }
   };
 
   const handleMouseEnter = () => {
+    isMouseOverRef.current = true;
     setIsHovered(true);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    // Check if we're really leaving or if this is a false alarm
+    // by checking if the relatedTarget is a child of the card
+    if (cardRef.current && cardRef.current.contains(e.relatedTarget as Node)) {
+      return;
+    }
+    
+    isMouseOverRef.current = false;
+    
+    // Reset rotation immediately to avoid lingering tilt
     setRotateXaxis(0);
     setRotateYaxis(0);
     setIsHovered(false);
@@ -943,6 +1011,20 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     rotateX.set(rotateXaxis);
     rotateY.set(rotateYaxis);
   }, [rotateXaxis, rotateYaxis]);
+
+  // Find and store references to all interactive elements on mount
+  useEffect(() => {
+    if (cardRef.current) {
+      const elements = cardRef.current.querySelectorAll('button, a, [role="button"]');
+      interactiveElementsRef.current = Array.from(elements) as HTMLElement[];
+      
+      // Add pointer-events-auto to all interactive elements to ensure they're clickable
+      interactiveElementsRef.current.forEach(element => {
+        element.style.position = 'relative';
+        element.style.zIndex = '30'; // Ensure buttons are above other elements
+      });
+    }
+  }, []);
 
   return (
     <motion.div
@@ -962,42 +1044,40 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
           height: "100%",
           position: "relative",
           transformStyle: "preserve-3d",
-          transition: "transform 0.05s ease-out",
+          transition: "transform 0.2s ease-out",
           rotateX: rotateX,
           rotateY: rotateY,
           z: 0,
         }}
-        whileHover={{ z: 50, scale: 1.03 }}
+        whileHover={{ z: 20, scale: 1.02 }}
       >
-        {/* Shine effect that follows cursor */}
-        {isHovered && (
-          <motion.div
-            className="absolute inset-0 pointer-events-none z-20 rounded-lg opacity-0 group-hover:opacity-100"
-            style={{
-              background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%)`,
-              transition: "opacity 0.3s ease",
-            }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: isHovered ? 1 : 0 }}
-          />
-        )}
-        
-        {/* Enhanced shadow effect on hover */}
+        {/* Shine effect that follows cursor - always present but opacity changes */}
         <motion.div
-          className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-purple-500/20 to-primary/20 rounded-lg blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-          style={{ 
-            transformStyle: "preserve-3d",
-            transform: "translateZ(-10px)",
-            zIndex: -1
+          className="absolute inset-0 pointer-events-none z-10 rounded-lg transition-opacity duration-500"
+          style={{
+            background: `radial-gradient(circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 60%)`,
+            opacity: isHovered ? 0.8 : 0,
           }}
         />
         
-        {/* Main content */}
+        {/* Enhanced shadow effect with smoother transition */}
+        <motion.div
+          className="absolute -inset-1 bg-gradient-to-r from-primary/15 via-purple-500/15 to-primary/15 rounded-lg blur-lg transition-opacity duration-500 pointer-events-none"
+          style={{ 
+            transformStyle: "preserve-3d",
+            transform: "translateZ(-5px)",
+            zIndex: -1,
+            opacity: isHovered ? 1 : 0
+          }}
+        />
+        
+        {/* Main content - ensure it keeps pointer events */}
         <motion.div
           style={{
             transformStyle: "preserve-3d",
             width: "100%",
             height: "100%",
+            pointerEvents: "auto", // Ensure it captures all events
           }}
         >
           {children}
