@@ -14,9 +14,15 @@ body {
   overflow: auto;
 }
 
-/* Make all main sections snap to viewport */
-section[id] {
+/* Target specific sections by ID for scroll snapping */
+header[id="home"],
+section[id="about"], 
+section[id="projects"], 
+section[id="youtube"], 
+section[id="contact"] {
   scroll-snap-align: start;
   min-height: 100vh;
   scroll-snap-stop: always;
+  /* Debug outline to make sure styles are applied */
+  outline: 2px solid rgba(168, 85, 247, 0.2);
 } 
