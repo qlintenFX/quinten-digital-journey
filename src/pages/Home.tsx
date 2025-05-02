@@ -886,6 +886,84 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
+// Add this utility function before the Home component
+const useTiltEffect = () => {
+  const tiltRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+  const mousePositionRef = useRef<{ x: number, y: number }>({ x: 0, y: 0 });
+  const cardRectRef = useRef<DOMRect | null>(null);
+  const shineRef = useRef<HTMLDivElement>(null);
+  
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!tiltRef.current) return;
+    
+    const card = tiltRef.current;
+    if (!cardRectRef.current) {
+      cardRectRef.current = card.getBoundingClientRect();
+    }
+    
+    const rect = cardRectRef.current;
+    mousePositionRef.current = {
+      x: (e.clientX - rect.left) / rect.width,
+      y: (e.clientY - rect.top) / rect.height
+    };
+    
+    if (!animationRef.current) {
+      animationRef.current = requestAnimationFrame(updateTilt);
+    }
+  };
+  
+  const updateTilt = () => {
+    animationRef.current = null;
+    if (!tiltRef.current) return;
+    
+    const card = tiltRef.current;
+    const { x, y } = mousePositionRef.current;
+    
+    // Calculate rotation based on mouse position
+    const rotateY = 10 * (0.5 - x);
+    const rotateX = 10 * (y - 0.5);
+    
+    // Apply the rotation transform
+    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    
+    // Update shine effect
+    if (shineRef.current) {
+      shineRef.current.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
+    }
+    
+    // Continue animation if still moving
+    animationRef.current = requestAnimationFrame(updateTilt);
+  };
+  
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!tiltRef.current) return;
+    
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    
+    const card = tiltRef.current;
+    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    
+    // Reset shine effect
+    if (shineRef.current) {
+      shineRef.current.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
+    }
+    
+    // Reset card rect reference
+    cardRectRef.current = null;
+  };
+  
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!tiltRef.current) return;
+    cardRectRef.current = tiltRef.current.getBoundingClientRect();
+  };
+  
+  return { tiltRef, shineRef, handleMouseMove, handleMouseLeave, handleMouseEnter };
+};
+
 /**
  * Home Component
  * Main page component containing all sections:
@@ -1124,6 +1202,39 @@ const Home = () => {
     }
   }, [isDark]);
 
+  // Add these refs to your Home component function
+  const { 
+    tiltRef: tiltRef1, 
+    shineRef: shineRef1,
+    handleMouseMove: handleMouseMove1, 
+    handleMouseLeave: handleMouseLeave1,
+    handleMouseEnter: handleMouseEnter1 
+  } = useTiltEffect();
+
+  const { 
+    tiltRef: tiltRef2, 
+    shineRef: shineRef2,
+    handleMouseMove: handleMouseMove2, 
+    handleMouseLeave: handleMouseLeave2,
+    handleMouseEnter: handleMouseEnter2 
+  } = useTiltEffect();
+
+  const { 
+    tiltRef: tiltRef3, 
+    shineRef: shineRef3,
+    handleMouseMove: handleMouseMove3, 
+    handleMouseLeave: handleMouseLeave3,
+    handleMouseEnter: handleMouseEnter3 
+  } = useTiltEffect();
+
+  const { 
+    tiltRef: tiltRef4, 
+    shineRef: shineRef4,
+    handleMouseMove: handleMouseMove4, 
+    handleMouseLeave: handleMouseLeave4,
+    handleMouseEnter: handleMouseEnter4 
+  } = useTiltEffect();
+
   return (
     <div className="flex flex-col min-h-screen relative">
       {/* Background tints layer - moved behind lens flares */}
@@ -1320,38 +1431,13 @@ const Home = () => {
             </motion.div>
 
             <div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
-              onMouseMove={(e) => {
-                const card = e.currentTarget;
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width;
-                const y = (e.clientY - rect.top) / rect.height;
-                
-                // Calculate rotation based on mouse position
-                const rotateY = 10 * (0.5 - x);
-                const rotateX = 10 * (y - 0.5);
-                
-                // Apply the rotation transform
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Update position of shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const card = e.currentTarget;
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                
-                // Reset shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
-                }
-              }}
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
+              ref={tiltRef1}
+              onMouseMove={handleMouseMove1}
+              onMouseEnter={handleMouseEnter1}
+              onMouseLeave={handleMouseLeave1}
             >
-              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div ref={shineRef1} className="shine-effect absolute inset-0 pointer-events-none"></div>
               <div className="grid md:grid-cols-2 relative z-10">
                 <div className="p-8">
                   <div className="mb-6">
@@ -1436,38 +1522,13 @@ const Home = () => {
             </motion.div>
 
             <div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
-              onMouseMove={(e) => {
-                const card = e.currentTarget;
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width;
-                const y = (e.clientY - rect.top) / rect.height;
-                
-                // Calculate rotation based on mouse position
-                const rotateY = 10 * (0.5 - x);
-                const rotateX = 10 * (y - 0.5);
-                
-                // Apply the rotation transform
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Update position of shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const card = e.currentTarget;
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                
-                // Reset shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
-                }
-              }}
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
+              ref={tiltRef2}
+              onMouseMove={handleMouseMove2}
+              onMouseEnter={handleMouseEnter2}
+              onMouseLeave={handleMouseLeave2}
             >
-              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div ref={shineRef2} className="shine-effect absolute inset-0 pointer-events-none"></div>
               <div className="grid md:grid-cols-2 relative z-10">
                 <div className="bg-muted lg:block hidden">
                   {/* Project 2 Image */}
@@ -1553,38 +1614,13 @@ const Home = () => {
             </motion.div>
 
             <div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
-              onMouseMove={(e) => {
-                const card = e.currentTarget;
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width;
-                const y = (e.clientY - rect.top) / rect.height;
-                
-                // Calculate rotation based on mouse position
-                const rotateY = 10 * (0.5 - x);
-                const rotateX = 10 * (y - 0.5);
-                
-                // Apply the rotation transform
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Update position of shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const card = e.currentTarget;
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                
-                // Reset shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
-                }
-              }}
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
+              ref={tiltRef3}
+              onMouseMove={handleMouseMove3}
+              onMouseEnter={handleMouseEnter3}
+              onMouseLeave={handleMouseLeave3}
             >
-              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div ref={shineRef3} className="shine-effect absolute inset-0 pointer-events-none"></div>
               <div className="grid md:grid-cols-2 relative z-10">
                 <div className="p-8">
                   <div className="mb-6">
@@ -1669,38 +1705,13 @@ const Home = () => {
             </motion.div>
 
             <div 
-              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 project-card-container"
-              onMouseMove={(e) => {
-                const card = e.currentTarget;
-                const rect = card.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width;
-                const y = (e.clientY - rect.top) / rect.height;
-                
-                // Calculate rotation based on mouse position
-                const rotateY = 10 * (0.5 - x);
-                const rotateX = 10 * (y - 0.5);
-                
-                // Apply the rotation transform
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-                
-                // Update position of shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = `radial-gradient(circle at ${x * 100}% ${y * 100}%, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 50%)`;
-                }
-              }}
-              onMouseLeave={(e) => {
-                const card = e.currentTarget;
-                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
-                
-                // Reset shine effect
-                const shine = card.querySelector('.shine-effect') as HTMLElement;
-                if (shine) {
-                  shine.style.background = 'radial-gradient(circle at 50% 50%, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%)';
-                }
-              }}
+              className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group"
+              ref={tiltRef4}
+              onMouseMove={handleMouseMove4}
+              onMouseEnter={handleMouseEnter4}
+              onMouseLeave={handleMouseLeave4}
             >
-              <div className="shine-effect absolute inset-0 pointer-events-none"></div>
+              <div ref={shineRef4} className="shine-effect absolute inset-0 pointer-events-none"></div>
               <div className="grid md:grid-cols-2 relative z-10">
                 <div className="bg-muted lg:block hidden">
                   {/* Project 4 Image */}
@@ -1761,7 +1772,7 @@ const Home = () => {
           <InteractiveTitleEffect>YouTube Channel</InteractiveTitleEffect>
 
           <div className="max-w-3xl mx-auto">
-            <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+            <div className="bg-card rounded-lg overflow-hidden shadow-lg transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] group">
               {/* Banner and Profile */}
               <div className="w-full relative">
                 <div className="w-full overflow-hidden" style={{ clipPath: 'inset(0 0 10% 0)' }}>
@@ -1885,19 +1896,19 @@ const Home = () => {
             {/* iOS-style app grid */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-8 mb-8">
               {/* GitHub */}
-                  <a 
-                    href="https://github.com/qlintenFX/" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group"
-                  >
+              <a 
+                href="https://github.com/qlintenFX/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group"
+              >
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#333] to-[#111] flex items-center justify-center shadow-lg mb-3 
                     group-hover:scale-110 transition-all duration-300 
                     group-hover:shadow-[0_0_15px_rgba(80,80,80,0.6)] shadow-[0_0_10px_rgba(80,80,80,0.3)]
-                    relative overflow-hidden
+                    relative overflow-hidden transform group-hover:translate-z-5
                     before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                     group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                     group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
                 </div>
@@ -1905,19 +1916,19 @@ const Home = () => {
               </a>
               
               {/* YouTube */}
-                  <a 
-                    href="https://www.youtube.com/@qlintenFX" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center group"
-                  >
+              <a 
+                href="https://www.youtube.com/@qlintenFX" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex flex-col items-center group"
+              >
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#FF0000] to-[#CC0000] flex items-center justify-center shadow-lg mb-3 
                     group-hover:scale-110 transition-all duration-300 
                     group-hover:shadow-[0_0_15px_rgba(255,0,0,0.7)] shadow-[0_0_10px_rgba(255,0,0,0.4)]
-                    relative overflow-hidden animate-pulse-gentle
+                    relative overflow-hidden transform group-hover:translate-z-5
                     before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                     group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                     group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
                 </div>
@@ -1934,10 +1945,10 @@ const Home = () => {
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#0077B5] to-[#0056A3] flex items-center justify-center shadow-lg mb-3 
                     group-hover:scale-110 transition-all duration-300 
                     group-hover:shadow-[0_0_15px_rgba(0,119,181,0.7)] shadow-[0_0_10px_rgba(0,119,181,0.4)]
-                    relative overflow-hidden animate-float
+                    relative overflow-hidden transform group-hover:translate-z-5
                     before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                     group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                     group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect width="4" height="12" x="2" y="9"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                 </div>
@@ -1952,10 +1963,10 @@ const Home = () => {
                 <div className="w-20 h-20 rounded-2xl bg-gradient-to-b from-[#34C759] to-[#27AE60] flex items-center justify-center shadow-lg mb-3 
                     group-hover:scale-110 transition-all duration-300 
                     group-hover:shadow-[0_0_15px_rgba(52,199,89,0.7)] shadow-[0_0_10px_rgba(52,199,89,0.4)]
-                    relative overflow-hidden animate-pulse-gentle
+                    relative overflow-hidden transform group-hover:translate-z-5
                     before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                     group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                    after:absolute after:h-[70%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent)] after:-left-[100%] 
+                    after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                     group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]">
                   <svg xmlns="http://www.w3.org/2000/svg" width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
                 </div>
