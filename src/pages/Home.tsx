@@ -1515,8 +1515,8 @@ const Home = () => {
               </div>
               
               {/* Button positioned outside the card */}
-              <div className="self-end md:self-center md:w-auto flex md:flex-col md:items-center md:ml-4">
-                <div className="group">
+              <div className="self-stretch flex flex-col justify-center md:w-auto md:ml-4">
+                <div className="group h-full flex flex-col items-center justify-center">
                   <button
                     onClick={() => setSelectedProject('project1')}
                     className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
@@ -1528,7 +1528,10 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <div className="flex items-center">
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white ml-1 -mt-1" />
+                    </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
                 </div>
@@ -1569,8 +1572,8 @@ const Home = () => {
 
             {/* Project layout with external button */}
             <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-              <div className="order-2 md:order-1 self-end md:self-center md:w-auto flex md:flex-col md:items-center md:mr-4">
-                <div className="group">
+              <div className="order-2 md:order-1 self-stretch flex flex-col justify-center md:w-auto md:mr-4">
+                <div className="group h-full flex flex-col items-center justify-center">
                   <button
                     onClick={() => setSelectedProject('project2')}
                     className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
@@ -1582,7 +1585,10 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <div className="flex items-center">
+                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white mr-1 -mt-1 -scale-x-100" />
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
                 </div>
@@ -1723,8 +1729,8 @@ const Home = () => {
               </div>
               
               {/* Button positioned outside the card */}
-              <div className="self-end md:self-center md:w-auto flex md:flex-col md:items-center md:ml-4">
-                <div className="group">
+              <div className="self-stretch flex flex-col justify-center md:w-auto md:ml-4">
+                <div className="group h-full flex flex-col items-center justify-center">
                   <button
                     onClick={() => setSelectedProject('project3')}
                     className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
@@ -1736,7 +1742,10 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <div className="flex items-center">
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white ml-1 -mt-1" />
+                    </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
                 </div>
@@ -1777,8 +1786,8 @@ const Home = () => {
 
             {/* Project layout with external button */}
             <div className="flex flex-col md:flex-row gap-6 md:gap-10">
-              <div className="order-2 md:order-1 self-end md:self-center md:w-auto flex md:flex-col md:items-center md:mr-4">
-                <div className="group">
+              <div className="order-2 md:order-1 self-stretch flex flex-col justify-center md:w-auto md:mr-4">
+                <div className="group h-full flex flex-col items-center justify-center">
                   <button
                     onClick={() => setSelectedProject('project4')}
                     className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
@@ -1790,7 +1799,10 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    <div className="flex items-center">
+                      <ArrowUpRight className="h-5 w-5 md:h-6 md:w-6 text-white mr-1 -mt-1 -scale-x-100" />
+                      <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                    </div>
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
                 </div>
