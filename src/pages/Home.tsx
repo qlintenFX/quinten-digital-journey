@@ -1464,7 +1464,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
               <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
@@ -1515,15 +1515,23 @@ const Home = () => {
               </div>
               
               {/* Button positioned outside the card */}
-              <div className="self-end md:self-center md:w-16 flex md:flex-col md:items-center">
-                <SparkleButton 
-                  variant="outline" 
-                  className="flex items-center"
-                  onClick={() => setSelectedProject('project1')}
-                >
-                  <ExternalLink className="h-4 w-4 md:mb-2" />
-                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
-                </SparkleButton>
+              <div className="self-end md:self-center md:w-auto flex md:flex-col md:items-center md:ml-4">
+                <div className="group">
+                  <button
+                    onClick={() => setSelectedProject('project1')}
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                      group-hover:scale-110 transition-all duration-300 
+                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
+                      relative overflow-hidden transform group-hover:translate-z-5
+                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
+                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
+                  >
+                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  </button>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -1560,16 +1568,24 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="order-2 md:order-1 self-end md:self-center md:w-16 flex md:flex-col md:items-center">
-                <SparkleButton 
-                  variant="outline" 
-                  className="flex items-center"
-                  onClick={() => setSelectedProject('project2')}
-                >
-                  <ExternalLink className="h-4 w-4 md:mb-2" />
-                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
-                </SparkleButton>
+            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+              <div className="order-2 md:order-1 self-end md:self-center md:w-auto flex md:flex-col md:items-center md:mr-4">
+                <div className="group">
+                  <button
+                    onClick={() => setSelectedProject('project2')}
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                      group-hover:scale-110 transition-all duration-300 
+                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
+                      relative overflow-hidden transform group-hover:translate-z-5
+                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
+                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
+                  >
+                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  </button>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                </div>
               </div>
               
               <div className="order-1 md:order-2 flex-grow">
@@ -1656,7 +1672,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
               <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
@@ -1707,15 +1723,23 @@ const Home = () => {
               </div>
               
               {/* Button positioned outside the card */}
-              <div className="self-end md:self-center md:w-16 flex md:flex-col md:items-center">
-                <SparkleButton 
-                  variant="outline" 
-                  className="flex items-center"
-                  onClick={() => setSelectedProject('project3')}
-                >
-                  <ExternalLink className="h-4 w-4 md:mb-2" />
-                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
-                </SparkleButton>
+              <div className="self-end md:self-center md:w-auto flex md:flex-col md:items-center md:ml-4">
+                <div className="group">
+                  <button
+                    onClick={() => setSelectedProject('project3')}
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                      group-hover:scale-110 transition-all duration-300 
+                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
+                      relative overflow-hidden transform group-hover:translate-z-5
+                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
+                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
+                  >
+                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  </button>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -1752,16 +1776,24 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="order-2 md:order-1 self-end md:self-center md:w-16 flex md:flex-col md:items-center">
-                <SparkleButton 
-                  variant="outline" 
-                  className="flex items-center"
-                  onClick={() => setSelectedProject('project4')}
-                >
-                  <ExternalLink className="h-4 w-4 md:mb-2" />
-                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
-                </SparkleButton>
+            <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+              <div className="order-2 md:order-1 self-end md:self-center md:w-auto flex md:flex-col md:items-center md:mr-4">
+                <div className="group">
+                  <button
+                    onClick={() => setSelectedProject('project4')}
+                    className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
+                      group-hover:scale-110 transition-all duration-300 
+                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
+                      relative overflow-hidden transform group-hover:translate-z-5
+                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
+                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
+                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
+                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
+                  >
+                    <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  </button>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                </div>
               </div>
               
               <div className="order-1 md:order-2 flex-grow">
