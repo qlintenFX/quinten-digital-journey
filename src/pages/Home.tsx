@@ -1691,13 +1691,9 @@ const Home = () => {
                             className="w-full h-full flex items-center justify-center"
                           >
                             <img 
-                              src="/images/optimized/project-4-KeyedColors-logo.webp" 
+                              src="/images/project-4-KeyedColors-logo.png" 
                               alt="KeyedColors" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
-                              onError={(e) => {
-                                const target = e.target as HTMLImageElement;
-                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                              }}
                             />
                           </motion.div>
                         </div>

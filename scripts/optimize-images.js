@@ -26,54 +26,76 @@ async function main() {
     
     // Process each image
     for (const file of imageFiles) {
-      const inputPath = path.join(INPUT_DIR, file);
-      const fileNameWithoutExt = path.basename(file, path.extname(file));
-      
-      // Get original file stats
-      const originalStats = await fs.stat(inputPath);
-      const originalSizeKB = (originalStats.size / 1024).toFixed(2);
-      
-      // Get image metadata
-      const metadata = await sharp(inputPath).metadata();
-      
-      // Determine if resize is needed
-      const needsResize = metadata.width > MAX_WIDTH;
-      const resizeOptions = needsResize ? { width: MAX_WIDTH } : undefined;
-      
-      // Create optimized PNG/JPG (maintaining original format)
-      const optimizedPath = path.join(OUTPUT_DIR, file);
-      await sharp(inputPath)
-        .resize(resizeOptions)
-        .toFormat(metadata.format, { quality: 80 })
-        .toFile(optimizedPath);
-      
-      // Create WebP version
-      const webpPath = path.join(OUTPUT_DIR, `${fileNameWithoutExt}.webp`);
-      await sharp(inputPath)
-        .resize(resizeOptions)
-        .webp({ quality: 80 })
-        .toFile(webpPath);
-      
-      // Get optimized file stats
-      const optimizedStats = await fs.stat(optimizedPath);
-      const optimizedSizeKB = (optimizedStats.size / 1024).toFixed(2);
-      
-      const webpStats = await fs.stat(webpPath);
-      const webpSizeKB = (webpStats.size / 1024).toFixed(2);
-      
-      // Calculate reduction percentages
-      const pngReduction = (100 - (optimizedStats.size / originalStats.size * 100)).toFixed(1);
-      const webpReduction = (100 - (webpStats.size / originalStats.size * 100)).toFixed(1);
-      
-      console.log(`Processed ${file}:`);
-      console.log(`  Original: ${originalSizeKB}KB`);
-      console.log(`  Optimized ${metadata.format}: ${optimizedSizeKB}KB (${pngReduction}% reduction)`);
-      console.log(`  WebP: ${webpSizeKB}KB (${webpReduction}% reduction)`);
-      
-      if (needsResize) {
-        console.log(`  Resized from ${metadata.width}x${metadata.height} to ${MAX_WIDTH}px width`);
+      try {
+        const inputPath = path.join(INPUT_DIR, file);
+        const fileNameWithoutExt = path.basename(file, path.extname(file));
+        
+        // Get original file stats
+        const originalStats = await fs.stat(inputPath);
+        const originalSizeKB = (originalStats.size / 1024).toFixed(2);
+        
+        console.log(`Processing ${file}:`);
+        console.log(`  Original: ${originalSizeKB}KB`);
+        
+        // Get image metadata
+        let metadata;
+        try {
+          metadata = await sharp(inputPath).metadata();
+        } catch (metadataError) {
+          console.error(`  Error reading metadata for ${file}:`, metadataError.message);
+          console.log('  Skipping this file...');
+          console.log('---');
+          continue;
+        }
+        
+        // Determine if resize is needed
+        const needsResize = metadata.width > MAX_WIDTH;
+        const resizeOptions = needsResize ? { width: MAX_WIDTH } : undefined;
+        
+        // Create optimized PNG/JPG (maintaining original format)
+        try {
+          const optimizedPath = path.join(OUTPUT_DIR, file);
+          await sharp(inputPath)
+            .resize(resizeOptions)
+            .toFormat(metadata.format, { quality: 80 })
+            .toFile(optimizedPath);
+          
+          // Get optimized file stats
+          const optimizedStats = await fs.stat(optimizedPath);
+          const optimizedSizeKB = (optimizedStats.size / 1024).toFixed(2);
+          const pngReduction = (100 - (optimizedStats.size / originalStats.size * 100)).toFixed(1);
+          
+          console.log(`  Optimized ${metadata.format}: ${optimizedSizeKB}KB (${pngReduction}% reduction)`);
+        } catch (optimizeError) {
+          console.error(`  Error creating optimized version of ${file}:`, optimizeError.message);
+        }
+        
+        // Create WebP version
+        try {
+          const webpPath = path.join(OUTPUT_DIR, `${fileNameWithoutExt}.webp`);
+          await sharp(inputPath)
+            .resize(resizeOptions)
+            .webp({ quality: 80 })
+            .toFile(webpPath);
+          
+          // Get WebP stats
+          const webpStats = await fs.stat(webpPath);
+          const webpSizeKB = (webpStats.size / 1024).toFixed(2);
+          const webpReduction = (100 - (webpStats.size / originalStats.size * 100)).toFixed(1);
+          
+          console.log(`  WebP: ${webpSizeKB}KB (${webpReduction}% reduction)`);
+        } catch (webpError) {
+          console.error(`  Error creating WebP version of ${file}:`, webpError.message);
+        }
+        
+        if (needsResize) {
+          console.log(`  Resized from ${metadata.width}x${metadata.height} to ${MAX_WIDTH}px width`);
+        }
+        console.log('---');
+      } catch (fileError) {
+        console.error(`Error processing ${file}:`, fileError.message);
+        console.log('---');
       }
-      console.log('---');
     }
     
     console.log('Image optimization complete!');
