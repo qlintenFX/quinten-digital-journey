@@ -1521,9 +1521,8 @@ const Home = () => {
                   <button
                     onClick={() => setSelectedProject('project1')}
                     className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform group-hover:translate-z-5
+                      relative overflow-hidden transform
                       before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                       group-hover:before:opacity-100 before:transition-opacity before:duration-300
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
@@ -1531,10 +1530,10 @@ const Home = () => {
                   >
                     <div className="flex flex-col items-center">
                       <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <ArrowUpRight className="h-5 w-5 text-white animate-pulse" />
+                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
                     </div>
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
                 </div>
               </div>
             </div>
@@ -1579,9 +1578,8 @@ const Home = () => {
                   <button
                     onClick={() => setSelectedProject('project2')}
                     className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform group-hover:translate-z-5
+                      relative overflow-hidden transform
                       before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                       group-hover:before:opacity-100 before:transition-opacity before:duration-300
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
@@ -1589,10 +1587,10 @@ const Home = () => {
                   >
                     <div className="flex flex-col items-center">
                       <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <ArrowUpLeft className="h-5 w-5 text-white animate-pulse" />
+                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
                     </div>
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
                 </div>
               </div>
               
@@ -1736,9 +1734,8 @@ const Home = () => {
                   <button
                     onClick={() => setSelectedProject('project3')}
                     className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform group-hover:translate-z-5
+                      relative overflow-hidden transform
                       before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                       group-hover:before:opacity-100 before:transition-opacity before:duration-300
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
@@ -1746,10 +1743,10 @@ const Home = () => {
                   >
                     <div className="flex flex-col items-center">
                       <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <ArrowUpRight className="h-5 w-5 text-white animate-pulse" />
+                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain" />
                     </div>
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
                 </div>
               </div>
             </div>
@@ -1794,9 +1791,8 @@ const Home = () => {
                   <button
                     onClick={() => setSelectedProject('project4')}
                     className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:scale-110 transition-all duration-300 
                       group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform group-hover:translate-z-5
+                      relative overflow-hidden transform
                       before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
                       group-hover:before:opacity-100 before:transition-opacity before:duration-300
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
@@ -1804,10 +1800,10 @@ const Home = () => {
                   >
                     <div className="flex flex-col items-center">
                       <ExternalLink className="h-6 w-6 md:h-8 md:w-8 text-white mb-2" />
-                      <ArrowUpLeft className="h-5 w-5 text-white animate-pulse" />
+                      <img src="/images/arrow.png" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
                     </div>
                   </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-colors">View Photos</span>
+                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary group-hover:translate-y-1 transition-all">View Photos</span>
                 </div>
               </div>
               
