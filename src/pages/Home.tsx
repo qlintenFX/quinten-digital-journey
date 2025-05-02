@@ -1465,7 +1465,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-row gap-6">
+            <div className="flex flex-row gap-10">
               <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
@@ -1568,7 +1568,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-row gap-6">
+            <div className="flex flex-row gap-10">
               {/* Button positioned outside the card, full height */}
               <div className="flex items-stretch w-20">
                 <div className="group flex flex-col w-full">
@@ -1672,7 +1672,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-row gap-6">
+            <div className="flex flex-row gap-10">
               <div className="flex-grow">
                 <TiltCard>
                   <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
@@ -1775,7 +1775,7 @@ const Home = () => {
             </motion.div>
 
             {/* Project layout with external button */}
-            <div className="flex flex-row gap-6">
+            <div className="flex flex-row gap-10">
               {/* Button positioned outside the card, full height */}
               <div className="flex items-stretch w-20">
                 <div className="group flex flex-col w-full">
