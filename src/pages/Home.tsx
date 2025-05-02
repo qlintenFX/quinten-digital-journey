@@ -1028,7 +1028,8 @@ const Home = () => {
       image: "/images/project-3-video-editing-awareness-movie.png",
       images: [
         "/images/project-3-video-editing-awareness-movie.png",
-        "/images/project-3-video-editing-awareness-movie-2.png"
+        "/images/project-3-video-editing-awareness-movie-2.png",
+        "/images/project-3-movie-2.png"
       ]
     },
     project4: {
