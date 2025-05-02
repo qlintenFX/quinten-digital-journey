@@ -252,9 +252,11 @@ const PurpleSparkle = ({ count = 15 }) => {
           }}
         >
           <img 
-            src={isDark ? "/images/dark-mode-star.png" : "/images/light-mode-star.png"} 
+            src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
             alt=""
             className="w-full h-full object-contain"
+            width="1000" 
+            height="1000"
           />
         </motion.div>
       ))}
@@ -382,9 +384,11 @@ const SparkleText = ({ children, className }) => {
             }}
           >
             <img 
-              src={isDark ? "/images/dark-mode-star.png" : "/images/light-mode-star.png"}
+              src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
               alt=""
               className="w-full h-full object-contain"
+              width="1000" 
+              height="1000"
             />
           </motion.div>
         ))}
@@ -491,6 +495,8 @@ const SparkleButton = ({ children, className, onClick, ...props }) => {
               src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
               alt=""
               className="w-full h-full object-contain"
+              width="1000" 
+              height="1000"
             />
           </motion.div>
         ))}
@@ -1236,6 +1242,8 @@ const Home = () => {
                     src="/images/optimized/profile-photo.webp"
                     alt="Profile Photo" 
                     className="w-full h-full object-contain rounded-xl"
+                    width="1000" 
+                    height="1000"
                     style={{ 
                       filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.7))",
                       maxHeight: "100%",
@@ -1386,6 +1394,8 @@ const Home = () => {
                               src="/images/optimized/project-1-Voting-System.webp" 
                               alt="IT Polis Voting System" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                              width="1000" 
+                              height="540"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.src = "https://placehold.co/800x600?text=Project+Screenshot";
@@ -1412,7 +1422,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" width="24" height="24" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1466,7 +1476,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" width="24" height="24" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1490,6 +1500,8 @@ const Home = () => {
                               src="/images/optimized/project-2-hosting-platform.webp" 
                               alt="Project 2" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                              width="1000" 
+                              height="485"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.src = "https://placehold.co/800x600?text=Project+Screenshot";
@@ -1590,6 +1602,8 @@ const Home = () => {
                               src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
                               alt="Security Awareness Campaign Movie" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                              width="1000" 
+                              height="544"
                               onError={(e) => {
                                 const target = e.target as HTMLImageElement;
                                 target.src = "https://placehold.co/800x600?text=Project+Screenshot";
@@ -1616,7 +1630,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" width="24" height="24" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1670,7 +1684,7 @@ const Home = () => {
                       after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
                       group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
                   >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" />
+                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" width="24" height="24" />
                   </button>
                   <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
                 </div>
@@ -1694,6 +1708,12 @@ const Home = () => {
                               src="/images/project-4-KeyedColors-logo.png" 
                               alt="KeyedColors" 
                               className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
+                              width="177" 
+                              height="177"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                              }}
                             />
                           </motion.div>
                         </div>
@@ -1738,6 +1758,8 @@ const Home = () => {
                     src="/images/optimized/banner.webp" 
                     alt="YouTube Channel Banner" 
                     className="w-full h-auto object-contain"
+                    width="1000" 
+                    height="521"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = "https://placehold.co/1200x300?text=YouTube+Banner";
@@ -1750,6 +1772,8 @@ const Home = () => {
                       src="/images/optimized/pfp.webp"
                       alt="YouTube Profile Picture" 
                       className="w-full h-full object-cover"
+                      width="1000" 
+                      height="1000"
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
                         target.src = "https://placehold.co/200x200?text=Profile";
@@ -1821,13 +1845,15 @@ const Home = () => {
                         <button
                           key={index}
                           onClick={() => setCurrentVideoIndex(index)}
-                          className={`w-2 h-2 rounded-full transition-all ${
+                          className={`w-5 h-5 p-5 rounded-full transition-all flex items-center justify-center ${
                             currentVideoIndex === index 
                               ? 'bg-primary scale-125' 
                               : 'bg-muted-foreground/40 hover:bg-muted-foreground/60'
                           }`}
                           aria-label={`View video ${index + 1}`}
-                        />
+                        >
+                          <span className="w-2 h-2 rounded-full block"></span>
+                        </button>
                       ))}
                     </div>
                   </div>

@@ -52,4 +52,17 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  // Configure build output with cache headers
+  build: {
+    rollupOptions: {
+      output: {
+        // Add cache-busting hashes to file names
+        entryFileNames: 'assets/[name]-[hash].js',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+      },
+    },
+    // Add headers for Netlify or similar hosting services
+    assetsDir: 'assets',
+  },
 }));

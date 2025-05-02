@@ -31,7 +31,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               <p>Toggle Custom Cursor</p>
             </TooltipContent>
           </Tooltip>
-          <Switch checked={cursorEnabled} onCheckedChange={toggleCursor} />
+          <Switch 
+            checked={cursorEnabled} 
+            onCheckedChange={toggleCursor} 
+            aria-label="Toggle custom cursor effect"
+          />
           <Tooltip>
             <TooltipTrigger asChild>
               <MousePointerClick className="h-4 w-4 dark:text-primary text-primary" />
@@ -46,7 +50,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         
         <div className="flex items-center gap-2">
           <Sun className="h-4 w-4 dark:text-muted-foreground text-primary" />
-          <Switch checked={theme === 'dark'} onCheckedChange={toggleTheme} />
+          <Switch 
+            checked={theme === 'dark'} 
+            onCheckedChange={toggleTheme} 
+            aria-label="Toggle dark mode"
+          />
           <Moon className="h-4 w-4 text-muted-foreground dark:text-primary" />
         </div>
       </div>

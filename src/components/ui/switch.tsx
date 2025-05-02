@@ -14,6 +14,7 @@ const Switch = React.forwardRef<
     )}
     {...props}
     ref={ref}
+    aria-label={props["aria-label"] || "Toggle"}
   >
     <SwitchPrimitives.Thumb
       className={cn(
