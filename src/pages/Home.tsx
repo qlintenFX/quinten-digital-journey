@@ -886,14 +886,11 @@ const KeywordHighlight = ({ children, className = "" }) => {
   );
 };
 
-// Replace the TiltCard component with this improved version
+// Modify the TiltCard component to improve hitbox accuracy and tilt response
 const TiltCard = ({ children }: { children: React.ReactNode }) => {
   const [rotateXaxis, setRotateXaxis] = useState(0);
   const [rotateYaxis, setRotateYaxis] = useState(0);
   const cardRef = useRef<HTMLDivElement>(null);
-  
-  // Create a reference to detect buttons for creating deadzones
-  const interactiveElementsRef = useRef<HTMLElement[]>([]);
   
   // Use spring animation with gentler physics for smoother transitions
   const springConfig = { damping: 15, stiffness: 150, mass: 1 };
@@ -904,34 +901,8 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
   const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
   
-  // Use a ref to track if mouse is over the card - more reliable than hover state
+  // Use a ref to track if mouse is over the card
   const isMouseOverRef = useRef(false);
-
-  // Function to check if the mouse is over any interactive element
-  const isOverInteractiveElement = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Get all buttons and links inside the card
-    if (!cardRef.current) return false;
-    
-    const elements = cardRef.current.querySelectorAll('button, a, [role="button"]');
-    const mouseX = e.clientX;
-    const mouseY = e.clientY;
-    
-    // Check if mouse is over any interactive element with a small margin
-    for (const element of Array.from(elements)) {
-      const rect = element.getBoundingClientRect();
-      // Add a 10px margin around interactive elements
-      if (
-        mouseX >= rect.left - 10 &&
-        mouseX <= rect.right + 10 &&
-        mouseY >= rect.top - 10 &&
-        mouseY <= rect.bottom + 10
-      ) {
-        return true;
-      }
-    }
-    
-    return false;
-  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -939,24 +910,16 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     const element = cardRef.current;
     const elementRect = element.getBoundingClientRect();
     
-    // Check if we're far enough inside the element to avoid edge jitter
-    // Create a 15px edge buffer zone
-    const buffer = 15;
+    // Create a smaller buffer zone to avoid edge jitter but maintain response
+    const buffer = 5;
     if (
       e.clientX < elementRect.left + buffer ||
       e.clientX > elementRect.right - buffer ||
       e.clientY < elementRect.top + buffer ||
       e.clientY > elementRect.bottom - buffer
     ) {
-      // If near the edge, use reduced tilt or return early
-      // This prevents flickering at the edges
-      isMouseOverRef.current = true;
       return;
     }
-    
-    // Check if we're hovering over an interactive element
-    // If so, reduce tilt effect significantly to make clicking easier
-    const overInteractive = isOverInteractiveElement(e);
     
     const elementWidth = elementRect.width;
     const elementHeight = elementRect.height;
@@ -967,8 +930,8 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     const mouseX = e.clientX - elementRect.left - elementCenterX;
     const mouseY = e.clientY - elementRect.top - elementCenterY;
     
-    // Calculate rotation angles with reduced intensity near interactive elements
-    const tiltFactor = overInteractive ? 3 : 12; // Reduce tilt by 75% when over buttons
+    // Calculate rotation angles with consistent intensity
+    const tiltFactor = 12;
     const degreeX = (mouseY / elementHeight) * tiltFactor;
     const degreeY = (mouseX / elementWidth) * tiltFactor;
     
@@ -991,13 +954,7 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     setIsHovered(true);
   };
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Check if we're really leaving or if this is a false alarm
-    // by checking if the relatedTarget is a child of the card
-    if (cardRef.current && cardRef.current.contains(e.relatedTarget as Node)) {
-      return;
-    }
-    
+  const handleMouseLeave = () => {
     isMouseOverRef.current = false;
     
     // Reset rotation immediately to avoid lingering tilt
@@ -1011,20 +968,6 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
     rotateX.set(rotateXaxis);
     rotateY.set(rotateYaxis);
   }, [rotateXaxis, rotateYaxis]);
-
-  // Find and store references to all interactive elements on mount
-  useEffect(() => {
-    if (cardRef.current) {
-      const elements = cardRef.current.querySelectorAll('button, a, [role="button"]');
-      interactiveElementsRef.current = Array.from(elements) as HTMLElement[];
-      
-      // Add pointer-events-auto to all interactive elements to ensure they're clickable
-      interactiveElementsRef.current.forEach(element => {
-        element.style.position = 'relative';
-        element.style.zIndex = '30'; // Ensure buttons are above other elements
-      });
-    }
-  }, []);
 
   return (
     <motion.div
@@ -1051,7 +994,7 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
         }}
         whileHover={{ z: 20, scale: 1.02 }}
       >
-        {/* Shine effect that follows cursor - always present but opacity changes */}
+        {/* Shine effect that follows cursor */}
         <motion.div
           className="absolute inset-0 pointer-events-none z-10 rounded-lg transition-opacity duration-500"
           style={{
@@ -1060,7 +1003,7 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
           }}
         />
         
-        {/* Enhanced shadow effect with smoother transition */}
+        {/* Enhanced shadow effect */}
         <motion.div
           className="absolute -inset-1 bg-gradient-to-r from-primary/15 via-purple-500/15 to-primary/15 rounded-lg blur-lg transition-opacity duration-500 pointer-events-none"
           style={{ 
@@ -1071,13 +1014,13 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
           }}
         />
         
-        {/* Main content - ensure it keeps pointer events */}
+        {/* Main content */}
         <motion.div
           style={{
             transformStyle: "preserve-3d",
             width: "100%",
             height: "100%",
-            pointerEvents: "auto", // Ensure it captures all events
+            pointerEvents: "auto", 
           }}
         >
           {children}
@@ -1497,7 +1440,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
             className="mb-20 relative"
           >
-            {/* Decorative elements specifically for project cards */}
+            {/* Decorative elements */}
             <motion.div 
               className="absolute -left-6 md:-left-16 top-1/3 w-12 h-12 opacity-10 pointer-events-none"
               animate={{ 
@@ -1520,61 +1463,69 @@ const Home = () => {
               <div className="w-full h-full rounded-md border-2 border-secondary"></div>
             </motion.div>
 
-            <TiltCard>
-              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="shine-effect absolute inset-0 pointer-events-none"></div>
-                <div className="grid md:grid-cols-2 relative z-10">
-                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
-                    <div className="mb-6">
-                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">IT Polis Voting System</h3>
-                    
-                    <div className="space-y-4 mb-6">
-                      <h4 className="text-lg font-semibold">Context & Background</h4>
-                      <p>Developed a <KeywordHighlight>voting system</KeywordHighlight> for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could <KeywordHighlight>only vote once</KeywordHighlight>, track votes in <KeywordHighlight>real-time</KeywordHighlight>, and provide event organizers with administrative control.</p>
-                      
-                      <h4 className="text-lg font-semibold">My Contribution</h4>
-                      <p>I created and managed the <KeywordHighlight>database architecture</KeywordHighlight>, implemented data processing for the <KeywordHighlight>live leaderboard</KeywordHighlight>, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
-                      
-                      <h4 className="text-lg font-semibold">What I Learned</h4>
-                      <p>Gained practical experience in <KeywordHighlight>secure database design</KeywordHighlight>, <KeywordHighlight>NFC technology</KeywordHighlight> integration, and <KeywordHighlight>real-time data visualization</KeywordHighlight>. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
-                    </div>
-                    
-                    <SparkleButton 
-                      variant="outline" 
-                      className="flex items-center"
-                      onClick={() => setSelectedProject('project1')}
-                    >
-                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                    </SparkleButton>
-                  </div>
-                  <div className="bg-muted lg:block hidden">
-                    {/* Project 1 Image with enhanced 3D transform */}
-                    <div className="relative h-full p-6 flex items-center justify-center">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(60px)" }}
-                      >
-                        <img 
-                          src="/images/project-1-Voting-System.png" 
-                          alt="IT Polis Voting System" 
-                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                          }}
-                        />
-                      </motion.div>
+            {/* Project layout with external button */}
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex-grow">
+                <TiltCard>
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                    <div className="grid md:grid-cols-2 relative z-10">
+                      <div className="p-8" style={{ transform: "translateZ(20px)" }}>
+                        <div className="mb-6">
+                          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2 Project</span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4">IT Polis Voting System</h3>
+                        
+                        <div className="space-y-4 mb-6">
+                          <h4 className="text-lg font-semibold">Context & Background</h4>
+                          <p>Developed a <KeywordHighlight>voting system</KeywordHighlight> for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could <KeywordHighlight>only vote once</KeywordHighlight>, track votes in <KeywordHighlight>real-time</KeywordHighlight>, and provide event organizers with administrative control.</p>
+                          
+                          <h4 className="text-lg font-semibold">My Contribution</h4>
+                          <p>I created and managed the <KeywordHighlight>database architecture</KeywordHighlight>, implemented data processing for the <KeywordHighlight>live leaderboard</KeywordHighlight>, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.</p>
+                          
+                          <h4 className="text-lg font-semibold">What I Learned</h4>
+                          <p>Gained practical experience in <KeywordHighlight>secure database design</KeywordHighlight>, <KeywordHighlight>NFC technology</KeywordHighlight> integration, and <KeywordHighlight>real-time data visualization</KeywordHighlight>. Developed skills in creating administrative dashboards and implementing user authentication systems.</p>
+                        </div>
+                      </div>
+                      <div className="bg-muted lg:block hidden">
+                        {/* Project 1 Image */}
+                        <div className="relative h-full p-6 flex items-center justify-center">
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="w-full h-full flex items-center justify-center"
+                            style={{ transform: "translateZ(60px)" }}
+                          >
+                            <img 
+                              src="/images/project-1-Voting-System.png" 
+                              alt="IT Polis Voting System" 
+                              className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                              }}
+                            />
+                          </motion.div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </TiltCard>
               </div>
-            </TiltCard>
+              
+              {/* Button positioned outside the card */}
+              <div className="self-end md:self-center md:w-16 flex md:flex-col md:items-center">
+                <SparkleButton 
+                  variant="outline" 
+                  className="flex items-center"
+                  onClick={() => setSelectedProject('project1')}
+                >
+                  <ExternalLink className="h-4 w-4 md:mb-2" />
+                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
+                </SparkleButton>
+              </div>
+            </div>
           </motion.div>
 
           {/* Project 2 */}
@@ -1585,7 +1536,7 @@ const Home = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mb-20 relative"
           >
-            {/* Decorative elements for project 2 */}
+            {/* Decorative elements */}
             <motion.div 
               className="absolute -left-10 md:-left-20 bottom-1/4 w-16 h-16 opacity-10 pointer-events-none"
               animate={{ 
@@ -1608,60 +1559,68 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-secondary/20"></div>
             </motion.div>
 
-            <TiltCard>
-              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="grid md:grid-cols-2 relative z-10">
-                  <div className="bg-muted lg:block hidden">
-                    {/* Project 2 Image with enhanced 3D transform */}
-                    <div className="relative h-full p-6 flex items-center justify-center">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(60px)" }}
-                      >
-                        <img 
-                          src="/images/project-2-hosting-platform.png" 
-                          alt="Project 2" 
-                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                          }}
-                        />
-                      </motion.div>
-                    </div>
-                  </div>
-                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
-                    <div className="mb-6">
-                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2.2 Project</span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">App Hosting Platform for Clients</h3>
-                    
-                    <div className="space-y-4 mb-6">
-                      <h4 className="text-lg font-semibold">Context & Background</h4>
-                      <p>Designed and implemented a <KeywordHighlight>hosting platform</KeywordHighlight> for PHP/Laravel applications within Thomas More's datacenter. The platform provides an <KeywordHighlight>automated deployment process</KeywordHighlight> for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
-                      
-                      <h4 className="text-lg font-semibold">My Contribution</h4>
-                      <p>I was responsible for creating and managing the <KeywordHighlight>Kubernetes cluster</KeywordHighlight>. My work involved setting up the infrastructure for <KeywordHighlight>container orchestration</KeywordHighlight>, ensuring <KeywordHighlight>high availability</KeywordHighlight>, and implementing automated scaling solutions for the hosted applications.</p>
-                      
-                      <h4 className="text-lg font-semibold">What I Learned</h4>
-                      <p>Gained practical experience in <KeywordHighlight>containerization technologies</KeywordHighlight>, Kubernetes administration, and implementing <KeywordHighlight>CIS security controls</KeywordHighlight>. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
-                    </div>
-                    
-                    <SparkleButton 
-                      variant="outline" 
-                      className="flex items-center"
-                      onClick={() => setSelectedProject('project2')}
-                    >
-                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                    </SparkleButton>
-                  </div>
-                </div>
+            {/* Project layout with external button */}
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="order-2 md:order-1 self-end md:self-center md:w-16 flex md:flex-col md:items-center">
+                <SparkleButton 
+                  variant="outline" 
+                  className="flex items-center"
+                  onClick={() => setSelectedProject('project2')}
+                >
+                  <ExternalLink className="h-4 w-4 md:mb-2" />
+                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
+                </SparkleButton>
               </div>
-            </TiltCard>
+              
+              <div className="order-1 md:order-2 flex-grow">
+                <TiltCard>
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                    <div className="grid md:grid-cols-2 relative z-10">
+                      <div className="bg-muted lg:block hidden">
+                        {/* Project 2 Image */}
+                        <div className="relative h-full p-6 flex items-center justify-center">
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="w-full h-full flex items-center justify-center"
+                            style={{ transform: "translateZ(60px)" }}
+                          >
+                            <img 
+                              src="/images/project-2-hosting-platform.png" 
+                              alt="Project 2" 
+                              className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                              }}
+                            />
+                          </motion.div>
+                        </div>
+                      </div>
+                      <div className="p-8" style={{ transform: "translateZ(20px)" }}>
+                        <div className="mb-6">
+                          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">SKIL2.2 Project</span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4">App Hosting Platform for Clients</h3>
+                        
+                        <div className="space-y-4 mb-6">
+                          <h4 className="text-lg font-semibold">Context & Background</h4>
+                          <p>Designed and implemented a <KeywordHighlight>hosting platform</KeywordHighlight> for PHP/Laravel applications within Thomas More's datacenter. The platform provides an <KeywordHighlight>automated deployment process</KeywordHighlight> for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely.</p>
+                          
+                          <h4 className="text-lg font-semibold">My Contribution</h4>
+                          <p>I was responsible for creating and managing the <KeywordHighlight>Kubernetes cluster</KeywordHighlight>. My work involved setting up the infrastructure for <KeywordHighlight>container orchestration</KeywordHighlight>, ensuring <KeywordHighlight>high availability</KeywordHighlight>, and implementing automated scaling solutions for the hosted applications.</p>
+                          
+                          <h4 className="text-lg font-semibold">What I Learned</h4>
+                          <p>Gained practical experience in <KeywordHighlight>containerization technologies</KeywordHighlight>, Kubernetes administration, and implementing <KeywordHighlight>CIS security controls</KeywordHighlight>. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TiltCard>
+              </div>
+            </div>
           </motion.div>
 
           {/* Additional Projects */}
@@ -1673,7 +1632,7 @@ const Home = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mb-20 relative"
           >
-            {/* Decorative elements for project 3 */}
+            {/* Decorative elements */}
             <motion.div 
               className="absolute -left-8 md:-left-16 top-1/4 w-14 h-14 opacity-10 pointer-events-none"
               animate={{ 
@@ -1696,60 +1655,69 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-secondary"></div>
             </motion.div>
 
-            <TiltCard>
-              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="grid md:grid-cols-2 relative z-10">
-                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
-                    <div className="mb-6">
-                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">Security Awareness Campaign Movie</h3>
-                    
-                    <div className="space-y-4 mb-6">
-                      <h4 className="text-lg font-semibold">Context & Background</h4>
-                      <p>Created an <KeywordHighlight>educational movie</KeywordHighlight> about <KeywordHighlight>cybersecurity awareness</KeywordHighlight>, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
-                      
-                      <h4 className="text-lg font-semibold">My Contribution</h4>
-                      <p>I served as the <KeywordHighlight>main editor</KeywordHighlight> and <KeywordHighlight>creative director</KeywordHighlight>, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
-                      
-                      <h4 className="text-lg font-semibold">What I Learned</h4>
-                      <p>Strengthened my skills in <KeywordHighlight>narrative storytelling</KeywordHighlight> through visual media, <KeywordHighlight>technical video production</KeywordHighlight> in security contexts, and effectively communicating complex security concepts through engaging content.</p>
-                    </div>
-                    
-                    <SparkleButton 
-                      variant="outline" 
-                      className="flex items-center"
-                      onClick={() => setSelectedProject('project3')}
-                    >
-                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                    </SparkleButton>
-                  </div>
-                  <div className="bg-muted lg:block hidden">
-                    {/* Project 3 Image with enhanced 3D transform */}
-                    <div className="relative h-full p-6 flex items-center justify-center">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(60px)" }}
-                      >
-                        <img 
-                          src="/images/project-3-video-editing-awareness-movie.png" 
-                          alt="Security Awareness Campaign Movie" 
-                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                          }}
-                        />
-                      </motion.div>
+            {/* Project layout with external button */}
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="flex-grow">
+                <TiltCard>
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                    <div className="grid md:grid-cols-2 relative z-10">
+                      <div className="p-8" style={{ transform: "translateZ(20px)" }}>
+                        <div className="mb-6">
+                          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Media Project</span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4">Security Awareness Campaign Movie</h3>
+                        
+                        <div className="space-y-4 mb-6">
+                          <h4 className="text-lg font-semibold">Context & Background</h4>
+                          <p>Created an <KeywordHighlight>educational movie</KeywordHighlight> about <KeywordHighlight>cybersecurity awareness</KeywordHighlight>, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim.</p>
+                          
+                          <h4 className="text-lg font-semibold">My Contribution</h4>
+                          <p>I served as the <KeywordHighlight>main editor</KeywordHighlight> and <KeywordHighlight>creative director</KeywordHighlight>, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.</p>
+                          
+                          <h4 className="text-lg font-semibold">What I Learned</h4>
+                          <p>Strengthened my skills in <KeywordHighlight>narrative storytelling</KeywordHighlight> through visual media, <KeywordHighlight>technical video production</KeywordHighlight> in security contexts, and effectively communicating complex security concepts through engaging content.</p>
+                        </div>
+                      </div>
+                      <div className="bg-muted lg:block hidden">
+                        {/* Project 3 Image */}
+                        <div className="relative h-full p-6 flex items-center justify-center">
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="w-full h-full flex items-center justify-center"
+                            style={{ transform: "translateZ(60px)" }}
+                          >
+                            <img 
+                              src="/images/project-3-video-editing-awareness-movie.png" 
+                              alt="Security Awareness Campaign Movie" 
+                              className="object-contain max-h-[90%] max-w-[90%] rounded-xl shadow-lg shadow-primary/20"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                              }}
+                            />
+                          </motion.div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </TiltCard>
               </div>
-            </TiltCard>
+              
+              {/* Button positioned outside the card */}
+              <div className="self-end md:self-center md:w-16 flex md:flex-col md:items-center">
+                <SparkleButton 
+                  variant="outline" 
+                  className="flex items-center"
+                  onClick={() => setSelectedProject('project3')}
+                >
+                  <ExternalLink className="h-4 w-4 md:mb-2" />
+                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
+                </SparkleButton>
+              </div>
+            </div>
           </motion.div>
 
           {/* Project 4 */}
@@ -1760,7 +1728,7 @@ const Home = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mb-20 relative"
           >
-            {/* Decorative elements for project 4 */}
+            {/* Decorative elements */}
             <motion.div 
               className="absolute -left-6 md:-left-12 bottom-1/3 w-10 h-10 opacity-10 pointer-events-none"
               animate={{ 
@@ -1783,60 +1751,68 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-primary"></div>
             </motion.div>
 
-            <TiltCard>
-              <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
-                <div className="grid md:grid-cols-2 relative z-10">
-                  <div className="bg-muted lg:block hidden">
-                    {/* Project 4 Image with enhanced 3D transform */}
-                    <div className="relative h-full p-6 flex items-center justify-center">
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                        className="w-full h-full flex items-center justify-center"
-                        style={{ transform: "translateZ(60px)" }}
-                      >
-                        <img 
-                          src="/images/project-4-KeyedColors-logo.png" 
-                          alt="KeyedColors" 
-                          className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = "https://placehold.co/800x600?text=Project+Screenshot";
-                          }}
-                        />
-                      </motion.div>
-                    </div>
-                  </div>
-                  <div className="p-8" style={{ transform: "translateZ(20px)" }}>
-                    <div className="mb-6">
-                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Personal Project</span>
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">KeyedColors</h3>
-                    
-                    <div className="space-y-4 mb-6">
-                      <h4 className="text-lg font-semibold">Context & Background</h4>
-                      <p>Developed a Windows application for creating <KeywordHighlight>custom display profiles</KeywordHighlight> with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using <KeywordHighlight>customizable hotkeys</KeywordHighlight>.</p>
-                      
-                      <h4 className="text-lg font-semibold">My Contribution</h4>
-                      <p>I identified a <KeywordHighlight>gap in the market</KeywordHighlight> for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
-                      
-                      <h4 className="text-lg font-semibold">What I Learned</h4>
-                      <p>Gained hands-on experience with <KeywordHighlight>Windows API</KeywordHighlight> for display settings manipulation, <KeywordHighlight>system tray integration</KeywordHighlight>, and <KeywordHighlight>global hotkey management</KeywordHighlight>. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
-                    </div>
-                    
-                    <SparkleButton 
-                      variant="outline" 
-                      className="flex items-center"
-                      onClick={() => setSelectedProject('project4')}
-                    >
-                      View Photo's <ExternalLink className="ml-2 h-4 w-4" />
-                    </SparkleButton>
-                  </div>
-                </div>
+            {/* Project layout with external button */}
+            <div className="flex flex-col md:flex-row gap-6">
+              <div className="order-2 md:order-1 self-end md:self-center md:w-16 flex md:flex-col md:items-center">
+                <SparkleButton 
+                  variant="outline" 
+                  className="flex items-center"
+                  onClick={() => setSelectedProject('project4')}
+                >
+                  <ExternalLink className="h-4 w-4 md:mb-2" />
+                  <span className="ml-2 md:ml-0 md:mt-1 md:text-xs">View Photos</span>
+                </SparkleButton>
               </div>
-            </TiltCard>
+              
+              <div className="order-1 md:order-2 flex-grow">
+                <TiltCard>
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 group">
+                    <div className="grid md:grid-cols-2 relative z-10">
+                      <div className="bg-muted lg:block hidden">
+                        {/* Project 4 Image */}
+                        <div className="relative h-full p-6 flex items-center justify-center">
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                            className="w-full h-full flex items-center justify-center"
+                            style={{ transform: "translateZ(60px)" }}
+                          >
+                            <img 
+                              src="/images/project-4-KeyedColors-logo.png" 
+                              alt="KeyedColors" 
+                              className="object-contain max-h-[90%] max-w-[90%] rounded-xl"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = "https://placehold.co/800x600?text=Project+Screenshot";
+                              }}
+                            />
+                          </motion.div>
+                        </div>
+                      </div>
+                      <div className="p-8" style={{ transform: "translateZ(20px)" }}>
+                        <div className="mb-6">
+                          <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Personal Project</span>
+                        </div>
+                        <h3 className="text-2xl font-bold mb-4">KeyedColors</h3>
+                        
+                        <div className="space-y-4 mb-6">
+                          <h4 className="text-lg font-semibold">Context & Background</h4>
+                          <p>Developed a Windows application for creating <KeywordHighlight>custom display profiles</KeywordHighlight> with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using <KeywordHighlight>customizable hotkeys</KeywordHighlight>.</p>
+                          
+                          <h4 className="text-lg font-semibold">My Contribution</h4>
+                          <p>I identified a <KeywordHighlight>gap in the market</KeywordHighlight> for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.</p>
+                          
+                          <h4 className="text-lg font-semibold">What I Learned</h4>
+                          <p>Gained hands-on experience with <KeywordHighlight>Windows API</KeywordHighlight> for display settings manipulation, <KeywordHighlight>system tray integration</KeywordHighlight>, and <KeywordHighlight>global hotkey management</KeywordHighlight>. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TiltCard>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
