@@ -1308,7 +1308,7 @@ const Home = () => {
                     
                     <Button variant="default" className="flex items-center gap-2">
                       <Download className="h-4 w-4" />
-                      <a href="/files/CV_Quinten.pdf" download>Download PDF</a>
+                      <a href="/files/Quinten De Meyer.pdf" download>Download PDF</a>
                     </Button>
                   </div>
                 </div>
@@ -2036,28 +2036,33 @@ const Home = () => {
       {/* CV Dialog for viewing PDF */}
       <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
         <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
-          <DialogHeader className="p-4 pb-2 shrink-0 flex flex-row justify-between items-center border-b">
-            <DialogTitle className="text-2xl">Curriculum Vitae</DialogTitle>
-            <div className="flex items-center gap-4">
+          <DialogHeader className="p-4 pb-0 min-h-[50px] shrink-0 flex justify-between items-center">
+            <DialogTitle>Curriculum Vitae</DialogTitle>
+            <div className="flex items-center gap-2">
               <a 
-                href="/files/CV_Quinten.pdf" 
-                download 
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                href="/files/Quinten De Meyer.pdf" 
+                download
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
               >
                 <Download className="h-4 w-4 mr-2" />
-                Download PDF
+                Download
               </a>
-              <DialogClose className="rounded-full p-2 hover:bg-muted flex items-center justify-center">
-                <X className="h-5 w-5" />
+              <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
               </DialogClose>
             </div>
           </DialogHeader>
-          <div className="w-full h-[calc(100%-80px)] grow overflow-hidden p-4 bg-muted/30">
-            <embed
-              src="/files/CV_Quinten.pdf"
-              type="application/pdf"
-              className="w-full h-full rounded-lg shadow-lg"
-            />
+          <div className="w-full h-[calc(100%-50px)] grow overflow-hidden p-1">
+            <iframe
+              src={`/files/Quinten De Meyer.pdf#view=FitH`}
+              className="w-full h-full border-0 rounded-lg"
+              title="Quinten De Meyer CV"
+            >
+              <p>Your browser does not support embedded PDFs. 
+                <a href="/files/Quinten De Meyer.pdf" download>Download the PDF</a> instead.
+              </p>
+            </iframe>
           </div>
         </DialogContent>
       </Dialog>
