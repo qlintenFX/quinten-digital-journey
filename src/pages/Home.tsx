@@ -1306,9 +1306,18 @@ const Home = () => {
                       Show CV
                     </Button>
                     
-                    <Button variant="default" className="flex items-center gap-2">
+                    <Button 
+                      variant="default" 
+                      className="flex items-center gap-2"
+                      onClick={() => {
+                        const link = document.createElement('a');
+                        link.href = "/files/Quinten De Meyer.pdf";
+                        link.download = "Quinten De Meyer.pdf";
+                        link.click();
+                      }}
+                    >
                       <Download className="h-4 w-4" />
-                      <a href="/files/Quinten De Meyer.pdf" download>Download PDF</a>
+                      Download PDF
                     </Button>
                   </div>
                 </div>
@@ -2036,18 +2045,19 @@ const Home = () => {
       {/* CV Dialog for viewing PDF */}
       <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
         <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
-          <DialogHeader className="p-4 pb-0 min-h-[50px] shrink-0 flex justify-between items-center">
+          <DialogHeader className="p-4 pb-0 min-h-[50px] shrink-0 flex flex-row justify-between items-center">
             <DialogTitle>Curriculum Vitae</DialogTitle>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3">
               <a 
                 href="/files/Quinten De Meyer.pdf" 
                 download
                 className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2"
+                aria-label="Download CV"
               >
                 <Download className="h-4 w-4 mr-2" />
                 Download
               </a>
-              <DialogClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+              <DialogClose className="rounded-full w-8 h-8 inline-flex items-center justify-center opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground" aria-label="Close dialog">
                 <X className="h-4 w-4" />
                 <span className="sr-only">Close</span>
               </DialogClose>
