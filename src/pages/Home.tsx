@@ -17,10 +17,11 @@ import {
   Triangle,
   Square,
   Plus,
-  ArrowUpLeft
+  ArrowUpLeft,
+  X
 } from 'lucide-react';
 import { Modal } from '@/components/ui/modal';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 
 /**
  * Function to check if the page is in dark mode by looking at the document element
@@ -1305,9 +1306,9 @@ const Home = () => {
                       Show CV
                     </Button>
                     
-                    <Button variant="default" className="flex items-center gap-2" onClick={() => setShowCVDialog(true)}>
+                    <Button variant="default" className="flex items-center gap-2">
                       <Download className="h-4 w-4" />
-                      Download PDF
+                      <a href="/files/CV_Quinten.pdf" download>Download PDF</a>
                     </Button>
                   </div>
                 </div>
@@ -2035,30 +2036,39 @@ const Home = () => {
       {/* CV Dialog for viewing PDF */}
       <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
         <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
-          <DialogHeader className="p-2 pb-0 min-h-[32px] shrink-0 flex flex-row justify-between items-center">
-            <DialogTitle>Curriculum Vitae</DialogTitle>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="flex items-center gap-2"
-              asChild
-            >
-              <a href="/files/CV_Quinten.pdf" download="Quinten_De_Meyer_CV.pdf">
-                <Download className="h-4 w-4" />
+          <DialogHeader className="p-4 pb-2 shrink-0 flex flex-row justify-between items-center border-b">
+            <DialogTitle className="text-2xl">Curriculum Vitae</DialogTitle>
+            <div className="flex items-center gap-3">
+              <a 
+                href="/files/CV_Quinten.pdf" 
+                download 
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+              >
+                <Download className="h-4 w-4 mr-2" />
                 Download PDF
               </a>
-            </Button>
+              <DialogClose className="rounded-full p-2 hover:bg-muted">
+                <X className="h-5 w-5" />
+              </DialogClose>
+            </div>
           </DialogHeader>
-          <div className="w-full h-[calc(100%-32px)] grow overflow-hidden">
+          <div className="w-full h-[calc(100%-80px)] grow overflow-hidden p-4 bg-muted/30">
             <object
               data="/files/CV_Quinten.pdf"
               type="application/pdf"
-              className="w-full h-full"
-              style={{ margin: 0, padding: 0, border: 0 }}
+              className="w-full h-full rounded-lg shadow-lg"
             >
-              <p>Your browser does not support PDFs. 
-                <a href="/files/CV_Quinten.pdf" download="Quinten_De_Meyer_CV.pdf">Download the PDF</a> instead.
-              </p>
+              <div className="w-full h-full flex flex-col items-center justify-center">
+                <p className="mb-4">Your browser does not support PDFs.</p>
+                <a 
+                  href="/files/CV_Quinten.pdf" 
+                  download
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  Download the PDF
+                </a>
+              </div>
             </object>
           </div>
         </DialogContent>
