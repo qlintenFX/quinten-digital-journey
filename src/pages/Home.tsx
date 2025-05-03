@@ -2038,7 +2038,7 @@ const Home = () => {
         <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
           <DialogHeader className="p-4 pb-2 shrink-0 flex flex-row justify-between items-center border-b">
             <DialogTitle className="text-2xl">Curriculum Vitae</DialogTitle>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center">
               <a 
                 href="/files/CV_Quinten.pdf" 
                 download 
@@ -2047,29 +2047,14 @@ const Home = () => {
                 <Download className="h-4 w-4 mr-2" />
                 Download PDF
               </a>
-              <DialogClose className="rounded-full p-2 hover:bg-muted">
-                <X className="h-5 w-5" />
-              </DialogClose>
             </div>
           </DialogHeader>
           <div className="w-full h-[calc(100%-80px)] grow overflow-hidden p-4 bg-muted/30">
-            <object
-              data="/files/CV_Quinten.pdf"
-              type="application/pdf"
+            <iframe
+              src="/files/CV_Quinten.pdf"
               className="w-full h-full rounded-lg shadow-lg"
-            >
-              <div className="w-full h-full flex flex-col items-center justify-center">
-                <p className="mb-4">Your browser does not support PDFs.</p>
-                <a 
-                  href="/files/CV_Quinten.pdf" 
-                  download
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Download the PDF
-                </a>
-              </div>
-            </object>
+              title="CV"
+            ></iframe>
           </div>
         </DialogContent>
       </Dialog>
