@@ -2044,7 +2044,7 @@ const Home = () => {
 
       {/* CV Dialog for viewing PDF */}
       <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
-        <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
+        <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col" hasCloseButton={false}>
           <DialogHeader className="p-4 pb-0 min-h-[50px] shrink-0 flex flex-row justify-between items-center">
             <DialogTitle>Curriculum Vitae</DialogTitle>
             <div className="flex items-center gap-3">
