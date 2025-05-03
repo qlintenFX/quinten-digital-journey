@@ -1305,9 +1305,9 @@ const Home = () => {
                       Show CV
                     </Button>
                     
-                    <Button variant="default" className="flex items-center gap-2">
+                    <Button variant="default" className="flex items-center gap-2" onClick={() => setShowCVDialog(true)}>
                       <Download className="h-4 w-4" />
-                      <a href="/files/CV_Quinten.pdf" download>Download PDF</a>
+                      Download PDF
                     </Button>
                   </div>
                 </div>
@@ -2035,8 +2035,19 @@ const Home = () => {
       {/* CV Dialog for viewing PDF */}
       <Dialog open={showCVDialog} onOpenChange={setShowCVDialog}>
         <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
-          <DialogHeader className="p-2 pb-0 min-h-[32px] shrink-0">
+          <DialogHeader className="p-2 pb-0 min-h-[32px] shrink-0 flex flex-row justify-between items-center">
             <DialogTitle>Curriculum Vitae</DialogTitle>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="flex items-center gap-2"
+              asChild
+            >
+              <a href="/files/CV_Quinten.pdf" download="Quinten_De_Meyer_CV.pdf">
+                <Download className="h-4 w-4" />
+                Download PDF
+              </a>
+            </Button>
           </DialogHeader>
           <div className="w-full h-[calc(100%-32px)] grow overflow-hidden">
             <object
@@ -2046,7 +2057,7 @@ const Home = () => {
               style={{ margin: 0, padding: 0, border: 0 }}
             >
               <p>Your browser does not support PDFs. 
-                <a href="/files/CV_Quinten.pdf" download>Download the PDF</a> instead.
+                <a href="/files/CV_Quinten.pdf" download="Quinten_De_Meyer_CV.pdf">Download the PDF</a> instead.
               </p>
             </object>
           </div>
