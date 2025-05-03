@@ -2038,7 +2038,7 @@ const Home = () => {
         <DialogContent className="max-w-7xl w-full p-0 h-[98vh] flex flex-col">
           <DialogHeader className="p-4 pb-2 shrink-0 flex flex-row justify-between items-center border-b">
             <DialogTitle className="text-2xl">Curriculum Vitae</DialogTitle>
-            <div className="flex items-center">
+            <div className="flex items-center gap-4">
               <a 
                 href="/files/CV_Quinten.pdf" 
                 download 
@@ -2047,14 +2047,17 @@ const Home = () => {
                 <Download className="h-4 w-4 mr-2" />
                 Download PDF
               </a>
+              <DialogClose className="rounded-full p-2 hover:bg-muted flex items-center justify-center">
+                <X className="h-5 w-5" />
+              </DialogClose>
             </div>
           </DialogHeader>
           <div className="w-full h-[calc(100%-80px)] grow overflow-hidden p-4 bg-muted/30">
-            <iframe
+            <embed
               src="/files/CV_Quinten.pdf"
+              type="application/pdf"
               className="w-full h-full rounded-lg shadow-lg"
-              title="CV"
-            ></iframe>
+            />
           </div>
         </DialogContent>
       </Dialog>
