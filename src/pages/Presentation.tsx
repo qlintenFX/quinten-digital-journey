@@ -344,38 +344,27 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6 w-3/4">
-                          <img 
-                            src="/images/optimized/project-2-hosting-platform.webp" 
-                            alt="App Hosting Platform" 
-                            className="w-full object-contain rounded-xl"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
-                            }}
-                          />
-                          <img 
-                            src="/images/optimized/project-2-hardware-diagram.webp" 
-                            alt="Hardware Diagram" 
-                            className="w-full object-contain rounded-xl"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
-                            }}
-                          />
-                          <img 
-                            src="/images/optimized/project-2-software-diagram.webp" 
-                            alt="Software Diagram" 
-                            className="w-full object-contain rounded-xl"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
-                            }}
-                          />
-                          <img 
-                            src="/images/optimized/project-2-hosting-platform-repository.webp" 
-                            alt="Repository Structure" 
-                            className="w-full object-contain rounded-xl"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
-                            }}
+                        <div className="w-3/4 flex flex-col">
+                          <ProjectImageCarousel 
+                            images={[
+                              {
+                                src: "/images/optimized/project-2-hosting-platform.webp",
+                                alt: "App Hosting Platform"
+                              },
+                              {
+                                src: "/images/optimized/project-2-hardware-diagram.webp",
+                                alt: "Hardware Diagram"
+                              },
+                              {
+                                src: "/images/optimized/project-2-software-diagram.webp",
+                                alt: "Software Diagram"
+                              },
+                              {
+                                src: "/images/optimized/project-2-hosting-platform-repository.webp",
+                                alt: "Repository Structure"
+                              }
+                            ]}
+                            isActive={currentSlide === 4}
                           />
                         </div>
                       </div>
@@ -869,6 +858,71 @@ const TimelinePoint: React.FC<{
       <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50"></div>
       <div className="w-1/2 pl-10"></div>
     </motion.div>
+  );
+};
+
+// Image carousel component for cycling through project images
+const ProjectImageCarousel: React.FC<{
+  images: { src: string; alt: string }[];
+  isActive: boolean;
+}> = ({ images, isActive }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
+  // Reset index when slide changes
+  useEffect(() => {
+    if (!isActive) {
+      setCurrentIndex(0);
+    }
+  }, [isActive]);
+  
+  // Only run the timer when the slide is active
+  useEffect(() => {
+    if (!isActive) return;
+    
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3000); // Change image every 3 seconds
+    
+    return () => clearInterval(timer);
+  }, [images.length, isActive]);
+  
+  return (
+    <div className="relative w-full aspect-video flex items-center justify-center">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentIndex}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.5 }}
+          className="w-full h-full flex items-center justify-center"
+        >
+          <img 
+            src={images[currentIndex].src} 
+            alt={images[currentIndex].alt}
+            className="w-4/5 h-auto object-contain rounded-xl mx-auto"
+            style={{
+              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
+            }}
+          />
+        </motion.div>
+      </AnimatePresence>
+      
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            className={`w-3 h-3 rounded-full transition-all ${
+              currentIndex === index 
+                ? 'bg-purple-800 scale-125' 
+                : 'bg-purple-500/40 hover:bg-purple-500/60'
+            }`}
+            aria-label={`Ga naar afbeelding ${index + 1}`}
+          />
+        ))}
+      </div>
+    </div>
   );
 };
 
