@@ -202,12 +202,12 @@ const Presentation = () => {
                       transition={{ delay: 0.3 }}
                       className="w-full max-w-6xl"
                     >
-                      <div className="relative">
-                        {/* Horizontal Timeline */}
-                        <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 h-3 bg-primary/40"></div>
+                      <div className="relative py-10">
+                        {/* Horizontal Timeline line */}
+                        <div className="absolute top-1/2 transform -translate-y-1/2 w-full h-3 bg-primary/40"></div>
                         
                         {/* Timeline points */}
-                        <div className="flex justify-between relative py-12">
+                        <div className="flex justify-between relative">
                           <HorizontalTimelinePoint 
                             title="IT Polis Voting System" 
                             description="SKIL2 Project"
@@ -838,7 +838,7 @@ const SlideContent: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   );
 };
 
-// Horizontal Timeline point component
+// Horizontal Timeline point component for the journey slide
 const HorizontalTimelinePoint: React.FC<{ 
   title: string; 
   description: string;
@@ -851,11 +851,11 @@ const HorizontalTimelinePoint: React.FC<{
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
     >
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
-      <div className="mt-14 text-center">
+      <div className="mb-8 text-center">
         <h3 className="text-3xl font-bold text-purple-900 mb-2">{title}</h3>
         <p className="text-xl text-muted-foreground">{description}</p>
       </div>
+      <div className="w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
     </motion.div>
   );
 };
