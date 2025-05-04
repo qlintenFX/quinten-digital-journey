@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useMotionValue, useSpring } from 'framer-motion';
 
 /**
  * Function to check if the page is in dark mode by looking at the document element
@@ -10,10 +10,104 @@ function isDarkMode() {
 }
 
 /**
+ * SparkleText Component
+ * Creates text with sparkle effects on hover
+ */
+export const SparkleText: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className = '' }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [sparklePositions, setSparklePositions] = useState<any[]>([]);
+  const [isDark, setIsDark] = useState(true);
+  
+  useEffect(() => {
+    // Check initial theme
+    setIsDark(isDarkMode());
+    
+    // Setup observer to watch for class changes on html element
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.attributeName === 'class') {
+          setIsDark(isDarkMode());
+        }
+      });
+    });
+    
+    observer.observe(document.documentElement, { 
+      attributes: true,
+      attributeFilter: ['class'] 
+    });
+    
+    return () => observer.disconnect();
+  }, []);
+  
+  useEffect(() => {
+    if (isHovered) {
+      // Generate 6-10 random sparkle positions
+      const count = Math.floor(Math.random() * 5) + 6;
+      const newPositions = Array(count).fill(0).map(() => ({
+        id: Math.random(),
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 15 + 5,
+        delay: Math.random() * 0.3,
+        duration: Math.random() * 0.8 + 0.5,
+        rotation: Math.random() * 360,
+        opacity: Math.random() * 0.7 + 0.3
+      }));
+      setSparklePositions(newPositions);
+    }
+  }, [isHovered]);
+  
+  return (
+    <span 
+      className={`relative inline-block ${className}`}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <span className="text-primary">{children}</span>
+      
+      <AnimatePresence>
+        {isHovered && sparklePositions.map(sparkle => (
+          <motion.div
+            key={sparkle.id}
+            className="absolute pointer-events-none"
+            style={{
+              left: `${sparkle.x}%`,
+              top: `${sparkle.y}%`,
+              width: `${sparkle.size}px`,
+              height: `${sparkle.size}px`,
+              zIndex: 10
+            }}
+            initial={{ opacity: 0, scale: 0, rotate: 0 }}
+            animate={{ 
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              rotate: [0, sparkle.rotation],
+              y: [0, -20]
+            }}
+            exit={{ opacity: 0, scale: 0 }}
+            transition={{
+              duration: sparkle.duration,
+              delay: sparkle.delay,
+              ease: "easeOut"
+            }}
+          >
+            <img 
+              src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
+              alt=""
+              className="w-full h-full object-contain"
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    </span>
+  );
+};
+
+/**
  * KeywordHighlight Component
  * Creates a subtle glow effect for important keywords
  */
-export const KeywordHighlight = ({ children, className = "" }) => {
+export const KeywordHighlight: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className = "" }) => {
   return (
     <span 
       className={`relative font-semibold text-primary ${className}`}
@@ -30,8 +124,8 @@ export const KeywordHighlight = ({ children, className = "" }) => {
  * PurpleSparkle Component
  * Creates floating sparkle effects across the screen
  */
-export const PurpleSparkle = ({ count = 15 }) => {
-  const [sparkles, setSparkles] = useState([]);
+export const PurpleSparkle: React.FC<{ count?: number }> = ({ count = 15 }) => {
+  const [sparkles, setSparkles] = useState<any[]>([]);
   const [isDark, setIsDark] = useState(true);
   
   useEffect(() => {
@@ -63,7 +157,7 @@ export const PurpleSparkle = ({ count = 15 }) => {
       x: Math.random() * 100, // position across width (%)
       y: Math.random() * 100, // position across height (%)
       rotation: Math.random() * 360, // random rotation
-      opacity: Math.random() * 0.6 + 0.3,
+      opacity: Math.random() * 0.6 + 0.3, 
       animationDuration: Math.random() * 15 + 10, // 10-25s
       delay: Math.random() * 10,
     }));
@@ -132,8 +226,6 @@ export const PurpleSparkle = ({ count = 15 }) => {
             src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
             alt=""
             className="w-full h-full object-contain"
-            width="1000" 
-            height="1000"
           />
         </motion.div>
       ))}
@@ -145,9 +237,9 @@ export const PurpleSparkle = ({ count = 15 }) => {
  * LensGlare Component
  * Creates lens flare and distant glow effects in the background
  */
-export const LensGlare = () => {
-  const [glarePositions, setGlarePositions] = useState([]);
-  const [distantGlows, setDistantGlows] = useState([]);
+export const LensGlare: React.FC = () => {
+  const [glarePositions, setGlarePositions] = useState<any[]>([]);
+  const [distantGlows, setDistantGlows] = useState<any[]>([]);
   const [isDark, setIsDark] = useState(true);
   
   useEffect(() => {
@@ -204,18 +296,18 @@ export const LensGlare = () => {
   }, []);
   
   // Adjust opacity and color for light mode
-  const getLightModeAdjustedOpacity = (opacity) => {
+  const getLightModeAdjustedOpacity = (opacity: number) => {
     return !isDark ? opacity * 1.5 : opacity;
   };
   
-  const getLightModeAdjustedColor = (color) => {
+  const getLightModeAdjustedColor = (color: string) => {
     if (!isDark) {
       // Extract values from rgba color string
       const rgbaMatch = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
       if (rgbaMatch) {
         const [_, r, g, b, a] = rgbaMatch;
         // Darken the color for light mode by reducing brightness and increasing opacity
-        return `rgba(${Math.max(0, r - 20)}, ${Math.max(0, g - 20)}, ${Math.max(0, b - 20)}, ${Math.min(1, parseFloat(a) * 1.5)})`;
+        return `rgba(${Math.max(0, parseInt(r) - 20)}, ${Math.max(0, parseInt(g) - 20)}, ${Math.max(0, parseInt(b) - 20)}, ${Math.min(1, parseFloat(a) * 1.5)})`;
       }
     }
     return color;
@@ -269,18 +361,18 @@ export const LensGlare = () => {
  * GridDeformation Component
  * Creates an interactive grid that deforms based on cursor position
  */
-export const GridDeformation = () => {
-  const canvasRef = useRef(null);
-  const animationRef = useRef(null);
+export const GridDeformation: React.FC = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationRef = useRef<number | null>(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
   const [mousePosition, setMousePosition] = useState({ x: -1000, y: -1000 });
   const lastMousePosition = useRef({ x: -1000, y: -1000 });
   const lastUpdateTime = useRef(0);
-  const gridPoints = useRef([]);
+  const gridPoints = useRef<any[]>([]);
   const [isDark, setIsDark] = useState(true);
   
   // Throttle mouse position updates
-  const handleMouseMove = useCallback((e) => {
+  const handleMouseMove = React.useCallback((e: MouseEvent) => {
     const now = performance.now();
     if (now - lastUpdateTime.current > 16) { // ~60fps
       lastMousePosition.current = { x: e.clientX, y: e.clientY };
@@ -308,7 +400,7 @@ export const GridDeformation = () => {
     // Generate grid points
     const createGrid = () => {
       const spacing = 60; // Increased from 30px to 60px for larger squares
-      const newGridPoints = [];
+      const newGridPoints: any[] = [];
       
       const columns = Math.ceil(dimensions.width / spacing) + 1;
       const rows = Math.ceil(dimensions.height / spacing) + 1;
@@ -370,6 +462,8 @@ export const GridDeformation = () => {
     if (!canvasRef.current || gridPoints.current.length === 0) return;
     
     const ctx = canvasRef.current.getContext('2d');
+    if (!ctx) return;
+
     const maxDistance = 250;
     const repulsionForce = 0.8;
     const friction = 0.85;
@@ -384,7 +478,7 @@ export const GridDeformation = () => {
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
       
       // Update grid points with enhanced physics
-      gridPoints.current.forEach(point => {
+      gridPoints.current.forEach((point: any) => {
         // Calculate distance to cursor
         const dx = mousePosition.x - point.x;
         const dy = mousePosition.y - point.y;
@@ -435,13 +529,13 @@ export const GridDeformation = () => {
       
       // Draw grid lines with enhanced visual effects
       ctx.strokeStyle = !isDark
-        ? 'rgba(134, 39, 230, 0.4)'
+        ? 'rgba(134, 39, 230, 0.4)' // Darker and more opaque for light mode
         : 'rgba(168, 85, 247, 0.25)';
       ctx.lineWidth = !isDark ? 1 : 0.8;
       
       // Draw horizontal lines
-      const columns = Math.ceil(dimensions.width / 60) + 1;
-      const rows = Math.ceil(dimensions.height / 60) + 1;
+      const columns = Math.ceil(dimensions.width / 60) + 1; // Updated to match new spacing
+      const rows = Math.ceil(dimensions.height / 60) + 1; // Updated to match new spacing
       
       for (let i = 0; i < rows; i++) {
         ctx.beginPath();
@@ -500,142 +594,5 @@ export const GridDeformation = () => {
       className="fixed inset-0 pointer-events-none z-[-10]"
       style={{ opacity: !isDark ? 0.85 : 0.7 }}
     />
-  );
-};
-
-/**
- * SparkleText Component
- * Creates text with sparkle effects on hover
- */
-export const SparkleText = ({ children, className }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const [sparklePositions, setSparklePositions] = useState([]);
-  const [isDark, setIsDark] = useState(true);
-  
-  useEffect(() => {
-    // Check initial theme
-    setIsDark(isDarkMode());
-    
-    // Setup observer to watch for class changes on html element
-    const observer = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.attributeName === 'class') {
-          setIsDark(isDarkMode());
-        }
-      });
-    });
-    
-    observer.observe(document.documentElement, { 
-      attributes: true,
-      attributeFilter: ['class'] 
-    });
-    
-    return () => observer.disconnect();
-  }, []);
-  
-  useEffect(() => {
-    if (isHovered) {
-      // Generate 6-10 random sparkle positions
-      const count = Math.floor(Math.random() * 5) + 6;
-      const newPositions = Array(count).fill(0).map(() => ({
-        id: Math.random(),
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 15 + 5,
-        delay: Math.random() * 0.3,
-        duration: Math.random() * 0.8 + 0.5,
-        rotation: Math.random() * 360,
-        opacity: Math.random() * 0.7 + 0.3 // Increased from default for better visibility
-      }));
-      setSparklePositions(newPositions);
-    }
-  }, [isHovered]);
-  
-  return (
-    <div 
-      className={`relative inline-block ${className}`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {children}
-      
-      <AnimatePresence>
-        {isHovered && sparklePositions.map(sparkle => (
-          <motion.div
-            key={sparkle.id}
-            className="absolute pointer-events-none"
-            style={{
-              left: `${sparkle.x}%`,
-              top: `${sparkle.y}%`,
-              width: `${sparkle.size}px`,
-              height: `${sparkle.size}px`,
-              zIndex: 10
-            }}
-            initial={{ opacity: 0, scale: 0, rotate: 0 }}
-            animate={{ 
-              opacity: [0, 1, 0],
-              scale: [0, 1, 0],
-              rotate: [0, sparkle.rotation],
-              y: [0, -20]
-            }}
-            exit={{ opacity: 0, scale: 0 }}
-            transition={{
-              duration: sparkle.duration,
-              delay: sparkle.delay,
-              ease: "easeOut"
-            }}
-          >
-            <img 
-              src={isDark ? "/images/optimized/dark-mode-star.webp" : "/images/optimized/light-mode-star.webp"}
-              alt=""
-              className="w-full h-full object-contain"
-              width="1000" 
-              height="1000"
-            />
-          </motion.div>
-        ))}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-/**
- * TitleEffect Component
- * Creates a title with hover effects
- */
-export const TitleEffect = ({ children, className = "" }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  
-  return (
-    <div className="relative mb-12">
-      <div 
-        className={`inline-block relative ${className}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <motion.h2 
-          className="text-5xl font-bold text-primary relative z-10"
-          animate={isHovered ? {
-            textShadow: [
-              "0 0 7px rgba(168,85,247,0.6)",
-              "0 0 15px rgba(168,85,247,0.8)",
-              "0 0 7px rgba(168,85,247,0.6)"
-            ],
-            color: [
-              "rgb(168,85,247)",
-              "rgb(192,132,252)",
-              "rgb(168,85,247)"
-            ]
-          } : {}}
-          transition={{
-            duration: 2,
-            repeat: isHovered ? Infinity : 0,
-            repeatType: "reverse"
-          }}
-        >
-          {children}
-        </motion.h2>
-      </div>
-    </div>
   );
 }; 
