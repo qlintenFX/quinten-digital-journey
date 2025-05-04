@@ -1183,29 +1183,44 @@ const Home = () => {
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] relative">
           <div className="max-w-3xl text-center">
             <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: -50 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-bold mb-8"
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-7xl font-bold mb-4 leading-tight"
             >
-              Welcome to my <SparkleText className="text-primary">E-Portfolio</SparkleText> 👋
+              <span className="inline-block">
+                <span className="text-primary">Quinten De Meyer</span>
+              </span>
             </motion.h1>
-            <motion.p 
+            
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-xl md:text-2xl text-muted-foreground mb-8"
+            >
+              Creator, Developer &amp; Cybersecurity Enthusiast
+            </motion.p>
+            
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-xl md:text-2xl"
+              transition={{ duration: 0.5, delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
             >
-              Hi, I'm <span className="font-semibold text-primary">Quinten</span>, a passionate student in Applied Computer Science / Electronics - ICT.
-            </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-xl md:text-2xl mt-4 mb-8"
-            >
-              I design and develop digital experiences with creativity and technical expertise. Welcome to my professional journey!
-            </motion.p>
+              <a href="#projects">
+                <SparkleButton className="w-full sm:w-auto px-6">
+                  <span>View Projects</span>
+                  <ArrowUpRight className="ml-2 h-4 w-4" />
+                </SparkleButton>
+              </a>
+              <a href="/presentation">
+                <SparkleButton className="w-full sm:w-auto px-6">
+                  <span>View Presentation</span>
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </SparkleButton>
+              </a>
+            </motion.div>
           </div>
           <motion.div 
             initial={{ opacity: 0 }}
