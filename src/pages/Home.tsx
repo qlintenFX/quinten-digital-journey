@@ -154,7 +154,7 @@ const InteractiveTitleEffect = ({ children, className = "" }) => {
  * Creates floating sparkle effects across the screen
  * @param {number} count - Number of sparkles to display
  */
-const PurpleSparkle = ({ count = 15 }) => {
+export const PurpleSparkle = ({ count = 15 }) => {
   const [sparkles, setSparkles] = useState([]);
   const [isDark, setIsDark] = useState(true);
   
@@ -641,7 +641,7 @@ const LensGlare = () => {
  * - Smooth physics-based movement
  * - Performance optimized with GPU acceleration
  */
-const GridDeformation = () => {
+export const GridDeformation = () => {
   const canvasRef = useRef(null);
   const animationRef = useRef(null);
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
@@ -882,7 +882,7 @@ const GridDeformation = () => {
  * @param {ReactNode} props.children - Text content
  * @param {string} props.className - Additional CSS classes
  */
-const KeywordHighlight = ({ children, className = "" }) => {
+export const KeywordHighlight = ({ children, className = "" }) => {
   return (
     <span 
       className={`relative font-semibold text-primary ${className}`}
