@@ -128,7 +128,7 @@ const Presentation = () => {
                     transition={{ duration: 0.8, delay: 0.6 }}
                     className="text-4xl text-primary/90"
                   >
-                    Applied Computer Science / Electronics - ICT
+                    2CCS01 - Cloud & Cyber Security
                   </motion.p>
                 </div>
               </SlideContent>
@@ -152,13 +152,13 @@ const Presentation = () => {
                       className="space-y-8 text-4xl"
                     >
                       <p>
-                        Gepassioneerde student met focus op het oplossen van <KeywordHighlight>praktische problemen</KeywordHighlight> via technologie.
+                        Ik droomde altijd al van een eigen computer. Zodra ik er één had, was ik constant bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en meer te <KeywordHighlight>leren</KeywordHighlight> over technologie.
                       </p>
                       <p>
-                        Ik combineer theoretische kennis met <KeywordHighlight>creatieve toepassingen</KeywordHighlight> en ben zowel technisch als creatief ingesteld.
+                        Ik zoek steeds naar oplossingen voor wat <KeywordHighlight>ik wil</KeywordHighlight> en wat <KeywordHighlight>anderen kunnen gebruiken</KeywordHighlight> - dit motiveert mij om apps te ontwikkelen die echt waarde toevoegen.
                       </p>
                       <p>
-                        Naast mijn studie onderhoud ik een <KeywordHighlight>YouTube kanaal</KeywordHighlight> en ontwikkel ik eigen <KeywordHighlight>softwareprojecten</KeywordHighlight>.
+                        Ik koos deze IT-opleiding omdat ik zo <KeywordHighlight>gepassioneerd</KeywordHighlight> ben over technologie dat ik er mijn <KeywordHighlight>carrière</KeywordHighlight> van wil maken en er altijd in wil blijven <KeywordHighlight>werken en leren</KeywordHighlight>.
                       </p>
                     </motion.div>
                   </div>
@@ -210,25 +210,25 @@ const Presentation = () => {
                         <div className="space-y-20 relative">
                           <TimelinePoint 
                             title="IT Polis Voting System" 
-                            description="SKIL2 Project - Semester 3"
+                            description="SKIL2 Project"
                             delay={0.4}
                           />
                           
                           <TimelinePoint 
                             title="App Hosting Platform" 
-                            description="SKIL2.2 Project - Semester 4"
+                            description="SKIL2.2 Project"
                             delay={0.6}
                           />
                           
                           <TimelinePoint 
                             title="Security Awareness Campaign" 
-                            description="Media Project - Semester 5"
+                            description="Media Project"
                             delay={0.8}
                           />
 
                           <TimelinePoint 
                             title="KeyedColors" 
-                            description="Persoonlijk Project - Semester 6"
+                            description="Persoonlijk Project"
                             delay={1.0}
                           />
                         </div>
