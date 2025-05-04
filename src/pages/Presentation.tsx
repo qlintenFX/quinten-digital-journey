@@ -289,12 +289,12 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
-                        <div className="flex flex-col gap-6 max-w-[80%]">
+                      <div className="relative w-full h-full max-h-[450px] flex items-center justify-center">
+                        <div className="flex flex-col gap-6 w-3/4 mx-auto">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
-                            className="w-full object-contain rounded-xl max-h-[220px]"
+                            className="w-full object-contain rounded-xl"
                             style={{
                               filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
                               border: "2px solid rgba(168, 85, 247, 0.3)",
@@ -304,7 +304,7 @@ const Presentation = () => {
                           <img 
                             src="/images/optimized/project-1-group-picture.webp" 
                             alt="Project Team" 
-                            className="w-full object-contain rounded-xl max-h-[220px]"
+                            className="w-full object-contain rounded-xl"
                             style={{
                               filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
                               border: "2px solid rgba(168, 85, 247, 0.3)",
@@ -347,8 +347,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6">
+                      <div className="relative w-full h-full max-h-[450px] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6 w-3/4 mx-auto">
                           <img 
                             src="/images/optimized/project-2-hosting-platform.webp" 
                             alt="App Hosting Platform" 
@@ -469,8 +469,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6">
+                      <div className="relative w-full h-full max-h-[450px] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6 w-3/4 mx-auto">
                           <img 
                             src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
                             alt="Security Awareness Movie" 
@@ -527,23 +527,25 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
-                        <div className="flex flex-col gap-6 max-w-[80%]">
-                          <img 
-                            src="/images/project-4-KeyedColors-logo.png" 
-                            alt="KeyedColors Logo" 
-                            className="w-full object-contain rounded-xl max-h-[180px]"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
-                            }}
-                          />
+                      <div className="relative w-full h-full max-h-[450px] flex items-center justify-center">
+                        <div className="flex flex-col gap-6 w-3/4 mx-auto">
+                          <div className="w-1/2 mx-auto">
+                            <img 
+                              src="/images/project-4-KeyedColors-logo.png" 
+                              alt="KeyedColors Logo" 
+                              className="w-full object-contain rounded-xl"
+                              style={{
+                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                                border: "2px solid rgba(168, 85, 247, 0.3)",
+                                boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              }}
+                            />
+                          </div>
                           <div className="grid grid-cols-2 gap-6">
                             <img 
                               src="/images/optimized/project-4-KeyedColors-dynamic-profile.webp" 
                               alt="Dynamic Profile" 
-                              className="w-full object-contain rounded-xl max-h-[200px]"
+                              className="w-full object-contain rounded-xl"
                               style={{
                                 filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
                                 border: "2px solid rgba(168, 85, 247, 0.3)",
@@ -553,7 +555,7 @@ const Presentation = () => {
                             <img 
                               src="/images/optimized/project-4-KeyedColors-profiles.webp" 
                               alt="Profiles" 
-                              className="w-full object-contain rounded-xl max-h-[200px]"
+                              className="w-full object-contain rounded-xl"
                               style={{
                                 filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
                                 border: "2px solid rgba(168, 85, 247, 0.3)",
