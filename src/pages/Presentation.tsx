@@ -290,7 +290,7 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="flex flex-col gap-4 w-3/5">
+                        <div className="flex flex-col gap-6 w-4/5">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
@@ -300,7 +300,7 @@ const Presentation = () => {
                             }}
                           />
                           <img 
-                            src="/images/optimized/project-1-group-picture.webp" 
+                            src="/images/optimized/project-1-group-picture.png" 
                             alt="Project Team" 
                             className="w-full h-auto object-contain rounded-xl"
                             style={{
