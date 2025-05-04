@@ -163,16 +163,16 @@ const Presentation = () => {
                     </motion.div>
                   </div>
                   <motion.div 
-                    className="flex-1 flex items-center justify-center"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
+                    className="flex-1 flex items-center justify-center"
                   >
-                    <div className="relative w-full h-auto rounded-2xl overflow-hidden" style={{ maxWidth: "80%" }}>
+                    <div className="relative w-[60%] h-0 pb-[60%] rounded-2xl overflow-hidden">
                       <img 
                         src="/images/optimized/profile-photo.webp" 
                         alt="Profielfoto"
-                        className="w-full h-full object-cover rounded-2xl"
+                        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
                         style={{ 
                           filter: "drop-shadow(0 0 25px rgba(168, 85, 247, 0.7))",
                           border: "4px solid rgba(168, 85, 247, 0.5)",
@@ -289,8 +289,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[90%] flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-3/4 mx-auto">
+                      <div className="relative w-full h-full max-h-[80%] flex items-center justify-center">
+                        <div className="flex flex-col gap-6 w-75% mx-auto">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
@@ -347,8 +347,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[90%] flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6 w-3/4 mx-auto">
+                      <div className="relative w-full h-full max-h-[80%] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6 w-75% mx-auto">
                           <img 
                             src="/images/optimized/project-2-hosting-platform.webp" 
                             alt="App Hosting Platform" 
@@ -469,8 +469,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[90%] flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-full mx-auto">
+                      <div className="relative w-full h-full max-h-[80%] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6 w-75% mx-auto">
                           <img 
                             src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
                             alt="Security Awareness Movie" 
@@ -527,13 +527,16 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[90%] flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-full mx-auto">
-                          <div className="w-1/2 mx-auto">
+                      <div className="relative w-full h-full max-h-[80%] flex items-center justify-center">
+                        <div className="flex flex-col gap-6 w-75% mx-auto">
+                          <div className="w-50% mx-auto">
                             <img 
                               src="/images/project-4-KeyedColors-logo.png" 
                               alt="KeyedColors Logo" 
                               className="w-full object-contain rounded-xl"
+                              style={{
+                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
+                              }}
                             />
                           </div>
                           <div className="grid grid-cols-2 gap-6">
@@ -698,7 +701,7 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center"
                     >
-                      <div className="relative w-full max-w-[90%]">
+                      <div className="relative w-full max-w-[600px]">
                         <div className="w-full overflow-hidden rounded-2xl shadow-lg bg-muted/60"
                           style={{
                             filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.5))",
