@@ -1,0 +1,84 @@
+# Detailed Presentation Content
+
+## Slide 1: Title Slide
+- Title: "Quinten De Meyer"
+- Subtitle: "Applied Computer Science / Electronics - ICT"
+- Tagline: "Welcome to my professional journey"
+- Visual: Purple sparkle effects, animated title with bubble animations
+
+## Slide 2: About Me
+- Heading: "Who Am I?"
+- Photo: profile image from the homepage
+- Text: "Hi, I'm Quinten, a passionate student in Applied Computer Science / Electronics - ICT. I design and develop digital experiences with creativity and technical expertise."
+- Visual: Photo should have glow effects similar to homepage
+
+## Slide 3: Why Applied Computer Science?
+- Heading: "Why Applied Computer Science / Electronics - ICT?"
+- Text: "I've chosen Applied Computer Science / Electronics - ICT because I'm fascinated by how technology can solve real-world problems. The blend of theoretical knowledge and practical applications allows me to turn my creative ideas into functional solutions."
+- Visual: Keyword highlighting for "solve real-world problems", "theoretical knowledge", and "practical applications"
+
+## Slide 4: Creative Pursuits
+- Heading: "My Creative Pursuits"
+- Text: "Outside of academics, I run a YouTube channel focused on creating custom cinematics for Assetto Corsa, which has sharpened my video editing and storytelling abilities. I also develop personal software projects like KeyedColors, which allows me to explore innovative solutions to everyday problems and continuously enhance my programming skills."
+- Visual: Keyword highlighting for "YouTube channel", "video editing", and "personal software projects"
+
+## Slide 5: Professional Ambitions
+- Heading: "Professional Ambitions"
+- Text: "My experiences with containerization, security systems, and application development have shaped my professional direction. I aim to specialize in creating robust, secure technological solutions while continuing to learn and adapt to emerging technologies that can positively impact users' experiences."
+- Visual: Keyword highlighting for "containerization", "security systems", "application development", and "learn and adapt"
+
+## Slide 6: Project 1 - IT Polis Voting System
+- Title: "IT Polis Voting System"
+- Semester: "SKIL2 Project"
+- Image: project-1-Voting-System.webp
+- Context: "Developed a voting system for the IT Polis event, a student project showcase where attendees vote for their favorite projects. The system needed to ensure each visitor could only vote once, track votes in real-time, and provide event organizers with administrative control."
+- Contribution: "I created and managed the database architecture, implemented data processing for the live leaderboard, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system."
+- Learnings: "Gained practical experience in secure database design, NFC technology integration, and real-time data visualization. Developed skills in creating administrative dashboards and implementing user authentication systems."
+- Technologies: "Database Design, NFC Technology, UI/UX, Real-time Systems, Admin Dashboard"
+
+## Slide 7: Project 2 - App Hosting Platform
+- Title: "App Hosting Platform for Clients"
+- Semester: "SKIL2.2 Project"
+- Image: project-2-hosting-platform.webp
+- Context: "Designed and implemented a hosting platform for PHP/Laravel applications within Thomas More's datacenter. The platform provides an automated deployment process for web applications, offering an efficient and scalable solution that allows clients to host multiple applications securely."
+- Contribution: "I was responsible for creating and managing the Kubernetes cluster. My work involved setting up the infrastructure for container orchestration, ensuring high availability, and implementing automated scaling solutions for the hosted applications."
+- Learnings: "Gained practical experience in containerization technologies, Kubernetes administration, and implementing CIS security controls. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows."
+- Technologies: "Kubernetes, Docker, CI/CD, GitLab, Ansible, Ubuntu Server, Security Controls"
+
+## Slide 8: Project 3 - Security Awareness Campaign
+- Title: "Security Awareness Campaign Movie"
+- Semester: "Media Project"
+- Image: project-3-video-editing-awareness-movie.webp
+- Context: "Created an educational movie about cybersecurity awareness, focusing on the dangers of found USB devices. The film follows a storyline where a hacker plants a malware-infected USB in a high-traffic area, which is then picked up and used by an unsuspecting victim."
+- Contribution: "I served as the main editor and creative director, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production."
+- Learnings: "Strengthened my skills in narrative storytelling through visual media, technical video production in security contexts, and effectively communicating complex security concepts through engaging content."
+- Technologies: "Video Editing, Cinematography, Storytelling, Security Awareness, Visual Effects"
+
+## Slide 9: Project 4 - KeyedColors
+- Title: "KeyedColors"
+- Semester: "Personal Project"
+- Image: project-4-KeyedColors-logo.png
+- Context: "Developed a Windows application for creating custom display profiles with gamma and contrast adjustments. KeyedColors allows users to create, save, and quickly switch between multiple display settings using customizable hotkeys."
+- Contribution: "I identified a gap in the market for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need."
+- Learnings: "Gained hands-on experience with Windows API for display settings manipulation, system tray integration, and global hotkey management. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use."
+- Technologies: "C#, .NET, Windows API, UI/UX, System Tray Integration, Global Hotkeys"
+
+## Slide 10: YouTube Channel
+- Title: "@qlintenFX"
+- Description: "Custom cinematics for Assetto Corsa"
+- Visual: Channel banner and profile picture
+- Featured videos: Embed or screenshots of the featured videos
+- Call to action: "Visit my channel to see my creative work"
+
+## Slide 11: Contact & Connect
+- Title: "Let's Connect"
+- GitHub: "github.com/qlintenFX"
+- YouTube: "youtube.com/@qlintenFX"
+- LinkedIn: "linkedin.com/in/quinten-de-meyer-2336282a2"
+- Email: "quinten1508@gmail.com"
+- Style: Use the same app-like icon grid from the homepage
+
+## Slide 12: Thank You
+- Title: "Thank You for Your Attention"
+- Message: "Feel free to reach out with any questions or opportunities"
+- Visual: Final sparkle effects and animations for a memorable closing 
