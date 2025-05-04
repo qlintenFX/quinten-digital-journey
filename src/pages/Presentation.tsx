@@ -207,23 +207,29 @@ const Presentation = () => {
                         <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-3 bg-primary/40"></div>
                         
                         {/* Timeline points */}
-                        <div className="space-y-28 relative">
+                        <div className="space-y-20 relative">
                           <TimelinePoint 
-                            title="Start Opleiding" 
-                            description="Eerste kennismaking met professionele software ontwikkeling en infrastructuur"
+                            title="IT Polis Voting System" 
+                            description="SKIL2 Project - Semester 3"
                             delay={0.4}
                           />
                           
                           <TimelinePoint 
-                            title="SKIL2 Projecten" 
-                            description="Ontwikkeling van teamvaardigheden en specialisatie in database en containerization"
-                            delay={0.8}
+                            title="App Hosting Platform" 
+                            description="SKIL2.2 Project - Semester 4"
+                            delay={0.6}
                           />
                           
                           <TimelinePoint 
-                            title="Persoonlijke Groei" 
-                            description="Verdieping in creatieve videoproductie en Windows applicatie-ontwikkeling"
-                            delay={1.2}
+                            title="Security Awareness Campaign" 
+                            description="Media Project - Semester 5"
+                            delay={0.8}
+                          />
+
+                          <TimelinePoint 
+                            title="KeyedColors" 
+                            description="Persoonlijk Project - Semester 6"
+                            delay={1.0}
                           />
                         </div>
                       </div>
