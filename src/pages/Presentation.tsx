@@ -155,7 +155,7 @@ const Presentation = () => {
                         Ik wou altijd al een computer hebben. Vanaf dat ik er een had, was ik ermee bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en ermee te <KeywordHighlight>leren</KeywordHighlight>.
                       </p>
                       <p>
-                        Ik zoek altijd voor wat <KeywordHighlight>ik wil</KeywordHighlight> en wat <KeywordHighlight>anderen zouden kunnen willen</KeywordHighlight> - daarom wil ik apps maken die mensen echt gebruiken.
+                        Ik was altijd het meest geïnteresseerd in het <KeywordHighlight>beveiligen</KeywordHighlight> en <KeywordHighlight>optimaliseren</KeywordHighlight> van apps. Cybersecurity trok me aan omdat ik wil zorgen dat wat ik en anderen maken ook echt <KeywordHighlight>veilig</KeywordHighlight> is.
                       </p>
                       <p>
                         Ik koos deze IT opleiding omdat ik het zo <KeywordHighlight>leuk vond</KeywordHighlight> dat ik er mijn <KeywordHighlight>carrière</KeywordHighlight> van wil maken en ermee altijd wil <KeywordHighlight>werken en leren</KeywordHighlight>.
