@@ -57,9 +57,9 @@ export default {
           foreground: 'hsl(var(--card-foreground))'
         },
         purple: {
-          light: '#E5DEFF',
-          DEFAULT: '#9B87F5',
-          dark: '#7E69AB'
+          light: '#D9CCFF',
+          DEFAULT: '#8B55E6',
+          dark: '#6A40B3'
         }
       },
       keyframes: {
