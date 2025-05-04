@@ -141,7 +141,7 @@ const Presentation = () => {
                     <motion.h2
                       initial={{ opacity: 0, x: -50 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="text-7xl font-bold mb-12 text-primary/90"
+                      className="text-7xl font-bold mb-12 text-purple-900"
                     >
                       Over Mij
                     </motion.h2>
@@ -191,7 +191,7 @@ const Presentation = () => {
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-7xl font-bold mb-12 text-center text-primary/90"
+                    className="text-7xl font-bold mb-12 text-center text-purple-900"
                   >
                     Mijn Projecten
                   </motion.h2>
@@ -246,7 +246,7 @@ const Presentation = () => {
                     <motion.div 
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="px-5 py-2 bg-primary/20 rounded-full text-primary text-2xl font-semibold mr-4"
+                      className="px-5 py-2 bg-primary/20 rounded-full text-purple-900 text-2xl font-semibold mr-4"
                     >
                       SKIL2 Project
                     </motion.div>
@@ -254,7 +254,7 @@ const Presentation = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className="text-7xl font-bold text-primary/90"
+                      className="text-7xl font-bold text-purple-900"
                     >
                       IT Polis Voting System
                     </motion.h2>
@@ -268,17 +268,17 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pr-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
                         <p>Een <KeywordHighlight>stem systeem</KeywordHighlight> voor IT Polis waar bezoekers stemmen op de projecten van studenten.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
                         <p>Ik maakte de <KeywordHighlight>database</KeywordHighlight>, de <KeywordHighlight>real-time scorebord</KeywordHighlight>, en de user interface.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
                         <p>Ik leerde over <KeywordHighlight>veilige databases</KeywordHighlight>, <KeywordHighlight>NFC-technologie</KeywordHighlight>, en <KeywordHighlight>data visualisatie</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
@@ -322,7 +322,7 @@ const Presentation = () => {
                     <motion.div 
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="px-5 py-2 bg-primary/20 rounded-full text-primary text-2xl font-semibold mr-4"
+                      className="px-5 py-2 bg-primary/20 rounded-full text-purple-900 text-2xl font-semibold mr-4"
                     >
                       SKIL2.2 Project
                     </motion.div>
@@ -330,7 +330,7 @@ const Presentation = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className="text-7xl font-bold text-primary/90"
+                      className="text-7xl font-bold text-purple-900"
                     >
                       App Hosting Platform
                     </motion.h2>
@@ -388,17 +388,17 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pl-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
                         <p>Een <KeywordHighlight>hosting platform</KeywordHighlight> voor PHP/Laravel apps in het datacenter.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
                         <p>Ik maak de <KeywordHighlight>Kubernetes cluster</KeywordHighlight> en zorg voor <KeywordHighlight>automatische schaalbaarheid</KeywordHighlight>.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
                         <p>Ik leerde werken met <KeywordHighlight>containers</KeywordHighlight>, Kubernetes, en <KeywordHighlight>security controls</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
@@ -414,7 +414,7 @@ const Presentation = () => {
                     <motion.div 
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="px-5 py-2 bg-primary/20 rounded-full text-primary text-2xl font-semibold mr-4"
+                      className="px-5 py-2 bg-primary/20 rounded-full text-purple-900 text-2xl font-semibold mr-4"
                     >
                       Media Project
                     </motion.div>
@@ -422,7 +422,7 @@ const Presentation = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className="text-7xl font-bold text-primary/90"
+                      className="text-7xl font-bold text-purple-900"
                     >
                       Security Awareness Movie
                     </motion.h2>
@@ -436,17 +436,17 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pr-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
                         <p>Een <KeywordHighlight>film</KeywordHighlight> over cybersecurity, die laat zien waarom je geen USB sticks moet oprapen.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
                         <p>Ik was de <KeywordHighlight>editor</KeywordHighlight> en <KeywordHighlight>creative director</KeywordHighlight>, verantwoordelijk voor het verhaal en de look.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
                         <p>Ik werd beter in <KeywordHighlight>visueel vertellen</KeywordHighlight> en <KeywordHighlight>video productie</KeywordHighlight> voor security awareness.</p>
                       </div>
                     </motion.div>
@@ -490,7 +490,7 @@ const Presentation = () => {
                     <motion.div 
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
-                      className="px-5 py-2 bg-primary/20 rounded-full text-primary text-2xl font-semibold mr-4"
+                      className="px-5 py-2 bg-primary/20 rounded-full text-purple-900 text-2xl font-semibold mr-4"
                     >
                       Mijn Eigen Project
                     </motion.div>
@@ -498,7 +498,7 @@ const Presentation = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
-                      className="text-7xl font-bold text-primary/90"
+                      className="text-7xl font-bold text-purple-900"
                     >
                       KeyedColors
                     </motion.h2>
@@ -552,17 +552,17 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pl-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
                         <p>Windows app om <KeywordHighlight>display profielen</KeywordHighlight> te maken met gamma en contrast instellingen.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
                         <p>Ik zag dat er niks was zoals dit en heb het zelf gemaakt met <KeywordHighlight>sneltoetsen</KeywordHighlight>.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
                         <p>Ik leerde werken met <KeywordHighlight>Windows API</KeywordHighlight>, <KeywordHighlight>systeemiconen</KeywordHighlight> en <KeywordHighlight>sneltoetsbeheer</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
@@ -577,7 +577,7 @@ const Presentation = () => {
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-7xl font-bold mb-12 text-center text-primary/90"
+                    className="text-7xl font-bold mb-12 text-center text-purple-900"
                   >
                     Mijn Skills
                   </motion.h2>
@@ -590,7 +590,7 @@ const Presentation = () => {
                       className="space-y-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Waar ik goed in ben</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Waar ik goed in ben</h3>
                         <ul className="space-y-5 text-4xl list-disc pl-12">
                           <li>Databases maken en verbeteren</li>
                           <li>Docker en Kubernetes gebruiken</li>
@@ -601,7 +601,7 @@ const Presentation = () => {
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Persoonlijke skills</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Persoonlijke skills</h3>
                         <ul className="space-y-5 text-4xl list-disc pl-12">
                           <li>Projecten organiseren</li>
                           <li>Creatief problemen oplossen</li>
@@ -617,7 +617,7 @@ const Presentation = () => {
                       className="space-y-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Wat ik wil verbeteren</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Wat ik wil verbeteren</h3>
                         <ul className="space-y-5 text-4xl list-disc pl-12">
                           <li>Grote cloud infrastructuren</li>
                           <li>Frontend frameworks</li>
@@ -626,7 +626,7 @@ const Presentation = () => {
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Mijn Plan</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Mijn Plan</h3>
                         <p className="text-4xl pl-4">
                           AWS/Azure certificaten halen, meewerken aan open-source projecten, en experimenteren met CI/CD in mijn eigen projecten.
                         </p>
@@ -643,7 +643,7 @@ const Presentation = () => {
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-7xl font-bold mb-12 text-center text-primary/90"
+                    className="text-7xl font-bold mb-12 text-center text-purple-900"
                   >
                     YouTube Kanaal
                   </motion.h2>
@@ -722,7 +722,7 @@ const Presentation = () => {
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-8xl font-bold mb-16 text-center text-primary/90"
+                    className="text-8xl font-bold mb-16 text-center text-purple-900"
                   >
                     Conclusie & Toekomst
                   </motion.h2>
@@ -776,8 +776,8 @@ const Presentation = () => {
                     transition={{ duration: 0.8, delay: 0.3 }}
                     className="text-5xl mb-12 space-y-8"
                   >
-                    <p className="text-primary/90 font-semibold">Quinten De Meyer</p>
-                    <p className="text-primary/70">quinten1508@gmail.com</p>
+                    <p className="text-purple-900 font-semibold">Quinten De Meyer</p>
+                    <p className="text-purple-800">quinten1508@gmail.com</p>
                     <p className="text-2xl text-muted-foreground mt-16">2CCS01 - Cloud & Cyber Security</p>
                   </motion.div>
                 </div>
@@ -863,10 +863,10 @@ const TimelinePoint: React.FC<{
       transition={{ delay }}
     >
       <div className="w-1/2 pr-10 text-right">
-        <h3 className="text-4xl font-bold text-primary mb-2">{title}</h3>
+        <h3 className="text-4xl font-bold text-purple-900 mb-2">{title}</h3>
         <p className="text-2xl text-muted-foreground">{description}</p>
       </div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-primary shadow-lg shadow-primary/50"></div>
+      <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50"></div>
       <div className="w-1/2 pl-10"></div>
     </motion.div>
   );
