@@ -203,30 +203,30 @@ const Presentation = () => {
                       className="w-full max-w-6xl"
                     >
                       <div className="relative">
-                        {/* Timeline */}
-                        <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-3 bg-primary/40"></div>
+                        {/* Horizontal Timeline */}
+                        <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 h-3 bg-primary/40"></div>
                         
                         {/* Timeline points */}
-                        <div className="space-y-20 relative">
-                          <TimelinePoint 
+                        <div className="flex justify-between relative py-12">
+                          <HorizontalTimelinePoint 
                             title="IT Polis Voting System" 
                             description="SKIL2 Project"
                             delay={0.4}
                           />
                           
-                          <TimelinePoint 
+                          <HorizontalTimelinePoint 
                             title="App Hosting Platform" 
                             description="SKIL2.2 Project"
                             delay={0.6}
                           />
                           
-                          <TimelinePoint 
+                          <HorizontalTimelinePoint 
                             title="Security Awareness Movie" 
                             description="Media Project"
                             delay={0.8}
                           />
 
-                          <TimelinePoint 
+                          <HorizontalTimelinePoint 
                             title="KeyedColors" 
                             description="Mijn Eigen Project"
                             delay={1.0}
@@ -838,25 +838,24 @@ const SlideContent: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   );
 };
 
-// Timeline point component for the journey slide
-const TimelinePoint: React.FC<{ 
+// Horizontal Timeline point component
+const HorizontalTimelinePoint: React.FC<{ 
   title: string; 
   description: string;
   delay: number;
 }> = ({ title, description, delay }) => {
   return (
     <motion.div 
-      className="flex items-center"
+      className="flex flex-col items-center w-1/4 px-4"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
     >
-      <div className="w-1/2 pr-10 text-right">
-        <h3 className="text-4xl font-bold text-purple-900 mb-2">{title}</h3>
-        <p className="text-2xl text-muted-foreground">{description}</p>
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
+      <div className="mt-14 text-center">
+        <h3 className="text-3xl font-bold text-purple-900 mb-2">{title}</h3>
+        <p className="text-xl text-muted-foreground">{description}</p>
       </div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50"></div>
-      <div className="w-1/2 pl-10"></div>
     </motion.div>
   );
 };
