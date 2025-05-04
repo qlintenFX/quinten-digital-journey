@@ -4,6 +4,22 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/images/optimized/pfp.webp" />
     
+    <!-- SPA GitHub Pages Redirect Handling -->
+    <script>
+      // Redirect handling for SPAs on GitHub Pages
+      (function() {
+        // Retrieve the URL from sessionStorage that was saved by the 404.html page
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        
+        // If we have a stored URL, use the pathname to navigate within the SPA
+        if (redirect && redirect !== location.href) {
+          var urlPath = new URL(redirect).pathname;
+          history.replaceState(null, null, urlPath);
+        }
+      })();
+    </script>
+    
     <!-- Preload critical images -->
     <link rel="preload" href="/images/optimized/profile-photo.webp" as="image" type="image/webp" />
     <link rel="preload" href="/images/optimized/pfp.webp" as="image" type="image/webp" />

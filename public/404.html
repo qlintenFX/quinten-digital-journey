@@ -5,26 +5,12 @@
   <title>Redirecting...</title>
   <script>
     // Single Page Apps for GitHub Pages
-    // https://github.com/rafgraph/spa-github-pages
-    // This script takes the current URL and converts the path and query
-    // string into a parameter for the real index.html, which allows the
-    // SPA to route correctly.
-    
-    // Redirects to index.html with the path in the 'p' parameter
-    var pathSegmentsToKeep = 0;
-    var location = window.location;
-    location.replace(
-      location.protocol + '//' + location.hostname + 
-      (location.port ? ':' + location.port : '') +
-      '/' +
-      (pathSegmentsToKeep ? location.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/' : '') +
-      '?p=/' + location.pathname.slice(1) +
-      (location.search ? '&' + location.search.slice(1) : '') +
-      location.hash
-    );
+    // MIT License - https://github.com/rafgraph/spa-github-pages
+    sessionStorage.redirect = location.href;
   </script>
+  <meta http-equiv="refresh" content="0;URL='/'">
 </head>
 <body>
-  Redirecting...
+  <p>Redirecting to homepage...</p>
 </body>
 </html> 
