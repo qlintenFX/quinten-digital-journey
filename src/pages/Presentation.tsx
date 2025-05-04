@@ -112,7 +112,7 @@ const Presentation = () => {
                     transition={{ duration: 0.8 }}
                     className="text-8xl font-bold mb-8"
                   >
-                    Welkom bij mijn <SparkleText>Portfolio Presentatie</SparkleText>
+                    Welkom bij mijn <SparkleText>Portfolio</SparkleText>
                   </motion.h1>
                   <motion.h2
                     initial={{ opacity: 0 }}
@@ -152,13 +152,13 @@ const Presentation = () => {
                       className="space-y-8 text-4xl"
                     >
                       <p>
-                        Ik droomde altijd al van een eigen computer. Zodra ik er één had, was ik constant bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en meer te <KeywordHighlight>leren</KeywordHighlight> over technologie.
+                        Ik wouw altijd al een computer hebben. Vanaf dat ik het had, was ik ermee bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en ermee over <KeywordHighlight>leren</KeywordHighlight>.
                       </p>
                       <p>
-                        Ik zoek steeds naar oplossingen voor wat <KeywordHighlight>ik wil</KeywordHighlight> en wat <KeywordHighlight>anderen kunnen gebruiken</KeywordHighlight> - dit motiveert mij om apps te ontwikkelen die echt waarde toevoegen.
+                        Ik zoek altijd voor wat <KeywordHighlight>ik wil</KeywordHighlight> en wat <KeywordHighlight>anderen zouden kunnen willen</KeywordHighlight> - daarom wil ik apps maken die mensen echt gebruiken.
                       </p>
                       <p>
-                        Ik koos deze IT-opleiding omdat ik zo <KeywordHighlight>gepassioneerd</KeywordHighlight> ben over technologie dat ik er mijn <KeywordHighlight>carrière</KeywordHighlight> van wil maken en er altijd in wil blijven <KeywordHighlight>werken en leren</KeywordHighlight>.
+                        Ik koos deze IT opleiding omdat ik het zo <KeywordHighlight>leuk vond</KeywordHighlight> dat ik er mijn <KeywordHighlight>cariere</KeywordHighlight> van wil maken en ermee altijd wil <KeywordHighlight>werken en leren</KeywordHighlight>.
                       </p>
                     </motion.div>
                   </div>
@@ -221,14 +221,14 @@ const Presentation = () => {
                           />
                           
                           <TimelinePoint 
-                            title="Security Awareness Campaign" 
+                            title="Security Awareness Movie" 
                             description="Media Project"
                             delay={0.8}
                           />
 
                           <TimelinePoint 
                             title="KeyedColors" 
-                            description="Persoonlijk Project"
+                            description="Mijn Eigen Project"
                             delay={1.0}
                           />
                         </div>
@@ -268,18 +268,18 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pr-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Context</h3>
-                        <p>Ontwikkeling van een <KeywordHighlight>stemsysteem</KeywordHighlight> voor het IT Polis evenement, waarbij bezoekers stemmen op studentenprojecten.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <p>Een <KeywordHighlight>stem systeem</KeywordHighlight> voor IT Polis waar bezoekers stemmen op de projecten van studenten.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Mijn Bijdrage</h3>
-                        <p>Verantwoordelijk voor <KeywordHighlight>database architectuur</KeywordHighlight>, implementatie van <KeywordHighlight>real-time leaderboard</KeywordHighlight>, en UI ontwikkeling.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <p>Ik maakte de <KeywordHighlight>database</KeywordHighlight>, de <KeywordHighlight>real-time scorebord</KeywordHighlight>, en de user interface.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat Ik Leerde</h3>
-                        <p>Ervaring opgedaan met <KeywordHighlight>veilig databaseontwerp</KeywordHighlight>, <KeywordHighlight>NFC-technologie</KeywordHighlight>, en <KeywordHighlight>real-time datavisualisatie</KeywordHighlight>.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <p>Ik leerde over <KeywordHighlight>veilige databases</KeywordHighlight>, <KeywordHighlight>NFC-technologie</KeywordHighlight>, en <KeywordHighlight>data visualisatie</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
                     
@@ -356,18 +356,18 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pl-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Context</h3>
-                        <p>Ontwikkeling van een <KeywordHighlight>hosting platform</KeywordHighlight> voor PHP/Laravel applicaties binnen Thomas More's datacenter.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <p>Een <KeywordHighlight>hosting platform</KeywordHighlight> voor PHP/Laravel apps in Thomas More's datacenter.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Mijn Bijdrage</h3>
-                        <p>Verantwoordelijk voor het opzetten en beheren van de <KeywordHighlight>Kubernetes cluster</KeywordHighlight> en implementeren van <KeywordHighlight>geautomatiseerde schaalbaarheid</KeywordHighlight>.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <p>Ik maakte de <KeywordHighlight>Kubernetes cluster</KeywordHighlight> en zorgde voor <KeywordHighlight>automatische schaalbaarheid</KeywordHighlight>.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat Ik Leerde</h3>
-                        <p>Ervaring met <KeywordHighlight>containerization technologieën</KeywordHighlight>, Kubernetes, en implementatie van <KeywordHighlight>CIS security controls</KeywordHighlight>.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <p>Ik leerde werken met <KeywordHighlight>containers</KeywordHighlight>, Kubernetes, en <KeywordHighlight>security controls</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
                   </div>
@@ -392,7 +392,7 @@ const Presentation = () => {
                       transition={{ delay: 0.2 }}
                       className="text-7xl font-bold text-primary/90"
                     >
-                      Security Awareness Campaign
+                      Security Awareness Movie
                     </motion.h2>
                   </div>
                   
@@ -404,18 +404,18 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pr-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Context</h3>
-                        <p>Ontwikkeling van een <KeywordHighlight>educatieve film</KeywordHighlight> over cybersecurity, met focus op de gevaren van gevonden USB-apparaten.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <p>Een <KeywordHighlight>film</KeywordHighlight> over cybersecurity, die laat zien waarom je geen USB sticks moet oprapen.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Mijn Bijdrage</h3>
-                        <p>Ik was de <KeywordHighlight>hoofdeditor</KeywordHighlight> en <KeywordHighlight>creative director</KeywordHighlight>, verantwoordelijk voor het visuele verhaal en de cinematische kwaliteit.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <p>Ik was de <KeywordHighlight>editor</KeywordHighlight> en <KeywordHighlight>creative director</KeywordHighlight>, verantwoordelijk voor het verhaal en de look.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat Ik Leerde</h3>
-                        <p>Verbetering van vaardigheden in <KeywordHighlight>visueel storytelling</KeywordHighlight> en <KeywordHighlight>technische videoproductie</KeywordHighlight> in security-context.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <p>Ik werd beter in <KeywordHighlight>visueel vertellen</KeywordHighlight> en <KeywordHighlight>video productie</KeywordHighlight> voor security awareness.</p>
                       </div>
                     </motion.div>
                     
@@ -452,7 +452,7 @@ const Presentation = () => {
                       animate={{ opacity: 1, x: 0 }}
                       className="px-5 py-2 bg-primary/20 rounded-full text-primary text-2xl font-semibold mr-4"
                     >
-                      Persoonlijk Project
+                      Mijn Eigen Project
                     </motion.div>
                     <motion.h2
                       initial={{ opacity: 0 }}
@@ -492,18 +492,18 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pl-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Context</h3>
-                        <p>Windows-applicatie voor het maken van <KeywordHighlight>aangepaste display profielen</KeywordHighlight> met gamma- en contrastaanpassingen.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
+                        <p>Windows app om <KeywordHighlight>display profielen</KeywordHighlight> te maken met gamma en contrast instellingen.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Mijn Bijdrage</h3>
-                        <p>Identificeerde een gat in de markt en ontwikkelde volledig zelf deze tool met <KeywordHighlight>hotkey ondersteuning</KeywordHighlight>.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
+                        <p>Ik zag dat er niks was zoals dit en heb het zelf gemaakt met <KeywordHighlight>sneltoetsen</KeywordHighlight>.</p>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat Ik Leerde</h3>
-                        <p>Hands-on ervaring met <KeywordHighlight>Windows API</KeywordHighlight>, <KeywordHighlight>systeemtray integratie</KeywordHighlight> en <KeywordHighlight>global hotkey management</KeywordHighlight>.</p>
+                        <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
+                        <p>Ik leerde werken met <KeywordHighlight>Windows API</KeywordHighlight>, <KeywordHighlight>systeem iconen</KeywordHighlight> en <KeywordHighlight>sneltoets beheer</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
                   </div>
@@ -519,7 +519,7 @@ const Presentation = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-7xl font-bold mb-12 text-center text-primary/90"
                   >
-                    Vaardigheden Ontwikkeling
+                    Mijn Skills
                   </motion.h2>
                   
                   <div className="flex-grow grid grid-cols-2 gap-20">
@@ -530,22 +530,22 @@ const Presentation = () => {
                       className="space-y-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Sterke Vaardigheden</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Waar ik goed in ben</h3>
                         <ul className="space-y-5 text-4xl list-disc pl-12">
-                          <li>Database ontwerp en optimalisatie</li>
-                          <li>Containerisatie (Docker, Kubernetes)</li>
-                          <li>Visueel storytelling en videoproductie</li>
-                          <li>UI/UX ontwerp en ontwikkeling</li>
-                          <li>Windows applicatie ontwikkeling</li>
+                          <li>Databases maken en verbeteren</li>
+                          <li>Docker en Kubernetes gebruiken</li>
+                          <li>Video's maken en bewerken</li>
+                          <li>Interfaces ontwerpen</li>
+                          <li>Windows apps maken</li>
                         </ul>
                       </div>
                       
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Zachte Vaardigheden</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Persoonlijke skills</h3>
                         <ul className="space-y-5 text-4xl list-disc pl-12">
-                          <li>Projectmanagement</li>
-                          <li>Creatief probleemoplossend denken</li>
-                          <li>Teamwork en communicatie</li>
+                          <li>Projecten organiseren</li>
+                          <li>Creatief problemen oplossen</li>
+                          <li>Samenwerken en communiceren</li>
                         </ul>
                       </div>
                     </motion.div>
@@ -557,10 +557,10 @@ const Presentation = () => {
                       className="space-y-12"
                     >
                       <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Te Verbeteren Vaardigheden</h3>
+                        <h3 className="text-5xl font-semibold mb-6 text-primary/80">Wat ik wil verbeteren</h3>
                         <ul className="space-y-5 text-4xl list-disc pl-12">
-                          <li>Cloud infrastructuur op grotere schaal</li>
-                          <li>Frontend frameworks verdieping</li>
+                          <li>Grote cloud infrastructuren</li>
+                          <li>Frontend frameworks</li>
                           <li>DevOps automatisering</li>
                         </ul>
                       </div>
@@ -568,7 +568,7 @@ const Presentation = () => {
                       <div>
                         <h3 className="text-5xl font-semibold mb-6 text-primary/80">Mijn Plan</h3>
                         <p className="text-4xl pl-4">
-                          Verdiepen in AWS/Azure certificeringen, bijdragen aan open-source projecten, en experimenteren met CI/CD pipelines in persoonlijke projecten.
+                          AWS/Azure certificaten halen, meewerken aan open-source projecten, en experimenteren met CI/CD in mijn eigen projecten.
                         </p>
                       </div>
                     </motion.div>
@@ -596,22 +596,22 @@ const Presentation = () => {
                       className="flex-1 space-y-8 text-4xl pr-12"
                     >
                       <p>
-                        Mijn YouTube kanaal <KeywordHighlight>@qlintenFX</KeywordHighlight> is een creatieve uitlaatklep waar ik custom cinematics maak voor Assetto Corsa.
+                        Op mijn YouTube kanaal <KeywordHighlight>@qlintenFX</KeywordHighlight> maak ik custom cinematics voor Assetto Corsa.
                       </p>
                       
                       <p>
-                        Dit project heeft mijn vaardigheden versterkt in:
+                        Hierdoor ben ik beter geworden in:
                       </p>
                       
                       <ul className="space-y-5 list-disc pl-12">
-                        <li>Video editing en postproductie</li>
-                        <li>Visuele compositie en cinematografie</li>
-                        <li>Storytelling door visuele middelen</li>
-                        <li>Technische optimalisatie voor online platforms</li>
+                        <li>Video bewerken</li>
+                        <li>Camera composities maken</li>
+                        <li>Verhalen vertellen met beeld</li>
+                        <li>Videos optimaliseren voor online</li>
                       </ul>
                       
                       <p>
-                        Deze creatieve vaardigheden versterken mijn technische projecten door betere gebruikerservaringen en intuïtieve interfaces te creëren.
+                        Deze skills helpen me ook bij IT projecten omdat ik betere user interfaces kan maken.
                       </p>
                     </motion.div>
                     
@@ -675,22 +675,22 @@ const Presentation = () => {
                       className="max-w-6xl space-y-12 text-4xl text-center"
                     >
                       <p>
-                        Mijn reis door Applied Computer Science / Electronics - ICT heeft mij gevormd tot een <KeywordHighlight>veelzijdige ontwikkelaar</KeywordHighlight> met zowel technische als creatieve vaardigheden.
+                        Door mijn opleiding ben ik een <KeywordHighlight>veelzijdige ontwikkelaar</KeywordHighlight> geworden die zowel technisch als creatief is.
                       </p>
                       
                       <p>
-                        Ik heb mij gespecialiseerd in <KeywordHighlight>database architectuur</KeywordHighlight>, <KeywordHighlight>containerizatie</KeywordHighlight>, <KeywordHighlight>videoproductie</KeywordHighlight> en <KeywordHighlight>applicatieontwikkeling</KeywordHighlight>.
+                        Ik heb veel geleerd over <KeywordHighlight>databases</KeywordHighlight>, <KeywordHighlight>containers</KeywordHighlight>, <KeywordHighlight>video's maken</KeywordHighlight> en <KeywordHighlight>apps ontwikkelen</KeywordHighlight>.
                       </p>
                       
                       <p>
-                        Mijn toekomstplannen omvatten:
+                        In de toekomst wil ik:
                       </p>
                       
                       <ul className="space-y-6 list-none">
-                        <li>Verdieping in cloud infrastructuur en DevOps</li>
-                        <li>Verdere ontwikkeling van mijn vaardigheden in UI/UX</li>
-                        <li>Bijdragen aan open-source projecten</li>
-                        <li>Blijven combineren van technische en creatieve vaardigheden</li>
+                        <li>Meer leren over cloud en DevOps</li>
+                        <li>Beter worden in UI/UX</li>
+                        <li>Meehelpen aan open-source projecten</li>
+                        <li>Techniek en creativiteit blijven combineren</li>
                       </ul>
                     </motion.div>
                   </div>
@@ -707,7 +707,7 @@ const Presentation = () => {
                     transition={{ duration: 0.8 }}
                     className="text-8xl font-bold mb-16"
                   >
-                    <SparkleText>Dank u voor uw aandacht</SparkleText>
+                    <SparkleText>Bedankt voor het kijken</SparkleText>
                   </motion.h1>
                   
                   <motion.div
@@ -718,7 +718,7 @@ const Presentation = () => {
                   >
                     <p className="text-primary/90 font-semibold">Quinten De Meyer</p>
                     <p className="text-primary/70">quinten1508@gmail.com</p>
-                    <p className="text-2xl text-muted-foreground mt-16">Applied Computer Science / Electronics - ICT</p>
+                    <p className="text-2xl text-muted-foreground mt-16">2CCS01 - Cloud & Cyber Security</p>
                   </motion.div>
                 </div>
               </SlideContent>
