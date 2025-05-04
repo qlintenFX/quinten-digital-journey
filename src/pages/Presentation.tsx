@@ -163,16 +163,16 @@ const Presentation = () => {
                     </motion.div>
                   </div>
                   <motion.div 
+                    className="flex-1 flex items-center justify-center"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 }}
-                    className="flex-1 flex items-center justify-center"
                   >
-                    <div className="relative w-3/5 aspect-square rounded-2xl overflow-hidden">
+                    <div className="relative w-[500px] h-[500px] rounded-2xl overflow-hidden">
                       <img 
                         src="/images/optimized/profile-photo.webp" 
                         alt="Profielfoto"
-                        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
+                        className="w-full h-full object-cover rounded-2xl"
                         style={{ 
                           filter: "drop-shadow(0 0 25px rgba(168, 85, 247, 0.7))",
                           border: "4px solid rgba(168, 85, 247, 0.5)",
@@ -290,15 +290,13 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-3/4 mx-auto">
+                        <div className="flex flex-col gap-6 w-3/4">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                           <img 
@@ -306,9 +304,7 @@ const Presentation = () => {
                             alt="Project Team" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                         </div>
@@ -348,15 +344,13 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6 w-3/4 mx-auto">
+                        <div className="grid grid-cols-2 gap-6 w-3/4">
                           <img 
                             src="/images/optimized/project-2-hosting-platform.webp" 
                             alt="App Hosting Platform" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                           <img 
@@ -364,9 +358,7 @@ const Presentation = () => {
                             alt="Hardware Diagram" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                           <img 
@@ -374,9 +366,7 @@ const Presentation = () => {
                             alt="Software Diagram" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                           <img 
@@ -384,9 +374,7 @@ const Presentation = () => {
                             alt="Repository Structure" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                         </div>
@@ -470,15 +458,13 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6 w-3/4 mx-auto">
+                        <div className="flex flex-col gap-6 w-3/4">
                           <img 
                             src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
                             alt="Security Awareness Movie" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                           <img 
@@ -486,9 +472,7 @@ const Presentation = () => {
                             alt="Movie Scene" 
                             className="w-full object-contain rounded-xl"
                             style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
                           />
                         </div>
@@ -528,7 +512,7 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-3/4 mx-auto">
+                        <div className="flex flex-col gap-6 w-3/4">
                           <div className="w-1/2 mx-auto">
                             <img 
                               src="/images/project-4-KeyedColors-logo.png" 
@@ -545,9 +529,7 @@ const Presentation = () => {
                               alt="Dynamic Profile" 
                               className="w-full object-contain rounded-xl"
                               style={{
-                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                                border: "2px solid rgba(168, 85, 247, 0.3)",
-                                boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                               }}
                             />
                             <img 
@@ -555,9 +537,7 @@ const Presentation = () => {
                               alt="Profiles" 
                               className="w-full object-contain rounded-xl"
                               style={{
-                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                                border: "2px solid rgba(168, 85, 247, 0.3)",
-                                boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                               }}
                             />
                           </div>
