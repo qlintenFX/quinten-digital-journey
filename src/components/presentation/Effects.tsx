@@ -110,9 +110,9 @@ export const SparkleText: React.FC<{ children: React.ReactNode, className?: stri
 export const KeywordHighlight: React.FC<{ children: React.ReactNode, className?: string }> = ({ children, className = "" }) => {
   return (
     <span 
-      className={`relative font-semibold text-primary ${className}`}
+      className={`relative font-bold text-purple-900 ${className}`}
       style={{ 
-        textShadow: "0 0 8px rgba(168, 85, 247, 0.4)"
+        textShadow: "0 0 8px rgba(168, 85, 247, 0.6)"
       }}
     >
       {children}
