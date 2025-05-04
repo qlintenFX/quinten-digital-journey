@@ -118,6 +118,15 @@ const Presentation = () => {
               </div>
             )}
 
+            {/* Slide 10: Final Slide */}
+            {currentSlide === 10 && (
+              <div className="flex flex-col items-center justify-center h-[80vh]">
+                <h1 className="text-8xl font-bold mb-8">
+                  <SparkleText>Bedankt</SparkleText> voor de aandacht!
+                </h1>
+              </div>
+            )}
+
             {/* ... remaining slides ... */}
           </div>
         </motion.div>
