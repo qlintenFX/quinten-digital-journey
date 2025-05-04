@@ -290,11 +290,11 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-3/4">
+                        <div className="flex flex-col gap-4 w-3/5">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
-                            className="w-full object-contain rounded-xl"
+                            className="w-full h-auto object-contain rounded-xl"
                             style={{
                               filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
@@ -302,7 +302,7 @@ const Presentation = () => {
                           <img 
                             src="/images/optimized/project-1-group-picture.webp" 
                             alt="Project Team" 
-                            className="w-full object-contain rounded-xl"
+                            className="w-full h-auto object-contain rounded-xl"
                             style={{
                               filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))"
                             }}
