@@ -370,288 +370,11 @@ const LensGlare = () => {
   );
 };
 
-// Define slide components
-const TitleSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center"
-      >
-        <h1 className="text-6xl md:text-7xl font-bold text-primary mb-4">
-          Quinten De Meyer
-        </h1>
-        <h2 className="text-2xl md:text-3xl text-muted-foreground mb-8">
-          Applied Computer Science / Electronics - ICT
-        </h2>
-        <p className="text-xl text-foreground/80 mt-8">
-          Welcome to my professional journey
-        </p>
-      </motion.div>
-    </div>
-  );
-};
-
-const AboutMeSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>Who Am I?</InteractiveTitleEffect>
-      <div className="flex flex-col md:flex-row items-center gap-12 max-w-5xl">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.6 }}
-          className="w-full md:w-1/3"
-        >
-          <div className="rounded-full overflow-hidden border-4 border-primary/30 shadow-xl shadow-primary/20 w-48 h-48 mx-auto">
-            <img 
-              src="/images/profile-photo.png" 
-              alt="Quinten De Meyer" 
-              className="w-full h-full object-cover"
-              width="192"
-              height="192"
-            />
-          </div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="w-full md:w-2/3 text-lg"
-        >
-          <p className="mb-4">
-            Hi, I'm Quinten, a passionate student in Applied Computer Science / Electronics - ICT. 
-            I design and develop digital experiences with creativity and technical expertise.
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-// Create the rest of the slides according to the plan
-const WhyComputerScienceSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>Why Applied Computer Science / Electronics - ICT?</InteractiveTitleEffect>
-      <div className="max-w-5xl mx-auto mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-lg text-center max-w-4xl mx-auto"
-        >
-          <p className="mb-8">
-            I've chosen Applied Computer Science / Electronics - ICT because I'm fascinated by how technology can <KeywordHighlight>solve real-world problems</KeywordHighlight>. 
-            The blend of <KeywordHighlight>theoretical knowledge</KeywordHighlight> and <KeywordHighlight>practical applications</KeywordHighlight> allows me to turn my creative ideas into functional solutions.
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const CreativePursuitsSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>My Creative Pursuits</InteractiveTitleEffect>
-      <div className="max-w-5xl mx-auto mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-lg text-center max-w-4xl mx-auto"
-        >
-          <p className="mb-8">
-            Outside of academics, I run a <KeywordHighlight>YouTube channel</KeywordHighlight> focused on creating custom cinematics for Assetto Corsa, 
-            which has sharpened my <KeywordHighlight>video editing</KeywordHighlight> and storytelling abilities. 
-            I also develop <KeywordHighlight>personal software projects</KeywordHighlight> like KeyedColors, which allows me to explore innovative solutions 
-            to everyday problems and continuously enhance my programming skills.
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const ProfessionalAmbitionsSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>Professional Ambitions</InteractiveTitleEffect>
-      <div className="max-w-5xl mx-auto mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-lg text-center max-w-4xl mx-auto"
-        >
-          <p className="mb-8">
-            My experiences with <KeywordHighlight>containerization</KeywordHighlight>, <KeywordHighlight>security systems</KeywordHighlight>, 
-            and <KeywordHighlight>application development</KeywordHighlight> have shaped my professional direction. 
-            I aim to specialize in creating robust, secure technological solutions while continuing to 
-            <KeywordHighlight> learn and adapt</KeywordHighlight> to emerging technologies that can positively impact users' experiences.
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const ProjectSlide = ({ project, image }) => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>{project.title}</InteractiveTitleEffect>
-      <div className="max-w-6xl mx-auto mt-4">
-        <div className="bg-card rounded-lg overflow-hidden shadow-lg">
-          <div className="grid md:grid-cols-2 gap-6 p-6">
-            <div className="space-y-4">
-              <div className="mb-2">
-                <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">
-                  {project.semester}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                <h4 className="text-lg font-semibold">Context & Background</h4>
-                <p>{project.context}</p>
-                
-                <h4 className="text-lg font-semibold">My Contribution</h4>
-                <p>{project.contribution}</p>
-                
-                <h4 className="text-lg font-semibold">What I Learned</h4>
-                <p>{project.learnings}</p>
-              </div>
-
-              <div className="flex flex-wrap gap-2 mt-4">
-                {project.technologies.map((tech, index) => (
-                  <span key={index} className="px-2 py-1 text-xs rounded-full bg-secondary/10 text-secondary">
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-            
-            <div className="flex items-center justify-center">
-              <TiltCard>
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
-                >
-                  <img 
-                    src={`/images/optimized/${image}`} 
-                    alt={project.title} 
-                    className="rounded-lg shadow-md max-h-[300px] object-contain"
-                    width="600"
-                    height="300"
-                  />
-                </motion.div>
-              </TiltCard>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const YoutubeChannelSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>@qlintenFX</InteractiveTitleEffect>
-      <div className="max-w-5xl mx-auto mt-8 text-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <h3 className="text-2xl font-bold mb-4">Custom cinematics for Assetto Corsa</h3>
-          
-          <div className="aspect-video max-w-3xl mx-auto bg-card rounded-lg overflow-hidden shadow-lg">
-            <iframe 
-              width="100%" 
-              height="100%" 
-              src={`https://www.youtube.com/embed/LAHGY-rWtbk?controls=1&rel=0`}
-              title="YouTube video player" 
-              frameBorder="0" 
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-              allowFullScreen
-              className="w-full h-full"
-            ></iframe>
-          </div>
-          
-          <p className="text-lg mt-8">
-            Visit my channel to see my creative work
-          </p>
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const ContactSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <InteractiveTitleEffect>Let's Connect</InteractiveTitleEffect>
-      <div className="max-w-4xl mx-auto mt-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-8"
-        >
-          {[
-            { icon: <Github size={24} />, label: "github.com/qlintenFX", color: "bg-[#333]/20" },
-            { icon: <Youtube size={24} />, label: "youtube.com/@qlintenFX", color: "bg-red-500/20" },
-            { icon: <Linkedin size={24} />, label: "linkedin.com/in/quinten-de-meyer-2336282a2", color: "bg-blue-600/20" },
-            { icon: <Mail size={24} />, label: "quinten1508@gmail.com", color: "bg-green-500/20" },
-          ].map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 * index }}
-              className={`flex flex-col items-center p-6 rounded-xl ${item.color} backdrop-blur-sm`}
-            >
-              <div className="w-12 h-12 rounded-full bg-card flex items-center justify-center mb-3">
-                {item.icon}
-              </div>
-              <p className="text-sm text-center">{item.label}</p>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </div>
-  );
-};
-
-const ThankYouSlide = () => {
-  return (
-    <div className="h-full w-full flex flex-col items-center justify-center p-8">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8 }}
-        className="text-center"
-      >
-        <h1 className="text-5xl md:text-6xl font-bold text-primary mb-8">
-          Thank You for Your Attention
-        </h1>
-        <p className="text-xl text-foreground/80 mt-8 max-w-2xl mx-auto">
-          Feel free to reach out with any questions or opportunities
-        </p>
-      </motion.div>
-    </div>
-  );
-};
-
 // Main Presentation Component
 const Presentation = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const totalSlides = 12; // Total number of slides
+  const totalSlides = 10; // Reduced to fit in 6 minutes
+  const [isFullscreen, setIsFullscreen] = useState(false);
   
   // Project data
   const projects = {
@@ -662,6 +385,7 @@ const Presentation = () => {
       contribution: "I created and managed the database architecture, implemented data processing for the live leaderboard, and collaborated on UI development. I helped fix UI issues and contributed ideas to enhance the overall user experience of the system.",
       learnings: "Gained practical experience in secure database design, NFC technology integration, and real-time data visualization. Developed skills in creating administrative dashboards and implementing user authentication systems.",
       technologies: ["Database Design", "NFC Technology", "UI/UX", "Real-time Systems", "Admin Dashboard"],
+      growth: "This project helped me develop my analytical thinking and technical database skills, but more importantly, it taught me the value of collaboration and iterative improvement."
     },
     project2: {
       title: "App Hosting Platform for Clients",
@@ -670,6 +394,7 @@ const Presentation = () => {
       contribution: "I was responsible for creating and managing the Kubernetes cluster. My work involved setting up the infrastructure for container orchestration, ensuring high availability, and implementing automated scaling solutions for the hosted applications.",
       learnings: "Gained practical experience in containerization technologies, Kubernetes administration, and implementing CIS security controls. Developed skills in creating resilient, scalable infrastructure and automating deployment workflows.",
       technologies: ["Kubernetes", "Docker", "CI/CD", "GitLab", "Ansible", "Ubuntu Server", "Security Controls"],
+      growth: "Through this project, I developed strong infrastructure management skills and deepened my understanding of security best practices in enterprise environments."
     },
     project3: {
       title: "Security Awareness Campaign Movie",
@@ -678,6 +403,7 @@ const Presentation = () => {
       contribution: "I served as the main editor and creative director, applying my extensive video design experience to create a cinematic look and feel. My vision shaped the storytelling approach and visual style of the entire production.",
       learnings: "Strengthened my skills in narrative storytelling through visual media, technical video production in security contexts, and effectively communicating complex security concepts through engaging content.",
       technologies: ["Video Editing", "Cinematography", "Storytelling", "Security Awareness", "Visual Effects"],
+      growth: "This project allowed me to combine technical knowledge with creative expression, developing my communication skills and ability to convey complex ideas through engaging visual media."
     },
     project4: {
       title: "KeyedColors",
@@ -686,6 +412,22 @@ const Presentation = () => {
       contribution: "I identified a gap in the market for an application that could manage custom display profiles with hotkey support. As there wasn't an existing solution, I designed and developed this tool from scratch to address this need.",
       learnings: "Gained hands-on experience with Windows API for display settings manipulation, system tray integration, and global hotkey management. Enhanced my C# skills while creating an intuitive UI that provides both functionality and ease of use.",
       technologies: ["C#", ".NET", "Windows API", "UI/UX", "System Tray Integration", "Global Hotkeys"],
+      growth: "This personal project demonstrates my entrepreneurial mindset, identifying needs and developing solutions independently, while also showcasing my ability to learn new technologies outside the classroom."
+    }
+  };
+
+  // Toggle fullscreen
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(err => {
+        console.error(`Error attempting to enable fullscreen: ${err.message}`);
+      });
+      setIsFullscreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+        setIsFullscreen(false);
+      }
     }
   };
 
@@ -700,6 +442,8 @@ const Presentation = () => {
         if (currentSlide > 0) {
           setCurrentSlide(current => current - 1);
         }
+      } else if (e.key === 'f' || e.key === 'F') {
+        toggleFullscreen();
       }
     };
 
@@ -707,35 +451,353 @@ const Presentation = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentSlide, totalSlides]);
 
+  // Define the new slides specifically for the jury presentation
+  const IntroductionSlide = () => (
+    <div className="h-full w-full flex flex-col items-center justify-center p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="text-center"
+      >
+        <h1 className="text-6xl md:text-7xl font-bold text-primary mb-4">
+          Quinten De Meyer
+        </h1>
+        <h2 className="text-2xl md:text-3xl text-muted-foreground mb-8">
+          Applied Computer Science / Electronics - ICT
+        </h2>
+        <div className="flex items-center justify-center mt-8 gap-4">
+          <div className="rounded-full overflow-hidden border-4 border-primary/30 shadow-xl shadow-primary/20 w-28 h-28">
+            <img 
+              src="/images/profile-photo.png" 
+              alt="Quinten De Meyer" 
+              className="w-full h-full object-cover"
+              width="112"
+              height="112"
+            />
+          </div>
+          <p className="text-xl text-foreground/80 mt-4 max-w-xl text-left">
+            "Blending technical expertise with creative vision to build solutions that make a difference."
+          </p>
+        </div>
+      </motion.div>
+    </div>
+  );
+
+  const MyJourneySlide = () => (
+    <div className="h-full w-full flex flex-col items-center justify-center p-8">
+      <InteractiveTitleEffect>My Journey</InteractiveTitleEffect>
+      <div className="max-w-5xl mx-auto mt-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-lg max-w-4xl mx-auto"
+        >
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-card p-6 rounded-lg shadow-md">
+              <h3 className="font-bold text-xl mb-2 text-primary">Where I Started</h3>
+              <p>Fascinated by technology but limited to basic knowledge. Eager to understand both hardware and software systems.</p>
+            </div>
+            <div className="bg-card p-6 rounded-lg shadow-md">
+              <h3 className="font-bold text-xl mb-2 text-primary">Where I Am</h3>
+              <p>Developed strong technical foundations while discovering my passion for combining technical and creative skills.</p>
+            </div>
+            <div className="bg-card p-6 rounded-lg shadow-md">
+              <h3 className="font-bold text-xl mb-2 text-primary">Where I'm Going</h3>
+              <p>Aiming to specialize in secure, scalable systems development while continuing to grow my creative technical skillset.</p>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+
+  const ProjectGrowthSlide = ({ project, image, index }) => {
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center p-8">
+        <InteractiveTitleEffect>Key Project {index}: {project.title}</InteractiveTitleEffect>
+        <div className="max-w-6xl mx-auto mt-4">
+          <div className="bg-card rounded-lg overflow-hidden shadow-lg">
+            <div className="grid md:grid-cols-2 gap-6 p-6">
+              <div className="space-y-4">
+                <div className="mb-2">
+                  <span className="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">
+                    {project.semester}
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  <p className="text-muted-foreground text-sm">
+                    {project.context.substring(0, 100)}...
+                  </p>
+                  
+                  <h4 className="text-lg font-semibold">Skills Developed</h4>
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.slice(0, 5).map((tech, index) => (
+                      <span key={index} className="px-2 py-1 text-xs rounded-full bg-secondary/10 text-secondary">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <h4 className="text-lg font-semibold">Personal Growth</h4>
+                  <p className="text-foreground/90">
+                    {project.growth}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-center">
+                <TiltCard>
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6, delay: 0.2 }}
+                  >
+                    <img 
+                      src={`/images/optimized/${image}`} 
+                      alt={project.title} 
+                      className="rounded-lg shadow-md max-h-[240px] object-contain"
+                      width="500"
+                      height="240"
+                    />
+                  </motion.div>
+                </TiltCard>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const SkillsGrowthSlide = () => {
+    const skillsGroups = [
+      {
+        title: "Technical Skills",
+        skills: [
+          { name: "Infrastructure Management", level: 90 },
+          { name: "Database Design", level: 85 },
+          { name: "Security Implementation", level: 80 },
+          { name: "UI/UX Development", level: 75 }
+        ]
+      },
+      {
+        title: "Creative Skills",
+        skills: [
+          { name: "Video Editing", level: 95 },
+          { name: "Visual Storytelling", level: 85 },
+          { name: "UI Design", level: 75 },
+          { name: "Creative Problem Solving", level: 85 }
+        ]
+      },
+      {
+        title: "Soft Skills",
+        skills: [
+          { name: "Project Collaboration", level: 85 },
+          { name: "Technical Communication", level: 80 },
+          { name: "Time Management", level: 75 },
+          { name: "Leadership", level: 70 }
+        ]
+      }
+    ];
+
+    return (
+      <div className="h-full w-full flex flex-col items-center justify-center p-8">
+        <InteractiveTitleEffect>Skills Development</InteractiveTitleEffect>
+        <div className="max-w-5xl mx-auto mt-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {skillsGroups.map((group, groupIndex) => (
+              <motion.div
+                key={groupIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: groupIndex * 0.1 }}
+                className="bg-card rounded-lg p-6 shadow-md"
+              >
+                <h3 className="text-xl font-bold mb-4 text-primary">{group.title}</h3>
+                <div className="space-y-4">
+                  {group.skills.map((skill, skillIndex) => (
+                    <div key={skillIndex}>
+                      <div className="flex justify-between mb-1">
+                        <span>{skill.name}</span>
+                        <span className="text-primary">{skill.level}%</span>
+                      </div>
+                      <div className="w-full bg-muted rounded-full h-2">
+                        <motion.div
+                          initial={{ width: 0 }}
+                          animate={{ width: `${skill.level}%` }}
+                          transition={{ duration: 1, delay: 0.2 + (groupIndex * 0.1) + (skillIndex * 0.1) }}
+                          className="bg-primary h-2 rounded-full"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const FutureGrowthSlide = () => (
+    <div className="h-full w-full flex flex-col items-center justify-center p-8">
+      <InteractiveTitleEffect>Areas for Growth</InteractiveTitleEffect>
+      <div className="max-w-5xl mx-auto mt-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-8"
+        >
+          <div className="bg-card p-6 rounded-lg shadow-md">
+            <h3 className="font-bold text-xl mb-4 text-primary">What I Need to Improve</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span><KeywordHighlight>Advanced Cloud Architecture</KeywordHighlight>: Deepen knowledge of multi-cloud environments and serverless architectures</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span><KeywordHighlight>Leadership Skills</KeywordHighlight>: Take more initiative in group settings and develop team leadership abilities</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span><KeywordHighlight>Mobile Development</KeywordHighlight>: Expand skillset to include native mobile application development</span>
+              </li>
+            </ul>
+          </div>
+          
+          <div className="bg-card p-6 rounded-lg shadow-md">
+            <h3 className="font-bold text-xl mb-4 text-primary">How I Plan to Improve</h3>
+            <ul className="space-y-3">
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Complete AWS/Azure certification path to deepen cloud expertise</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Join technical communities and volunteer for leadership roles</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Build a cross-platform mobile application for KeyedColors as next project phase</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Continue combining technical and creative skills in future projects</span>
+              </li>
+            </ul>
+          </div>
+        </motion.div>
+      </div>
+    </div>
+  );
+
+  const BeyondCurriculumSlide = () => (
+    <div className="h-full w-full flex flex-col items-center justify-center p-8">
+      <InteractiveTitleEffect>Beyond the Curriculum</InteractiveTitleEffect>
+      <div className="max-w-5xl mx-auto mt-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            className="bg-card p-6 rounded-lg shadow-md"
+          >
+            <h3 className="font-bold text-xl mb-4 text-primary">Creative Media Production</h3>
+            <p className="mb-4">Applied technical knowledge to creative fields:</p>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>YouTube channel with 15+ cinematic videos</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Advanced video editing and post-production</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Educational security awareness content</span>
+              </li>
+            </ul>
+          </motion.div>
+          
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="bg-card p-6 rounded-lg shadow-md"
+          >
+            <h3 className="font-bold text-xl mb-4 text-primary">Entrepreneurial Initiative</h3>
+            <p className="mb-4">Self-driven projects and skills:</p>
+            <ul className="space-y-2">
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Developed KeyedColors to fill market gap</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Self-taught UI/UX design principles</span>
+              </li>
+              <li className="flex items-start">
+                <span className="text-primary mr-2">•</span>
+                <span>Continuous learning through personal projects</span>
+              </li>
+            </ul>
+          </motion.div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const ThankYouSlide = () => (
+    <div className="h-full w-full flex flex-col items-center justify-center p-8">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
+        className="text-center"
+      >
+        <h1 className="text-5xl md:text-6xl font-bold text-primary mb-8">
+          Thank You
+        </h1>
+        <p className="text-xl text-foreground/80 mb-8 max-w-2xl mx-auto">
+          My journey in Applied Computer Science / Electronics - ICT has been about combining technical excellence with creative vision.
+        </p>
+        <p className="text-lg text-primary">
+          Questions?
+        </p>
+      </motion.div>
+    </div>
+  );
+
   // Render the appropriate slide based on currentSlide
   const renderSlide = () => {
     switch(currentSlide) {
       case 0:
-        return <TitleSlide />;
+        return <IntroductionSlide />;
       case 1:
-        return <AboutMeSlide />;
+        return <MyJourneySlide />;
       case 2:
-        return <WhyComputerScienceSlide />;
+        return <ProjectGrowthSlide project={projects.project1} image="project-1-Voting-System.webp" index={1} />;
       case 3:
-        return <CreativePursuitsSlide />;
+        return <ProjectGrowthSlide project={projects.project3} image="project-3-video-editing-awareness-movie.webp" index={2} />;
       case 4:
-        return <ProfessionalAmbitionsSlide />;
+        return <ProjectGrowthSlide project={projects.project2} image="project-2-hosting-platform.webp" index={3} />;
       case 5:
-        return <ProjectSlide project={projects.project1} image="project-1-Voting-System.webp" />;
+        return <SkillsGrowthSlide />;
       case 6:
-        return <ProjectSlide project={projects.project2} image="project-2-hosting-platform.webp" />;
+        return <BeyondCurriculumSlide />;
       case 7:
-        return <ProjectSlide project={projects.project3} image="project-3-video-editing-awareness-movie.webp" />;
+        return <FutureGrowthSlide />;
       case 8:
-        return <ProjectSlide project={projects.project4} image="project-4-KeyedColors-dynamic-profile.webp" />;
-      case 9:
-        return <YoutubeChannelSlide />;
-      case 10:
-        return <ContactSlide />;
-      case 11:
         return <ThankYouSlide />;
       default:
-        return <div className="h-full flex items-center justify-center"><p className="text-2xl">Slide {currentSlide + 1} content coming soon!</p></div>;
+        return <div className="h-full flex items-center justify-center"><p className="text-2xl">Slide {currentSlide + 1}</p></div>;
     }
   };
 
@@ -781,6 +843,23 @@ const Presentation = () => {
             <ChevronRight size={24} />
           </button>
         )}
+
+        {/* Fullscreen button */}
+        <button
+          className="absolute top-4 left-4 bg-card/70 backdrop-blur-sm p-2 rounded-full text-foreground/70 hover:text-foreground transition-colors z-10"
+          onClick={toggleFullscreen}
+          aria-label={isFullscreen ? "Exit fullscreen" : "Enter fullscreen"}
+        >
+          {isFullscreen ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path>
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 8V5a2 2 0 0 1 2-2h3m9 0h3a2 2 0 0 1 2 2v3m0 9v3a2 2 0 0 1-2 2h-3m-9 0H5a2 2 0 0 1-2-2v-3"></path>
+            </svg>
+          )}
+        </button>
 
         {/* Slide content with animation */}
         <AnimatePresence mode="wait">
