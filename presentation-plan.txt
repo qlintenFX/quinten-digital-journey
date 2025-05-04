@@ -1,0 +1,63 @@
+PRESENTATIEPLAN - QUINTEN DE MEYER 
+
+SLIDE 1: INTRODUCTIE
+- Titel: "Quinten De Meyer - Applied Computer Science / Electronics - ICT"
+- Subtitel: "Mijn reis in technologische innovatie"
+- Korte creatieve maar professionele introductie
+- Achtergrond met lensglare effect en paarse sparkles van homepage
+
+SLIDE 2: WIE BEN IK?
+- Professionele foto
+- Kernvaardigheden benadrukken
+- Waarom Applied Computer Science / Electronics - ICT?
+- Mijn passies en drijfveren
+- Focus op persoonlijke verhaallijn en groei
+
+SLIDE 3: PROJECT 1 - IT POLIS VOTING SYSTEM
+- Context en achtergrond
+- Mijn bijdrage (nadruk op database architectuur en live leaderboard)
+- Wat ik heb geleerd (databaseontwerp, NFC-technologie, realtime datavisualisatie)
+- Bereikte competenties: Analyse, Realisatie, Communicatie
+
+SLIDE 4: PROJECT 2 - APP HOSTING PLATFORM
+- Context en achtergrond
+- Mijn bijdrage (Kubernetes cluster, container orchestratie)
+- Wat ik heb geleerd (containerization, Kubernetes, CIS security controls)
+- Bereikte competenties: Realisatie, Operatie, Projectbeheer
+
+SLIDE 5: PROJECT 3 - KEYEDCOLORS (PERSOONLIJK PROJECT)
+- Context en achtergrond
+- Waarom ik dit project ontwikkelde (gat in de markt)
+- Wat ik heb geleerd (Windows API, systeem tray integratie, global hotkey management)
+- Bereikte competenties: Analyse, Realisatie, Professionele houding
+
+SLIDE 6: YOUTUBE KANAAL - CREATIEVE VAARDIGHEDEN
+- Korte introductie van mijn YouTube kanaal (@qlintenFX)
+- Hoe dit mijn technische vaardigheden aanvult
+- Video editing en creatief storytelling als aanvullende competenties
+- Bereikte competenties: Communicatie, Professionele houding
+
+SLIDE 7: PERSOONLIJKE GROEI
+- Mijn belangrijkste groeigebieden (technisch en persoonlijk)
+- Visualisatie van groeitraject (tijdlijn of grafiek)
+- Hoe projecten hebben bijgedragen aan mijn ontwikkeling
+- Competentie ontwikkeling in kaart brengen
+
+SLIDE 8: TOEKOMSTIGE ONTWIKKELING
+- Vaardigheden die ik nog wil verbeteren
+- Hoe ik van plan ben dit te doen
+- Toekomstplannen en -ambities
+- Afsluiting persoonlijke verhaallijn
+
+SLIDE 9: DANK U - VRAGEN?
+- Contactgegevens
+- GitHub/LinkedIn links
+- Afsluiting met call-to-action voor vragen
+
+ONTWERP RICHTLIJNEN:
+- Grote tekst voor optimale leesbaarheid
+- Volledige schermweergave
+- Consistent gebruik van visuele elementen van homepage (TiltCard, KeywordHighlight, LensGlare, PurpleSparkle)
+- Eenvoudige navigatie met pijltjestoetsen
+- Minimale tekst per slide, focus op kernpunten
+- Professionele maar visueel aantrekkelijke stijl 
