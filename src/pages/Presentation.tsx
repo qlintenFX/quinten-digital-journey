@@ -191,7 +191,7 @@ const Presentation = () => {
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-7xl font-bold mb-12 text-center text-purple-900"
+                    className="text-7xl font-bold mb-16 text-center text-purple-900"
                   >
                     Mijn Projecten
                   </motion.h2>
@@ -200,38 +200,37 @@ const Presentation = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
-                      className="w-full max-w-6xl"
+                      className="w-full max-w-7xl"
                     >
-                      <div className="relative py-10">
-                        {/* Horizontal Timeline line */}
-                        <div className="absolute top-1/2 transform -translate-y-1/2 w-full h-3 bg-primary/40"></div>
+                      {/* Project Grid */}
+                      <div className="grid grid-cols-4 gap-12">
+                        <ProjectTile 
+                          title="IT Polis Voting System" 
+                          description="SKIL2 Project"
+                          delay={0.4}
+                          iconClass="i-lucide-vote"
+                        />
                         
-                        {/* Timeline points */}
-                        <div className="flex justify-between relative">
-                          <HorizontalTimelinePoint 
-                            title="IT Polis Voting System" 
-                            description="SKIL2 Project"
-                            delay={0.4}
-                          />
-                          
-                          <HorizontalTimelinePoint 
-                            title="App Hosting Platform" 
-                            description="SKIL2.2 Project"
-                            delay={0.6}
-                          />
-                          
-                          <HorizontalTimelinePoint 
-                            title="Security Awareness Movie" 
-                            description="Media Project"
-                            delay={0.8}
-                          />
+                        <ProjectTile 
+                          title="App Hosting Platform" 
+                          description="SKIL2.2 Project"
+                          delay={0.6}
+                          iconClass="i-lucide-server"
+                        />
+                        
+                        <ProjectTile 
+                          title="Security Awareness Movie" 
+                          description="Media Project"
+                          delay={0.8}
+                          iconClass="i-lucide-film"
+                        />
 
-                          <HorizontalTimelinePoint 
-                            title="KeyedColors" 
-                            description="Mijn Eigen Project"
-                            delay={1.0}
-                          />
-                        </div>
+                        <ProjectTile 
+                          title="KeyedColors" 
+                          description="Mijn Eigen Project"
+                          delay={1.0}
+                          iconClass="i-lucide-palette"
+                        />
                       </div>
                     </motion.div>
                   </div>
@@ -838,24 +837,30 @@ const SlideContent: React.FC<{ children: React.ReactNode }> = ({ children }) => 
   );
 };
 
-// Horizontal Timeline point component for the journey slide
-const HorizontalTimelinePoint: React.FC<{ 
+// Project tile component for the projects slide
+const ProjectTile: React.FC<{ 
   title: string; 
   description: string;
   delay: number;
-}> = ({ title, description, delay }) => {
+  iconClass?: string;
+}> = ({ title, description, delay, iconClass }) => {
   return (
     <motion.div 
-      className="flex flex-col items-center w-1/4 px-4"
+      className="flex flex-col items-center p-6 rounded-2xl bg-primary/10 border-2 border-purple-800/30 shadow-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
+      style={{
+        boxShadow: "0 0 20px rgba(168, 85, 247, 0.2)"
+      }}
     >
-      <div className="mb-8 text-center">
-        <h3 className="text-3xl font-bold text-purple-900 mb-2">{title}</h3>
+      <div className="w-20 h-20 rounded-full bg-purple-800/30 flex items-center justify-center mb-6">
+        <div className="w-12 h-12 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
+      </div>
+      <div className="text-center">
+        <h3 className="text-3xl font-bold text-purple-900 mb-3">{title}</h3>
         <p className="text-xl text-muted-foreground">{description}</p>
       </div>
-      <div className="w-8 h-8 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
     </motion.div>
   );
 };
