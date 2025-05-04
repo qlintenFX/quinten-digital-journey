@@ -289,8 +289,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-3/4 mx-auto">
+                      <div className="relative flex items-center justify-center h-full w-full">
+                        <div className="flex flex-col gap-6 w-4/5 mx-auto">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
@@ -469,8 +469,8 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="flex flex-col gap-6 w-full mx-auto">
+                      <div className="relative flex items-center justify-center h-full w-full">
+                        <div className="flex flex-col gap-6 w-4/5 mx-auto">
                           <img 
                             src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
                             alt="Security Awareness Movie" 
