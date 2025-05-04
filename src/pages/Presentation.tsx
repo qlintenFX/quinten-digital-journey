@@ -289,7 +289,7 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-auto flex items-center justify-center py-6">
+                      <div className="relative w-full h-full flex items-center justify-center">
                         <div className="flex flex-col gap-6 w-3/4 mx-auto">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
@@ -469,7 +469,7 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-auto flex items-center justify-center py-6">
+                      <div className="relative w-full h-full flex items-center justify-center">
                         <div className="flex flex-col gap-6 w-full mx-auto">
                           <img 
                             src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
