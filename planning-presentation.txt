@@ -1,0 +1,84 @@
+## PRESENTATIE PLANNING
+
+# Algemene opzet:
+- Nederlandse presentatie
+- Fullscreen weergave
+- Grote, goed leesbare tekst
+- Navigatie: pijltjestoetsen, links klikken (vooruit), rechts klikken (terug)
+- Navigatietabs onderaan
+- Fullscreen-knop
+- Gebruik van visuele elementen en stijl van de homepage
+
+# Slide Structuur (6-7 minuten presentatie):
+
+## Slide 1: Introductie
+- Naam en opleiding: Quinten De Meyer
+- Achtergrond: Student Applied Computer Science / Electronics - ICT
+- Korte persoonlijke introductie
+- Visueel element: Profiel foto met animatie-effect
+
+## Slide 2: Mijn Persoonlijk Verhaal
+- Korte intro over mijn passie voor technologie
+- Waarom ik voor deze opleiding heb gekozen
+- Mijn ontwikkelingsreis tot nu toe
+- Visueel: Timeline of progression path
+
+## Slide 3: Projectoverzicht
+- Visueel overzicht van de 4 hoofdprojecten
+- Kort statement over diversiteit aan vaardigheden
+- Uitleg dat deze projecten mijn persoonlijke groei illustreren
+- Visueel: Grid met project previews/logos
+
+## Slide 4: Project 1 - IT Polis Voting System
+- Context en achtergrond
+- Mijn bijdrage: database architectuur, data processing
+- Wat ik heb geleerd: secure database design, NFC technologie
+- Aansluiting bij ITF competenties: Analyse, Realisatie
+- Visueel: Afbeelding van het systeem
+
+## Slide 5: Project 2 - App Hosting Platform for Clients
+- Context: hosting platform voor PHP/Laravel applicaties
+- Mijn bijdrage: Kubernetes cluster, infrastructuur
+- Wat ik heb geleerd: containerization, Kubernetes administratie
+- Aansluiting bij ITF competenties: Realisatie, Beheer
+- Visueel: Diagram van platform architectuur
+
+## Slide 6: Project 3 - Security Awareness Campaign Movie
+- Context: educatieve film over cybersecurity
+- Mijn bijdrage: hoofdredacteur en creatief directeur
+- Wat ik heb geleerd: visual storytelling, technische videoproductie
+- Aansluiting bij ITF competenties: Communicatie, Projectbeheer
+- Visueel: Screenshot van de film
+
+## Slide 7: Project 4 - KeyedColors (Persoonlijk Project)
+- Context: Windows applicatie voor display profielen
+- Mijn bijdrage: volledig eigen ontwerp en ontwikkeling
+- Wat ik heb geleerd: Windows API, system tray integratie
+- Aansluiting bij ITF competenties: Analyse, Realisatie, Professioneel handelen
+- Visueel: Logo en screenshot van de applicatie
+
+## Slide 8: Persoonlijke Groei
+- Belangrijkste vaardigheden die ik heb ontwikkeld
+- Hoe de projecten hebben bijgedragen aan mijn groei
+- Visuele voorstelling van groei in technische en soft skills
+- Visueel: Skills radar chart of growth graph
+
+## Slide 9: Sterke Punten & Uitdagingen
+- Mijn sterke punten: waar ik in uitblink
+- Vaardigheden die ik nog wil verbeteren
+- Hoe ik plan om deze vaardigheden te ontwikkelen
+- Visueel: Split screen met strengths/improvements
+
+## Slide 10: Conclusie & Toekomst
+- Samenvatting van mijn reis en ervaring
+- Toekomstplannen en doelen
+- Dank u voor uw aandacht
+- Visueel: Forward-looking image
+
+# Technische Implementatie:
+- Gebruik dezelfde animatie-effecten als homepage (TiltCard, InteractiveTitleEffect)
+- PurpleSparkle effect voor achtergrond
+- GridDeformation voor achtergrondanimatie
+- Reageren op toetsenbord en muis events voor navigatie
+- Fullscreen API implementatie
+- Progress indicator onder aan de pagina 
