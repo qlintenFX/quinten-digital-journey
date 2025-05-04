@@ -63,7 +63,7 @@ export const SparkleText: React.FC<{ children: React.ReactNode, className?: stri
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <span className="text-primary">{children}</span>
+      <span className="text-purple-900 font-bold">{children}</span>
       
       <AnimatePresence>
         {isHovered && sparklePositions.map(sparkle => (
