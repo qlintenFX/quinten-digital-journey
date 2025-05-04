@@ -290,7 +290,7 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-6">
                           <img 
                             src="/images/optimized/project-1-Voting-System.webp" 
                             alt="IT Polis Voting System" 
@@ -401,12 +401,12 @@ const Presentation = () => {
                     >
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat het is</h3>
-                        <p>Een <KeywordHighlight>hosting platform</KeywordHighlight> voor PHP/Laravel apps in Thomas More's datacenter.</p>
+                        <p>Een <KeywordHighlight>hosting platform</KeywordHighlight> voor PHP/Laravel apps in het datacenter.</p>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik deed</h3>
-                        <p>Ik maakte de <KeywordHighlight>Kubernetes cluster</KeywordHighlight> en zorgde voor <KeywordHighlight>automatische schaalbaarheid</KeywordHighlight>.</p>
+                        <p>Ik maak de <KeywordHighlight>Kubernetes cluster</KeywordHighlight> en zorg voor <KeywordHighlight>automatische schaalbaarheid</KeywordHighlight>.</p>
                       </div>
                       
                       <div>
@@ -528,7 +528,7 @@ const Presentation = () => {
                       className="flex-1 flex items-center justify-center p-4"
                     >
                       <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
-                        <div className="grid grid-cols-2 gap-6">
+                        <div className="flex flex-col gap-6">
                           <img 
                             src="/images/project-4-KeyedColors-logo.png" 
                             alt="KeyedColors Logo" 
@@ -539,26 +539,28 @@ const Presentation = () => {
                               boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
                             }}
                           />
-                          <img 
-                            src="/images/optimized/project-4-KeyedColors-dynamic-profile.webp" 
-                            alt="Dynamic Profile" 
-                            className="w-full object-contain rounded-xl"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
-                            }}
-                          />
-                          <img 
-                            src="/images/optimized/project-4-KeyedColors-profiles.webp" 
-                            alt="Profiles" 
-                            className="col-span-2 w-full object-contain rounded-xl"
-                            style={{
-                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
-                              border: "2px solid rgba(168, 85, 247, 0.3)",
-                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
-                            }}
-                          />
+                          <div className="grid grid-cols-2 gap-6">
+                            <img 
+                              src="/images/optimized/project-4-KeyedColors-dynamic-profile.webp" 
+                              alt="Dynamic Profile" 
+                              className="w-full object-contain rounded-xl"
+                              style={{
+                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                                border: "2px solid rgba(168, 85, 247, 0.3)",
+                                boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              }}
+                            />
+                            <img 
+                              src="/images/optimized/project-4-KeyedColors-profiles.webp" 
+                              alt="Profiles" 
+                              className="w-full object-contain rounded-xl"
+                              style={{
+                                filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                                border: "2px solid rgba(168, 85, 247, 0.3)",
+                                boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                              }}
+                            />
+                          </div>
                         </div>
                       </div>
                     </motion.div>
@@ -740,7 +742,7 @@ const Presentation = () => {
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="text-7xl font-bold mb-16 text-center text-primary/90"
+                    className="text-8xl font-bold mb-16 text-center text-primary/90"
                   >
                     Conclusie & Toekomst
                   </motion.h2>
