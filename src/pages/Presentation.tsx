@@ -193,7 +193,7 @@ const Presentation = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-7xl font-bold mb-12 text-center text-primary/90"
                   >
-                    Mijn Reis
+                    Mijn Projecten
                   </motion.h2>
                   <div className="flex-grow flex items-center justify-center">
                     <motion.div
@@ -289,15 +289,15 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-muted/60 p-6">
+                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
                         <img 
                           src="/images/optimized/project-1-Voting-System.webp" 
                           alt="IT Polis Voting System" 
                           className="max-w-full max-h-full object-contain rounded-xl"
                           style={{
-                            filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))",
-                            border: "3px solid rgba(168, 85, 247, 0.4)",
-                            boxShadow: "0 0 20px 5px rgba(168, 85, 247, 0.4)"
+                            filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                            border: "2px solid rgba(168, 85, 247, 0.3)",
+                            boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
                           }}
                         />
                       </div>
@@ -335,17 +335,49 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-muted/60 p-6">
-                        <img 
-                          src="/images/optimized/project-2-hosting-platform.webp" 
-                          alt="App Hosting Platform" 
-                          className="max-w-full max-h-full object-contain rounded-xl"
-                          style={{
-                            filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))",
-                            border: "3px solid rgba(168, 85, 247, 0.4)",
-                            boxShadow: "0 0 20px 5px rgba(168, 85, 247, 0.4)"
-                          }}
-                        />
+                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6">
+                          <img 
+                            src="/images/optimized/project-2-hosting-platform.webp" 
+                            alt="App Hosting Platform" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                          <img 
+                            src="/images/optimized/project-2-hardware-diagram.webp" 
+                            alt="Hardware Diagram" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                          <img 
+                            src="/images/optimized/project-2-software-diagram.webp" 
+                            alt="Software Diagram" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                          <img 
+                            src="/images/optimized/project-2-hosting-platform-repository.webp" 
+                            alt="Repository Structure" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                        </div>
                       </div>
                     </motion.div>
                     
@@ -425,17 +457,29 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-muted/60 p-6">
-                        <img 
-                          src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
-                          alt="Security Awareness Campaign" 
-                          className="max-w-full max-h-full object-contain rounded-xl"
-                          style={{
-                            filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))",
-                            border: "3px solid rgba(168, 85, 247, 0.4)",
-                            boxShadow: "0 0 20px 5px rgba(168, 85, 247, 0.4)"
-                          }}
-                        />
+                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6">
+                          <img 
+                            src="/images/optimized/project-3-video-editing-awareness-movie.webp" 
+                            alt="Security Awareness Movie" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                          <img 
+                            src="/images/optimized/project-3-video-editiing-awareness-movie-2.webp" 
+                            alt="Movie Scene" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                        </div>
                       </div>
                     </motion.div>
                   </div>
@@ -471,17 +515,39 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center p-4"
                     >
-                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center rounded-2xl overflow-hidden bg-muted/60 p-6">
-                        <img 
-                          src="/images/project-4-KeyedColors-logo.png" 
-                          alt="KeyedColors" 
-                          className="max-w-full max-h-full object-contain rounded-xl"
-                          style={{
-                            filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.6))",
-                            border: "3px solid rgba(168, 85, 247, 0.4)",
-                            boxShadow: "0 0 20px 5px rgba(168, 85, 247, 0.4)"
-                          }}
-                        />
+                      <div className="relative w-full h-full max-h-[550px] flex items-center justify-center">
+                        <div className="grid grid-cols-2 gap-6">
+                          <img 
+                            src="/images/project-4-KeyedColors-logo.png" 
+                            alt="KeyedColors Logo" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                          <img 
+                            src="/images/optimized/project-4-KeyedColors-dynamic-profile.webp" 
+                            alt="Dynamic Profile" 
+                            className="w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                          <img 
+                            src="/images/optimized/project-4-KeyedColors-profiles.webp" 
+                            alt="Profiles" 
+                            className="col-span-2 w-full object-contain rounded-xl"
+                            style={{
+                              filter: "drop-shadow(0 0 10px rgba(168, 85, 247, 0.5))",
+                              border: "2px solid rgba(168, 85, 247, 0.3)",
+                              boxShadow: "0 0 15px 3px rgba(168, 85, 247, 0.3)"
+                            }}
+                          />
+                        </div>
                       </div>
                     </motion.div>
                     
