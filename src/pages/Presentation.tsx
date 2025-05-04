@@ -203,7 +203,7 @@ const Presentation = () => {
                       className="w-full max-w-7xl"
                     >
                       {/* Project Grid */}
-                      <div className="grid grid-cols-4 gap-12">
+                      <div className="grid grid-cols-2 gap-12">
                         <ProjectTile 
                           title="IT Polis Voting System" 
                           description="SKIL2 Project"
@@ -846,7 +846,7 @@ const ProjectTile: React.FC<{
 }> = ({ title, description, delay, iconClass }) => {
   return (
     <motion.div 
-      className="flex flex-col items-center p-6 rounded-2xl bg-primary/10 border-2 border-purple-800/30 shadow-lg"
+      className="flex flex-col items-center p-8 rounded-2xl bg-primary/10 border-2 border-purple-800/30 shadow-lg"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay }}
@@ -854,12 +854,12 @@ const ProjectTile: React.FC<{
         boxShadow: "0 0 20px rgba(168, 85, 247, 0.2)"
       }}
     >
-      <div className="w-20 h-20 rounded-full bg-purple-800/30 flex items-center justify-center mb-6">
-        <div className="w-12 h-12 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
+      <div className="w-28 h-28 rounded-full bg-purple-800/30 flex items-center justify-center mb-8">
+        <div className="w-16 h-16 rounded-full bg-purple-800 shadow-lg shadow-purple-800/50 z-10"></div>
       </div>
       <div className="text-center">
-        <h3 className="text-3xl font-bold text-purple-900 mb-3">{title}</h3>
-        <p className="text-xl text-muted-foreground">{description}</p>
+        <h3 className="text-4xl font-bold text-purple-900 mb-4">{title}</h3>
+        <p className="text-2xl text-muted-foreground">{description}</p>
       </div>
     </motion.div>
   );
