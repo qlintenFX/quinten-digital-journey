@@ -9,7 +9,7 @@ import CursorEffectsProvider from "./components/ui/CursorEffectsProvider";
 
 // Lazy load components
 const Index = lazy(() => import("./pages/Index"));
-const Presentation = lazy(() => import("./pages/presentation"));
+const Presentation = lazy(() => import("./pages/Presentation"));
 
 const queryClient = new QueryClient();
 

@@ -1,63 +1,86 @@
-PRESENTATIEPLAN - QUINTEN DE MEYER 
+PRESENTATIE PLANNING
 
-SLIDE 1: INTRODUCTIE
-- Titel: "Quinten De Meyer - Applied Computer Science / Electronics - ICT"
-- Subtitel: "Mijn reis in technologische innovatie"
-- Korte creatieve maar professionele introductie
-- Achtergrond met lensglare effect en paarse sparkles van homepage
+Slide 1: Introductie
+- Naam & foto (gebruik profile foto van homepage)
+- Titel: "Applied Computer Science / Electronics - ICT Student"
+- Ondertitel: "Mijn digitale reis"
+- Achtergrond: Gebruik de interactieve achtergrond/effecten van de homepage
 
-SLIDE 2: WIE BEN IK?
-- Professionele foto
-- Kernvaardigheden benadrukken
-- Waarom Applied Computer Science / Electronics - ICT?
-- Mijn passies en drijfveren
-- Focus op persoonlijke verhaallijn en groei
+Slide 2: Over mij
+- Korte persoonlijke introductie
+- Waarom ik voor Applied Computer Science / Electronics - ICT heb gekozen
+- Mijn creatieve bezigheden (YouTube kanaal, persoonlijke projecten)
+- Professionele ambities
+- Gebruik KeywordHighlight voor belangrijke punten
 
-SLIDE 3: PROJECT 1 - IT POLIS VOTING SYSTEM
-- Context en achtergrond
-- Mijn bijdrage (nadruk op database architectuur en live leaderboard)
-- Wat ik heb geleerd (databaseontwerp, NFC-technologie, realtime datavisualisatie)
-- Bereikte competenties: Analyse, Realisatie, Communicatie
+Slide 3: Mijn Persoonlijke Groei
+- Tijdlijn van mijn ontwikkeling
+- Belangrijkste leermomenten
+- Hoe mijn vaardigheden zijn gegroeid tijdens mijn opleiding
+- Verbinding met ITF competenties (Analyseren, Realiseren, Beheren, Communiceren)
 
-SLIDE 4: PROJECT 2 - APP HOSTING PLATFORM
-- Context en achtergrond
-- Mijn bijdrage (Kubernetes cluster, container orchestratie)
-- Wat ik heb geleerd (containerization, Kubernetes, CIS security controls)
-- Bereikte competenties: Realisatie, Operatie, Projectbeheer
+Slide 4: Project 1: IT Polis Voting System
+- SKIL2 Project
+- Context & Achtergrond
+- Mijn bijdrage: database architectuur, live leaderboard, UI ontwikkeling
+- Wat ik geleerd heb: veilig database ontwerp, NFC technologie, real-time visualisatie
+- Demonstratie van competenties: Analyseren, Realiseren, Communiceren
 
-SLIDE 5: PROJECT 3 - KEYEDCOLORS (PERSOONLIJK PROJECT)
-- Context en achtergrond
-- Waarom ik dit project ontwikkelde (gat in de markt)
-- Wat ik heb geleerd (Windows API, systeem tray integratie, global hotkey management)
-- Bereikte competenties: Analyse, Realisatie, Professionele houding
+Slide 5: Project 2: App Hosting Platform for Clients
+- SKIL2.2 Project
+- Context & Achtergrond
+- Mijn bijdrage: Kubernetes cluster, container orchestration, geautomatiseerde scaling
+- Wat ik geleerd heb: containerization, Kubernetes administratie, CIS security controls
+- Demonstratie van competenties: Realiseren, Beheren, Professioneel handelen
 
-SLIDE 6: YOUTUBE KANAAL - CREATIEVE VAARDIGHEDEN
-- Korte introductie van mijn YouTube kanaal (@qlintenFX)
-- Hoe dit mijn technische vaardigheden aanvult
-- Video editing en creatief storytelling als aanvullende competenties
-- Bereikte competenties: Communicatie, Professionele houding
+Slide 6: Project 3: Security Awareness Campaign Movie
+- Media Project
+- Context & Achtergrond
+- Mijn bijdrage: hoofdredacteur, creative director, storytelling
+- Wat ik geleerd heb: storytelling, video productie, communiceren over security
+- Demonstratie van competenties: Communiceren, Realiseren, Professioneel handelen
 
-SLIDE 7: PERSOONLIJKE GROEI
-- Mijn belangrijkste groeigebieden (technisch en persoonlijk)
-- Visualisatie van groeitraject (tijdlijn of grafiek)
-- Hoe projecten hebben bijgedragen aan mijn ontwikkeling
-- Competentie ontwikkeling in kaart brengen
+Slide 7: Project 4: KeyedColors
+- Persoonlijk Project
+- Context & Achtergrond
+- Mijn bijdrage: concept, ontwerp, ontwikkeling
+- Wat ik geleerd heb: Windows API, system tray integratie, global hotkey management
+- Demonstratie van competenties: Analyseren, Realiseren, Operationaliseren
 
-SLIDE 8: TOEKOMSTIGE ONTWIKKELING
-- Vaardigheden die ik nog wil verbeteren
+Slide 8: Technische Vaardigheden Overzicht
+- Belangrijkste technische vaardigheden die ik heb verworven
+- Hoe deze vaardigheden zijn toegepast in mijn projecten
+- Toekomstige technische vaardigheden die ik wil ontwikkelen
+- Gebruik van visuele elementen zoals SparkleText of KeywordHighlight
+
+Slide 9: Soft Skills & Professionele Groei
+- Belangrijkste soft skills die ik heb ontwikkeld
+- Hoe deze skills zijn toegepast in mijn projecten
+- Professionele groei en ontwikkeling
+- Toekomstige doelen voor professionele ontwikkeling
+
+Slide 10: YouTube & Creative Pursuits
+- Mijn YouTube kanaal en creatieve projecten
+- Hoe dit mijn technische vaardigheden heeft versterkt
+- Hoe dit mijn communicatievaardigheden heeft verbeterd
+- Verbinding tussen creatieve en technische aspecten
+
+Slide 11: Ontwikkelingspunten & Toekomstplannen
+- Vaardigheden die ik nog verder wil ontwikkelen
 - Hoe ik van plan ben dit te doen
-- Toekomstplannen en -ambities
-- Afsluiting persoonlijke verhaallijn
+- Mijn visie voor mijn professionele toekomst
+- Connectie met ITF competenties
 
-SLIDE 9: DANK U - VRAGEN?
-- Contactgegevens
-- GitHub/LinkedIn links
-- Afsluiting met call-to-action voor vragen
+Slide 12: Conclusie
+- Samenvatting van mijn persoonlijke groei en verhaal
+- Belangrijkste leerpunten en prestaties
+- Toekomstvisie
+- Dank voor uw aandacht
 
-ONTWERP RICHTLIJNEN:
-- Grote tekst voor optimale leesbaarheid
-- Volledige schermweergave
-- Consistent gebruik van visuele elementen van homepage (TiltCard, KeywordHighlight, LensGlare, PurpleSparkle)
-- Eenvoudige navigatie met pijltjestoetsen
-- Minimale tekst per slide, focus op kernpunten
-- Professionele maar visueel aantrekkelijke stijl 
+Notities:
+- Navigatie met pijltoetsen en klikken (links vooruit, rechts terug)
+- Slide-indicators onderaan het scherm
+- Fullscreen knop in de hoek
+- Grote tekst voor goede leesbaarheid op TV-scherm
+- Behoud de visuele stijl, effecten en componenten van de homepage
+- Zorg voor consistente stijl en layout tussen slides 
