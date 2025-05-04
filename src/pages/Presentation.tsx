@@ -152,13 +152,13 @@ const Presentation = () => {
                       className="space-y-8 text-4xl"
                     >
                       <p>
-                        Ik wouw altijd al een computer hebben. Vanaf dat ik het had, was ik ermee bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en ermee over <KeywordHighlight>leren</KeywordHighlight>.
+                        Ik wou altijd al een computer hebben. Vanaf dat ik er een had, was ik ermee bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en ermee te <KeywordHighlight>leren</KeywordHighlight>.
                       </p>
                       <p>
                         Ik zoek altijd voor wat <KeywordHighlight>ik wil</KeywordHighlight> en wat <KeywordHighlight>anderen zouden kunnen willen</KeywordHighlight> - daarom wil ik apps maken die mensen echt gebruiken.
                       </p>
                       <p>
-                        Ik koos deze IT opleiding omdat ik het zo <KeywordHighlight>leuk vond</KeywordHighlight> dat ik er mijn <KeywordHighlight>cariere</KeywordHighlight> van wil maken en ermee altijd wil <KeywordHighlight>werken en leren</KeywordHighlight>.
+                        Ik koos deze IT opleiding omdat ik het zo <KeywordHighlight>leuk vond</KeywordHighlight> dat ik er mijn <KeywordHighlight>carrière</KeywordHighlight> van wil maken en ermee altijd wil <KeywordHighlight>werken en leren</KeywordHighlight>.
                       </p>
                     </motion.div>
                   </div>
@@ -503,7 +503,7 @@ const Presentation = () => {
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-primary/80">Wat ik leerde</h3>
-                        <p>Ik leerde werken met <KeywordHighlight>Windows API</KeywordHighlight>, <KeywordHighlight>systeem iconen</KeywordHighlight> en <KeywordHighlight>sneltoets beheer</KeywordHighlight>.</p>
+                        <p>Ik leerde werken met <KeywordHighlight>Windows API</KeywordHighlight>, <KeywordHighlight>systeemiconen</KeywordHighlight> en <KeywordHighlight>sneltoetsbeheer</KeywordHighlight>.</p>
                       </div>
                     </motion.div>
                   </div>
