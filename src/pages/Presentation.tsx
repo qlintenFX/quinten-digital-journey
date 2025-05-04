@@ -513,7 +513,7 @@ const Presentation = () => {
                     >
                       <div className="relative w-full h-full flex items-center justify-center">
                         <div className="flex flex-col gap-6 w-3/4">
-                          <div className="w-1/2 mx-auto">
+                          <div className="w-1/3 mx-auto">
                             <img 
                               src="/images/project-4-KeyedColors-logo.png" 
                               alt="KeyedColors Logo" 
@@ -523,7 +523,7 @@ const Presentation = () => {
                               }}
                             />
                           </div>
-                          <div className="grid grid-cols-2 gap-6">
+                          <div className="grid grid-cols-2 gap-8">
                             <img 
                               src="/images/optimized/project-4-KeyedColors-dynamic-profile.webp" 
                               alt="Dynamic Profile" 
