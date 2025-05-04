@@ -4,7 +4,8 @@ const routes = {
   about: "/about",
   projects: "/projects",
   contact: "/contact",
-  blog: "/blog"
+  blog: "/blog",
+  presentation: "/presentation"
 };
 
 export const RouteComponents: Record<string, React.FC> = {};
