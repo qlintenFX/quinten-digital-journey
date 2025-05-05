@@ -21,7 +21,7 @@ const Presentation = () => {
   const [showControls, setShowControls] = useState(false);
   const presentationRef = useRef<HTMLDivElement>(null);
   const controlsTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const totalSlides = 11;
+  const totalSlides = 10;
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -139,7 +139,7 @@ const Presentation = () => {
                     transition={{ duration: 0.8 }}
                     className="text-8xl font-bold mb-8"
                   >
-                    Welkom bij mijn <SparkleText>Portfolio</SparkleText>
+                    Welkom bij mijn <SparkleText>Portfolio</SparkleText> presentatie
                   </motion.h1>
                   <motion.h2
                     initial={{ opacity: 0 }}
@@ -176,17 +176,53 @@ const Presentation = () => {
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.3 }}
-                      className="space-y-8 text-4xl"
+                      className="space-y-8"
                     >
-                      <p>
-                        Ik wou altijd al een computer hebben. Vanaf dat ik er een had, was ik ermee bezig om <KeywordHighlight>dingen te maken</KeywordHighlight> en ermee te <KeywordHighlight>leren</KeywordHighlight>.
-                      </p>
-                      <p>
-                        Ik was altijd het meest geïnteresseerd in het <KeywordHighlight>beveiligen</KeywordHighlight> en <KeywordHighlight>optimaliseren</KeywordHighlight> van apps. Cybersecurity trok me aan omdat ik wil zorgen dat wat ik en anderen maken ook echt <KeywordHighlight>veilig</KeywordHighlight> is.
-                      </p>
-                      <p>
-                        Ik koos deze IT opleiding omdat ik het zo <KeywordHighlight>leuk vond</KeywordHighlight> dat ik er mijn <KeywordHighlight>carrière</KeywordHighlight> van wil maken en ermee altijd wil <KeywordHighlight>werken en leren</KeywordHighlight>.
-                      </p>
+                      <div className="space-y-12 relative">
+                        {/* Timeline line */}
+                        <div className="absolute top-4 bottom-0 left-4 w-1 bg-primary/50" />
+                        
+                        {/* Timeline points */}
+                        <div className="relative flex items-start pl-16">
+                          <div className="absolute left-0 top-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                            1
+                          </div>
+                          <div className="text-4xl">
+                            <p className="font-semibold">Vroege interesse</p>
+                            <p>Al sinds vroeg <KeywordHighlight>gefascineerd</KeywordHighlight> door computers en technologie.</p>
+                          </div>
+                        </div>
+                        
+                        <div className="relative flex items-start pl-16">
+                          <div className="absolute left-0 top-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                            2
+                          </div>
+                          <div className="text-4xl">
+                            <p className="font-semibold">Ontdekking van mijn passie</p>
+                            <p>Interesse in <KeywordHighlight>beveiliging</KeywordHighlight> en <KeywordHighlight>software</KeywordHighlight> ontwikkeling.</p>
+                          </div>
+                        </div>
+                        
+                        <div className="relative flex items-start pl-16">
+                          <div className="absolute left-0 top-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                            3
+                          </div>
+                          <div className="text-4xl">
+                            <p className="font-semibold">Keuze voor ICT</p>
+                            <p>Start IT-opleiding vanuit <KeywordHighlight>persoonlijke interesse</KeywordHighlight>.</p>
+                          </div>
+                        </div>
+                        
+                        <div className="relative flex items-start pl-16">
+                          <div className="absolute left-0 top-2 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold">
+                            4
+                          </div>
+                          <div className="text-4xl">
+                            <p className="font-semibold">Specialisatie</p>
+                            <p>Focus op <KeywordHighlight>Cloud & Cyber Security</KeywordHighlight>.</p>
+                          </div>
+                        </div>
+                      </div>
                     </motion.div>
                   </div>
                   <motion.div 
@@ -239,24 +275,24 @@ const Presentation = () => {
                         />
                         
                         <ProjectTile 
-                          title="App Hosting Platform" 
-                          description="SKIL2.2 Project"
-                          delay={0.6}
-                          iconClass="i-lucide-server"
-                        />
-                        
-                        <ProjectTile 
                           title="Security Awareness Movie" 
                           description="Media Project"
-                          delay={0.8}
+                          delay={0.6}
                           iconClass="i-lucide-film"
                         />
 
                         <ProjectTile 
                           title="KeyedColors" 
                           description="Mijn Eigen Project"
-                          delay={1.0}
+                          delay={0.8}
                           iconClass="i-lucide-palette"
+                        />
+                        
+                        <ProjectTile 
+                          title="YouTube Kanaal" 
+                          description="Creative Platform"
+                          delay={1.0}
+                          iconClass="i-lucide-youtube"
                         />
                       </div>
                     </motion.div>
@@ -295,17 +331,28 @@ const Presentation = () => {
                     >
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
-                        <p>Een <KeywordHighlight>stem systeem</KeywordHighlight> voor IT Polis waar bezoekers stemmen op de projecten van studenten.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>Een <KeywordHighlight>stem systeem</KeywordHighlight> voor IT Polis</li>
+                          <li>Bezoekers stemmen op projecten van studenten</li>
+                        </ul>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
-                        <p>Ik maakte de <KeywordHighlight>database</KeywordHighlight>, de <KeywordHighlight>real-time scorebord</KeywordHighlight>, en de user interface.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>De <KeywordHighlight>database</KeywordHighlight> architectuur</li>
+                          <li>Het <KeywordHighlight>real-time scorebord</KeywordHighlight></li>
+                          <li>De user interface ontwikkeling</li>
+                        </ul>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
-                        <p>Ik leerde over <KeywordHighlight>veilige databases</KeywordHighlight>, <KeywordHighlight>NFC-technologie</KeywordHighlight>, en <KeywordHighlight>data visualisatie</KeywordHighlight>.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li><KeywordHighlight>Veilige databases</KeywordHighlight> ontwerpen</li>
+                          <li>Werken met <KeywordHighlight>NFC-technologie</KeywordHighlight></li>
+                          <li><KeywordHighlight>Data visualisatie</KeywordHighlight> techniek</li>
+                        </ul>
                       </div>
                     </motion.div>
                     
@@ -350,87 +397,6 @@ const Presentation = () => {
                       animate={{ opacity: 1, x: 0 }}
                       className="px-5 py-2 bg-primary/20 rounded-full text-purple-900 text-2xl font-semibold mr-4"
                     >
-                      SKIL2.2 Project
-                    </motion.div>
-                    <motion.h2
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.2 }}
-                      className="text-7xl font-bold text-purple-900"
-                    >
-                      App Hosting Platform
-                    </motion.h2>
-                  </div>
-                  
-                  <div className="flex flex-col md:flex-row flex-grow">
-                    <motion.div 
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.6 }}
-                      className="flex-1 flex items-center justify-center p-4"
-                    >
-                      <div className="relative w-full h-full flex items-center justify-center">
-                        <div className="w-3/4 flex flex-col">
-                          <ProjectImageCarousel 
-                            images={[
-                              {
-                                src: "/images/optimized/project-2-hosting-platform.webp",
-                                alt: "App Hosting Platform"
-                              },
-                              {
-                                src: "/images/optimized/project-2-hardware-diagram.webp",
-                                alt: "Hardware Diagram"
-                              },
-                              {
-                                src: "/images/optimized/project-2-software-diagram.webp",
-                                alt: "Software Diagram"
-                              },
-                              {
-                                src: "/images/optimized/project-2-hosting-platform-repository.webp",
-                                alt: "Repository Structure"
-                              }
-                            ]}
-                            isActive={currentSlide === 4}
-                          />
-                        </div>
-                      </div>
-                    </motion.div>
-                    
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      transition={{ delay: 0.4 }}
-                      className="flex-1 space-y-8 text-4xl pl-12"
-                    >
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
-                        <p>Een <KeywordHighlight>hosting platform</KeywordHighlight> voor PHP/Laravel apps in het datacenter.</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
-                        <p>Ik maak de <KeywordHighlight>Kubernetes cluster</KeywordHighlight> en zorg voor <KeywordHighlight>automatische schaalbaarheid</KeywordHighlight>.</p>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
-                        <p>Ik leerde werken met <KeywordHighlight>containers</KeywordHighlight>, Kubernetes, en <KeywordHighlight>security controls</KeywordHighlight>.</p>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </SlideContent>
-            )}
-
-            {currentSlide === 5 && (
-              <SlideContent key="slide-5">
-                <div className="flex flex-col h-full px-20 py-16">
-                  <div className="flex items-center mb-8">
-                    <motion.div 
-                      initial={{ opacity: 0, x: -30 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="px-5 py-2 bg-primary/20 rounded-full text-purple-900 text-2xl font-semibold mr-4"
-                    >
                       Media Project
                     </motion.div>
                     <motion.h2
@@ -452,17 +418,29 @@ const Presentation = () => {
                     >
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
-                        <p>Een <KeywordHighlight>film</KeywordHighlight> over cybersecurity, die laat zien waarom je geen USB sticks moet oprapen.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>Een <KeywordHighlight>film</KeywordHighlight> over cybersecurity</li>
+                          <li>Laat zien waarom je geen USB sticks moet oprapen</li>
+                          <li>Educatief materiaal voor awareness</li>
+                        </ul>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
-                        <p>Ik was de <KeywordHighlight>editor</KeywordHighlight> en <KeywordHighlight>creative director</KeywordHighlight>, verantwoordelijk voor het verhaal en de look.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>De <KeywordHighlight>editor</KeywordHighlight> van de film</li>
+                          <li><KeywordHighlight>Creative director</KeywordHighlight> voor het verhaal</li>
+                          <li>Verantwoordelijk voor de <KeywordHighlight>look en feel</KeywordHighlight></li>
+                        </ul>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
-                        <p>Ik werd beter in <KeywordHighlight>visueel vertellen</KeywordHighlight> en <KeywordHighlight>video productie</KeywordHighlight> voor security awareness.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li><KeywordHighlight>Visueel vertellen</KeywordHighlight> van verhalen</li>
+                          <li><KeywordHighlight>Video productie</KeywordHighlight> voor security</li>
+                          <li>Effectieve educatieve content maken</li>
+                        </ul>
                       </div>
                     </motion.div>
                     
@@ -498,8 +476,8 @@ const Presentation = () => {
               </SlideContent>
             )}
 
-            {currentSlide === 6 && (
-              <SlideContent key="slide-6">
+            {currentSlide === 5 && (
+              <SlideContent key="slide-5">
                 <div className="flex flex-col h-full px-20 py-16">
                   <div className="flex items-center mb-8">
                     <motion.div 
@@ -568,17 +546,114 @@ const Presentation = () => {
                     >
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat het is</h3>
-                        <p>Windows app om <KeywordHighlight>display profielen</KeywordHighlight> te maken met gamma en contrast instellingen.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>Windows app voor <KeywordHighlight>display profielen</KeywordHighlight></li>
+                          <li>Instellen van gamma en contrast</li>
+                          <li>Snel wisselen tussen profielen</li>
+                        </ul>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik deed</h3>
-                        <p>Ik zag dat er niks was zoals dit en heb het zelf gemaakt met <KeywordHighlight>sneltoetsen</KeywordHighlight>.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>Zelf bedacht en ontwikkeld</li>
+                          <li>Implementatie van <KeywordHighlight>sneltoetsen</KeywordHighlight></li>
+                          <li>Volledig ontwerp en uitvoering</li>
+                        </ul>
                       </div>
                       
                       <div>
                         <h3 className="text-5xl font-semibold mb-4 text-purple-900">Wat ik leerde</h3>
-                        <p>Ik leerde werken met <KeywordHighlight>Windows API</KeywordHighlight>, <KeywordHighlight>systeemiconen</KeywordHighlight> en <KeywordHighlight>sneltoetsbeheer</KeywordHighlight>.</p>
+                        <ul className="space-y-3 text-4xl list-disc pl-10">
+                          <li>Werken met <KeywordHighlight>Windows API</KeywordHighlight></li>
+                          <li>Implementeren van <KeywordHighlight>systeemiconen</KeywordHighlight></li>
+                          <li><KeywordHighlight>Sneltoetsbeheer</KeywordHighlight> voor desktop apps</li>
+                        </ul>
+                      </div>
+                    </motion.div>
+                  </div>
+                </div>
+              </SlideContent>
+            )}
+
+            {currentSlide === 6 && (
+              <SlideContent key="slide-6">
+                <div className="flex flex-col h-full px-20 py-16">
+                  <motion.h2
+                    initial={{ opacity: 0, y: -30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-7xl font-bold mb-10 text-center text-purple-900"
+                  >
+                    Professionele Groei
+                  </motion.h2>
+                  
+                  <div className="flex-grow grid grid-cols-2 gap-16">
+                    <motion.div
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="flex flex-col border-r-2 border-primary/30 pr-12"
+                    >
+                      <h3 className="text-6xl font-semibold text-purple-900 mb-8">Mijn Groei</h3>
+                      
+                      <div className="space-y-8 flex-grow">
+                        <div className="bg-primary/10 rounded-xl p-6 border-2 border-primary/20">
+                          <h4 className="text-4xl font-semibold mb-5 text-purple-800">Hard Skills</h4>
+                          <ul className="space-y-4 text-3xl list-disc pl-8">
+                            <li><KeywordHighlight>Databases</KeywordHighlight> ontwerpen & optimaliseren</li>
+                            <li><KeywordHighlight>Docker</KeywordHighlight> & containerization</li>
+                            <li><KeywordHighlight>Video</KeywordHighlight> productie & bewerking</li>
+                            <li><KeywordHighlight>Interfaces</KeywordHighlight> ontwerpen</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-primary/10 rounded-xl p-6 border-2 border-primary/20">
+                          <h4 className="text-4xl font-semibold mb-5 text-purple-800">Soft Skills</h4>
+                          <ul className="space-y-4 text-3xl list-disc pl-8">
+                            <li>Project <KeywordHighlight>management</KeywordHighlight></li>
+                            <li><KeywordHighlight>Probleemoplossend</KeywordHighlight> denken</li>
+                            <li><KeywordHighlight>Teamwork</KeywordHighlight> & communicatie</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-primary/10 rounded-xl p-6 border-2 border-primary/20">
+                          <h4 className="text-4xl font-semibold mb-5 text-purple-800">Vaardigheden in Actie</h4>
+                          <ul className="space-y-4 text-3xl list-disc pl-8">
+                            <li>IT Polis: <KeywordHighlight>database-ontwerp</KeywordHighlight> toegepast</li>
+                            <li>Security Movie: <KeywordHighlight>visueel verhalen</KeywordHighlight> vertellen</li>
+                            <li>YouTube: <KeywordHighlight>creatieve communicatie</KeywordHighlight></li>
+                          </ul>
+                        </div>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="flex flex-col pl-12"
+                    >
+                      <h3 className="text-6xl font-semibold text-purple-900 mb-8">Toekomstige Ontwikkeling</h3>
+                      
+                      <div className="space-y-8 flex-grow">
+                        <div className="bg-primary/10 rounded-xl p-6 border-2 border-primary/20">
+                          <h4 className="text-4xl font-semibold mb-5 text-purple-800">Te Verbeteren Vaardigheden</h4>
+                          <ul className="space-y-4 text-3xl list-disc pl-8">
+                            <li>Enterprise <KeywordHighlight>cloud infrastructuren</KeywordHighlight></li>
+                            <li>Moderne <KeywordHighlight>frontend frameworks</KeywordHighlight> door <KeywordHighlight>meer apps</KeywordHighlight> te maken</li>
+                            <li><KeywordHighlight>DevOps</KeywordHighlight> automatisering & CI/CD</li>
+                            <li><KeywordHighlight>Schaalbare applicaties</KeywordHighlight> ontwikkelen</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-primary/10 rounded-xl p-6 border-2 border-primary/20">
+                          <h4 className="text-4xl font-semibold mb-5 text-purple-800">Mijn Actieplan</h4>
+                          <ul className="space-y-4 text-3xl list-disc pl-8">
+                            <li><KeywordHighlight>Meer certificaten</KeywordHighlight> behalen</li>
+                            <li><KeywordHighlight>Open-source</KeywordHighlight> bijdragen leveren</li>
+                            <li><KeywordHighlight>CI/CD</KeywordHighlight> in eigen projecten toepassen</li>
+                          </ul>
+                        </div>
                       </div>
                     </motion.div>
                   </div>
@@ -588,72 +663,6 @@ const Presentation = () => {
 
             {currentSlide === 7 && (
               <SlideContent key="slide-7">
-                <div className="flex flex-col h-full px-20 py-16">
-                  <motion.h2
-                    initial={{ opacity: 0, y: -30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-7xl font-bold mb-12 text-center text-purple-900"
-                  >
-                    Mijn Skills
-                  </motion.h2>
-                  
-                  <div className="flex-grow grid grid-cols-2 gap-20">
-                    <motion.div
-                      initial={{ opacity: 0, x: -50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.3 }}
-                      className="space-y-12"
-                    >
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Waar ik goed in ben</h3>
-                        <ul className="space-y-5 text-4xl list-disc pl-12">
-                          <li>Databases maken en verbeteren</li>
-                          <li>Docker en Kubernetes gebruiken</li>
-                          <li>Video's maken en bewerken</li>
-                          <li>Interfaces ontwerpen</li>
-                          <li>Windows apps maken</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Persoonlijke skills</h3>
-                        <ul className="space-y-5 text-4xl list-disc pl-12">
-                          <li>Projecten organiseren</li>
-                          <li>Creatief problemen oplossen</li>
-                          <li>Samenwerken en communiceren</li>
-                        </ul>
-                      </div>
-                    </motion.div>
-                    
-                    <motion.div
-                      initial={{ opacity: 0, x: 50 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.5 }}
-                      className="space-y-12"
-                    >
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Wat ik wil verbeteren</h3>
-                        <ul className="space-y-5 text-4xl list-disc pl-12">
-                          <li>Grote cloud infrastructuren</li>
-                          <li>Frontend frameworks</li>
-                          <li>DevOps automatisering</li>
-                        </ul>
-                      </div>
-                      
-                      <div>
-                        <h3 className="text-5xl font-semibold mb-6 text-purple-900">Mijn Plan</h3>
-                        <p className="text-4xl pl-4">
-                          AWS/Azure certificaten halen, meewerken aan open-source projecten, en experimenteren met CI/CD in mijn eigen projecten.
-                        </p>
-                      </div>
-                    </motion.div>
-                  </div>
-                </div>
-              </SlideContent>
-            )}
-
-            {currentSlide === 8 && (
-              <SlideContent key="slide-8">
                 <div className="flex flex-col h-full px-20 py-16">
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
@@ -678,16 +687,20 @@ const Presentation = () => {
                         Hierdoor ben ik beter geworden in:
                       </p>
                       
-                      <ul className="space-y-5 list-disc pl-12">
-                        <li>Video bewerken</li>
-                        <li>Camera composities maken</li>
-                        <li>Verhalen vertellen met beeld</li>
-                        <li>Videos optimaliseren voor online</li>
+                      <ul className="space-y-4 text-4xl list-disc pl-10">
+                        <li><KeywordHighlight>Video's bewerken</KeywordHighlight> en monteren</li>
+                        <li><KeywordHighlight>Online community</KeywordHighlight> onderhouden</li>
+                        <li>Visuele storytelling technieken</li>
                       </ul>
                       
                       <p>
-                        Deze skills helpen me ook bij IT projecten omdat ik betere user interfaces kan maken.
+                        Deze skills helpen me bij IT projecten:
                       </p>
+                      
+                      <ul className="space-y-4 text-4xl list-disc pl-10">
+                        <li>Betere user interfaces ontwerpen</li>
+                        <li>Effectieve visualisaties maken</li>
+                      </ul>
                     </motion.div>
                     
                     <motion.div 
@@ -696,7 +709,28 @@ const Presentation = () => {
                       transition={{ delay: 0.6 }}
                       className="flex-1 flex items-center justify-center"
                     >
-                      <div className="relative w-full max-w-[600px]">
+                      <div className="relative w-full max-w-[600px] flex flex-col gap-8">
+                        {/* Featured video */}
+                        <div className="w-full overflow-hidden rounded-2xl shadow-lg relative"
+                          style={{
+                            filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.5))",
+                            border: "3px solid rgba(168, 85, 247, 0.3)",
+                          }}
+                        >
+                          <img 
+                            src="/images/optimized/embedvid.webp" 
+                            alt="Featured YouTube Video" 
+                            className="w-full h-auto"
+                            style={{
+                              borderRadius: "0.75rem"
+                            }}
+                          />
+                          <div className="absolute bottom-4 right-4 bg-black/70 px-3 py-1 rounded-full text-white font-medium flex items-center">
+                            <span className="text-xl">30K views</span>
+                          </div>
+                        </div>
+                        
+                        {/* Channel info */}
                         <div className="w-full overflow-hidden rounded-2xl shadow-lg bg-muted/60"
                           style={{
                             filter: "drop-shadow(0 0 20px rgba(168, 85, 247, 0.5))",
@@ -731,8 +765,8 @@ const Presentation = () => {
               </SlideContent>
             )}
 
-            {currentSlide === 9 && (
-              <SlideContent key="slide-9">
+            {currentSlide === 8 && (
+              <SlideContent key="slide-8">
                 <div className="flex flex-col h-full px-20 py-16">
                   <motion.h2
                     initial={{ opacity: 0, y: -30 }}
@@ -742,39 +776,65 @@ const Presentation = () => {
                     Conclusie & Toekomst
                   </motion.h2>
                   
-                  <div className="flex-grow flex flex-col items-center justify-center">
+                  <div className="flex-grow grid grid-cols-2 gap-20">
                     <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
+                      initial={{ opacity: 0, x: -50 }}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: 0.3 }}
-                      className="max-w-6xl space-y-12 text-4xl text-center"
+                      className="flex flex-col space-y-8 border-r-2 border-primary/30 pr-12"
                     >
-                      <p>
-                        Door mijn opleiding ben ik een <KeywordHighlight>veelzijdige ontwikkelaar</KeywordHighlight> geworden die zowel technisch als creatief is.
-                      </p>
+                      <h3 className="text-6xl font-semibold text-purple-900 mb-8">Conclusie</h3>
                       
-                      <p>
-                        Ik heb veel geleerd over <KeywordHighlight>databases</KeywordHighlight>, <KeywordHighlight>containers</KeywordHighlight>, <KeywordHighlight>video's maken</KeywordHighlight> en <KeywordHighlight>apps ontwikkelen</KeywordHighlight>.
-                      </p>
+                      <div className="text-4xl space-y-8">
+                        <p>
+                          Door mijn opleiding ben ik een <KeywordHighlight>veelzijdige ontwikkelaar</KeywordHighlight> geworden die zowel technisch als creatief is.
+                        </p>
+                        
+                        <p>
+                          Ik heb veel geleerd over:
+                        </p>
+                        
+                        <ul className="space-y-4 list-disc pl-10">
+                          <li><KeywordHighlight>Databases</KeywordHighlight> ontwerpen en optimaliseren</li>
+                          <li><KeywordHighlight>Containers</KeywordHighlight> en Kubernetes</li>
+                          <li><KeywordHighlight>Video's maken</KeywordHighlight> en bewerken</li>
+                          <li><KeywordHighlight>Apps ontwikkelen</KeywordHighlight> voor verschillende platforms</li>
+                        </ul>
+                      </div>
+                    </motion.div>
+                    
+                    <motion.div
+                      initial={{ opacity: 0, x: 50 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="flex flex-col space-y-8 pl-12"
+                    >
+                      <h3 className="text-6xl font-semibold text-purple-900 mb-8">Toekomst</h3>
                       
-                      <p>
-                        In de toekomst wil ik:
-                      </p>
-                      
-                      <ul className="space-y-6 list-none">
-                        <li>Meer leren over cloud en DevOps</li>
-                        <li>Beter worden in UI/UX</li>
-                        <li>Meehelpen aan open-source projecten</li>
-                        <li>Techniek en creativiteit blijven combineren</li>
-                      </ul>
+                      <div className="text-4xl space-y-8">
+                        <p>
+                          In de toekomst wil ik:
+                        </p>
+                        
+                        <ul className="space-y-4 list-disc pl-10">
+                          <li>Meer leren over <KeywordHighlight>cloud</KeywordHighlight> en DevOps</li>
+                          <li>Beter worden in <KeywordHighlight>UI/UX</KeywordHighlight></li>
+                          <li>Meehelpen aan <KeywordHighlight>open-source</KeywordHighlight> projecten</li>
+                          <li><KeywordHighlight>Techniek</KeywordHighlight> en <KeywordHighlight>creativiteit</KeywordHighlight> blijven combineren</li>
+                        </ul>
+                        
+                        <p className="pt-4">
+                          Ik wil certificaten halen voor AWS/Azure en experimenteren met CI/CD in mijn eigen projecten.
+                        </p>
+                      </div>
                     </motion.div>
                   </div>
                 </div>
               </SlideContent>
             )}
 
-            {currentSlide === 10 && (
-              <SlideContent key="slide-10">
+            {currentSlide === 9 && (
+              <SlideContent key="slide-9">
                 <div className="flex flex-col items-center justify-center h-full text-center px-20">
                   <motion.h1
                     initial={{ opacity: 0, y: 50 }}
@@ -794,6 +854,27 @@ const Presentation = () => {
                     <p className="text-purple-900 font-semibold">Quinten De Meyer</p>
                     <p className="text-purple-800">quinten1508@gmail.com</p>
                     <p className="text-2xl text-muted-foreground mt-16">2CCS01 - Cloud & Cyber Security</p>
+                  </motion.div>
+                  
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    className="mt-8 text-4xl flex flex-col items-center"
+                  >
+                    <p className="text-purple-900 font-semibold">Als volgende ga ik jullie mijn e-portfolio tonen</p>
+                    <div className="flex items-center mt-4">
+                      <ChevronRight className="text-primary animate-pulse" size={32} />
+                      <a 
+                        href="https://quinten-de-meyer.be" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="ml-2 text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+                      >
+                        E-Portfolio Demo
+                      </a>
+                      <ChevronRight className="text-primary animate-pulse ml-2" size={32} />
+                    </div>
                   </motion.div>
                 </div>
               </SlideContent>
