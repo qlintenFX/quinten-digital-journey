@@ -18,7 +18,9 @@ import {
 const Presentation = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [showControls, setShowControls] = useState(false);
   const presentationRef = useRef<HTMLDivElement>(null);
+  const controlsTimerRef = useRef<NodeJS.Timeout | null>(null);
   const totalSlides = 11;
 
   // Handle keyboard navigation
@@ -26,8 +28,10 @@ const Presentation = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'ArrowRight' || e.key === ' ') {
         nextSlide();
+        showControlsTemporarily();
       } else if (e.key === 'ArrowLeft') {
         prevSlide();
+        showControlsTemporarily();
       } else if (e.key === 'f' || e.key === 'F') {
         toggleFullscreen();
       } else if (e.key === 'Escape' && isFullscreen) {
@@ -38,6 +42,29 @@ const Presentation = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [currentSlide, isFullscreen]);
+
+  // Show controls temporarily when mouse moves
+  useEffect(() => {
+    const handleMouseMove = () => {
+      showControlsTemporarily();
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  // Function to show controls temporarily
+  const showControlsTemporarily = () => {
+    setShowControls(true);
+    
+    if (controlsTimerRef.current) {
+      clearTimeout(controlsTimerRef.current);
+    }
+    
+    controlsTimerRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 3000);
+  };
 
   const nextSlide = () => {
     if (currentSlide < totalSlides - 1) {
@@ -774,21 +801,37 @@ const Presentation = () => {
           </AnimatePresence>
         </div>
         
-        {/* Navigation controls */}
+        {/* Navigation Controls */}
         <div className="absolute inset-x-0 bottom-8 px-8 flex justify-between items-center">
-          <button 
-            onClick={prevSlide}
+          {/* Previous slide button - only visible when showControls is true */}
+          <motion.button 
+            onClick={() => {
+              prevSlide();
+              showControlsTemporarily();
+            }}
             className={`p-5 rounded-full bg-primary/30 text-primary-foreground hover:bg-primary/50 transition-colors ${currentSlide === 0 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
             disabled={currentSlide === 0}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: showControls ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
           >
             <ChevronLeft size={36} />
-          </button>
+          </motion.button>
           
-          <div className="flex space-x-3">
+          {/* Slide tabs - only visible when showControls is true */}
+          <motion.div 
+            className="flex space-x-3"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: showControls ? 1 : 0 }}
+            transition={{ duration: 0.3 }}
+          >
             {Array.from({ length: totalSlides }).map((_, index) => (
               <button
                 key={index}
-                onClick={() => goToSlide(index)}
+                onClick={() => {
+                  goToSlide(index);
+                  showControlsTemporarily();
+                }}
                 className={`w-5 h-5 rounded-full transition-all ${
                   currentSlide === index 
                     ? 'bg-primary scale-125 border-2 border-primary-foreground' 
@@ -797,9 +840,10 @@ const Presentation = () => {
                 aria-label={`Ga naar slide ${index + 1}`}
               />
             ))}
-          </div>
+          </motion.div>
           
           <div className="flex items-center">
+            {/* Fullscreen button - always visible */}
             <button 
               onClick={toggleFullscreen}
               className="p-5 rounded-full bg-primary/30 text-primary-foreground hover:bg-primary/50 transition-colors mr-5"
@@ -808,13 +852,20 @@ const Presentation = () => {
               <Maximize size={28} />
             </button>
             
-            <button 
-              onClick={nextSlide}
+            {/* Next slide button - only visible when showControls is true */}
+            <motion.button 
+              onClick={() => {
+                nextSlide();
+                showControlsTemporarily();
+              }}
               className={`p-5 rounded-full bg-primary/30 text-primary-foreground hover:bg-primary/50 transition-colors ${currentSlide === totalSlides - 1 ? 'opacity-50 cursor-not-allowed' : 'opacity-100'}`}
               disabled={currentSlide === totalSlides - 1}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: showControls ? 1 : 0 }}
+              transition={{ duration: 0.3 }}
             >
               <ChevronRight size={36} />
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
