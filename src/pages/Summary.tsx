@@ -1,273 +1,260 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  PurpleSparkle, 
-  KeywordHighlight, 
-  SparkleText,
-  GridDeformation
-} from '@/components/presentation/Effects'; // Assuming Effects.tsx is in components/presentation
-import { ChevronDown } from 'lucide-react';
+import { ArrowDown } from 'lucide-react';
 
-// Helper function to check dark mode (can be moved to a utils file if not already)
-function isDarkMode() {
-  if (typeof window !== 'undefined') {
-    return document.documentElement.classList.contains('dark');
-  }
-  return true; // Default to dark for SSR or non-browser environments
-}
+// Helper component for consistent section styling
+const Section: React.FC<{ title: string; id: string; children: React.ReactNode }> = ({ title, id, children }) => (
+  <motion.section
+    id={id}
+    className="mb-16 p-6 bg-white shadow-lg rounded-lg min-h-[200px]" // Added min-h for better visual
+    initial={{ opacity: 0, y: 50 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true, amount: 0.3 }}
+    transition={{ duration: 0.5 }}
+  >
+    <h2 className="text-3xl font-bold mb-6 text-purple-700 border-b-2 border-purple-300 pb-2">{title}</h2>
+    <div className="prose prose-lg max-w-none text-gray-700">
+      {children}
+    </div>
+  </motion.section>
+);
 
-const TimelineItem: React.FC<{
-  title: string;
-  date?: string;
-  description: React.ReactNode;
-  isLast?: boolean;
-  delay?: number;
-}> = ({ title, date, description, isLast = false, delay = 0 }) => {
-  const [isDark, setIsDark] = useState(true);
+// Helper component for timeline dots and lines
+const TimelineItem: React.FC<{ isLast?: boolean; children: React.ReactNode }> = ({ isLast = false, children }) => (
+  <div className="relative pl-8">
+    <div className="absolute left-0 top-0 h-full">
+      <div className="w-4 h-4 bg-purple-500 rounded-full mt-1"></div>
+      {!isLast && <div className="absolute left-[7px] top-4 bottom-0 w-0.5 bg-purple-300"></div>}
+    </div>
+    <div className="pb-8">
+      {children}
+    </div>
+  </div>
+);
 
-  useEffect(() => {
-    setIsDark(isDarkMode());
-    const observer = new MutationObserver(() => setIsDark(isDarkMode()));
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 50 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay } },
-  };
-
-  return (
-    <motion.div 
-      className="relative pl-12 pb-12"
-      variants={itemVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.3 }}
-    >
-      {/* Dot */}
-      <div 
-        className={`absolute left-0 top-1 w-6 h-6 rounded-full border-4 shadow-md
-                    ${isDark ? 'bg-purple-500 border-purple-300' : 'bg-primary-light-accent border-primary-light-accent/70'}`}
-        style={isDark ? { boxShadow: '0 0 10px rgba(168, 85, 247, 0.7)'} : { boxShadow: '0 0 10px rgba(109, 40, 217, 0.5)'}}
-      ></div>
-      {/* Line */}
-      {!isLast && (
-        <div 
-          className={`absolute left-[10px] top-8 bottom-0 w-1 
-                      ${isDark ? 'bg-purple-400/30' : 'bg-primary-light-accent/40'}`}
-        ></div>
-      )}
-      <div 
-        className={`p-6 rounded-xl shadow-xl transition-all duration-300
-                    ${isDark ? 'bg-card hover:shadow-purple-500/30' : 'bg-white hover:shadow-primary-light-accent/20 border border-gray-200'}`}
-      >
-        {date && (
-          <p 
-            className={`text-sm mb-2 font-semibold 
-                        ${isDark ? 'text-purple-300' : 'text-primary-light-accent'}`}
-          >
-            {date}
-          </p>
-        )}
-        <h3 
-          className={`text-3xl font-bold mb-3 
-                      ${isDark ? 'text-primary' : 'text-primary-light'}`}
-        >
-          {title}
-        </h3>
-        <div className={`text-lg ${isDark ? 'text-muted-foreground' : 'text-gray-700'}`}>
-          {description}
-        </div>
-      </div>
-    </motion.div>
-  );
-};
-
-const Summary: React.FC = () => {
-  const [isDark, setIsDark] = useState(true);
-
-  useEffect(() => {
-    // Set initial theme
-    setIsDark(isDarkMode());
-
-    // Force light theme for this page if needed for specific design
-    // For now, we let the global theme dictate, but ensure components adapt.
-    // Example: document.documentElement.classList.remove('dark');
-
-    // Observe theme changes
-    const observer = new MutationObserver(() => {
-      setIsDark(isDarkMode());
-    });
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-    return () => observer.disconnect();
-  }, []);
-  
-  // Placeholder data for the timeline
-  // Replace with actual content based on user's PDFs and input
-  const timelineData = [
-    { 
-      title: "⭐ Final portfolio Communication Skills 2 ⭐", 
-      date: "Due: Fri, 30 May 2025",
-      description: (
-        <>
-          <p className="mb-3">This page summarizes the journey and assignments for the Final Portfolio in Communication Skills 2.</p>
-          <p className="mb-2"><KeywordHighlight>Key requirements:</KeywordHighlight> Personal brand consistency, well-cared for PDF, specific content inclusions, and reflections.</p>
-          <p>Grading includes personal brand, table of contents, introduction, assignment presentation, and language skills reflection.</p>
-        </>
-      ) 
-    },
-    { 
-      title: "Front Page & Personal Brand", 
-      description: <p>The portfolio will begin with a front page reflecting my established personal brand and color scheme. <SparkleText>Visual consistency</SparkleText> is key.</p> 
-    },
-    { 
-      title: "Table of Contents",
-      description: <p>A clear, neat table of contents with page numbers for easy navigation.</p> 
-    },
-    { 
-      title: "Personal Portfolio Reflection", 
-      date: "250-500 words",
-      description: <p>Reflecting on the overall purpose of the portfolio, key learning outcomes, significant accomplishments, and personal/academic growth throughout the course. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Assignment 1: Understanding my client", 
-      description: <p>Summary of the assignment, excluding the full report and business case. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Assignment 3: Humanity in IT", 
-      description: <p>Summary of the assignment. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Assignment 4: My cultural activity", 
-      description: <p>Summary of the assignment. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Assignment 5: Intercultural workspaces", 
-      description: <p>Summary of the assignment. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Assignment 6: My passport presentation", 
-      description: <p>Summary of the passport presentation, ideally with key slides or concepts presented concisely (multiple slides per page format noted). <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Assignment 7: My convincing and negotiating strategies", 
-      description: <p>Summary of the assignment. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-    { 
-      title: "Reflection on language skills improvement", 
-      date: "250-500 words + screenshots",
-      description: <p>Discussion on language skill improvement, initial mistakes, learning points, online test scores (before and after), and hardest exercises, supported by screenshots. <KeywordHighlight>Placeholder for user content.</KeywordHighlight></p> 
-    },
-     { 
-      title: "Portfolio Finalization Tips", 
-      description: (
-        <>
-          <p className="mb-2">Ensuring the introduction sets the tone and reflects on growth.</p>
-          <p className="mb-2">Detailing language skill improvements with evidence.</p>
-          <p className="mb-2">Applying <SparkleText>personal brand</SparkleText> throughout the entire document.</p>
-          <p>Proofreading and spell-checking for a polished submission.</p>
-        </>
-      )
-    },
+const PortfolioSummary: React.FC = () => {
+  const sections = [
+    { id: "introduction", title: "Personal Portfolio Reflection" },
+    { id: "assignment1", title: "Assignment 1: Understanding My Client" },
+    { id: "assignment3", title: "Assignment 3: Humanity in IT" },
+    { id: "assignment4", title: "Assignment 4: My Cultural Activity" },
+    { id: "assignment5", title: "Assignment 5: Intercultural Workspaces" },
+    { id: "assignment6", title: "Assignment 6: My Passport Presentation" },
+    { id: "assignment7", title: "Assignment 7: My Convincing and Negotiating Strategies" },
+    { id: "language-reflection", title: "Reflection on Language Skills Improvement" },
   ];
 
-  // Define light mode theme properties explicitly for this page
-  // These would ideally come from a theme context or Tailwind config
-  const lightThemeColors = {
-    background: 'bg-gray-50', // Light gray background
-    text: 'text-gray-800',
-    primary: 'text-purple-700', // Slightly darker purple for text
-    primaryAccent: 'text-purple-600', // For highlights, icons
-    cardBackground: 'bg-white',
-    cardBorder: 'border-gray-200',
-    mutedText: 'text-gray-600',
-  };
-  
-  // Tailwind classes for primary colors in light mode, for easy use
-  const primaryLight = 'text-purple-700'; // For main headings, important text
-  const primaryLightAccent = 'text-purple-600'; // For icons, sub-headings, borders
-
   return (
-    <div className={`flex flex-col min-h-screen relative ${isDark ? 'dark bg-background' : `${lightThemeColors.background} ${lightThemeColors.text}`}`}>
-      {/* Background Effects Layer - Z Index 0 */}
-      <div className="fixed inset-0 z-0">
-        {/* Conditional Gradient: More subtle for light mode */}
-        <div 
-          className={`absolute inset-0 ${isDark ? 'bg-gradient-to-b from-background to-cyber-light/10' : 'bg-gradient-to-b from-gray-50 to-purple-50/10'}`} 
-        />
-        {/* Conditional Radial Gradient: Adjusted for light mode visibility */}
-        <div 
-          className={`absolute inset-0 ${isDark ? 'bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.05)_0%,transparent_50%)]' : 'bg-[radial-gradient(circle_at_50%_50%,rgba(109,40,217,0.03)_0%,transparent_60%)]'}`}
-        />
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-pink-50 to-indigo-100 py-8 px-4 sm:px-6 lg:px-8">
+      <header className="text-center mb-12">
+        <motion.h1 
+          className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-pink-500 mb-4"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          ⭐ Final Portfolio Communication Skills 2 ⭐
+        </motion.h1>
+        <motion.p 
+          className="text-2xl text-gray-600"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2 }}
+        >
+          Summary
+        </motion.p>
+      </header>
+
+      <motion.div 
+        className="mb-12 p-6 bg-white/80 backdrop-blur-md shadow-xl rounded-lg sticky top-4 z-50"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <h2 className="text-2xl font-semibold text-purple-700 mb-4">Table of Contents</h2>
+        <ul className="space-y-2">
+          {sections.map((section) => (
+            <li key={section.id}>
+              <a href={`#${section.id}`} className="text-purple-600 hover:text-pink-500 hover:underline transition-colors duration-300 text-lg">
+                {section.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 text-center">
+            <ArrowDown className="h-8 w-8 text-purple-500 animate-bounce mx-auto" />
+            <p className="text-sm text-gray-500">Scroll to explore</p>
+        </div>
+      </motion.div>
+
+      <div className="max-w-4xl mx-auto">
+        {/* Placeholder for Personal Portfolio Reflection - User needs to provide this */}
+        <TimelineItem>
+          <Section title="Personal Portfolio Reflection" id="introduction">
+            <p>
+              <em>Please replace this placeholder with your 250-500 word reflection.</em>
+            </p>
+            <p className="mt-4 italic text-gray-600">
+              Prompts to consider based on the rubric:
+              <ul className="list-disc pl-5">
+                <li>What stuck with you?</li>
+                <li>Which assignment are you most/least proud of?</li>
+                <li>What did you like and dislike about the course in general?</li>
+              </ul>
+            </p>
+          </Section>
+        </TimelineItem>
+
+        <TimelineItem>
+          <Section title="Assignment 1: Understanding My Client" id="assignment1">
+            <h3 className="text-xl font-semibold text-purple-600 mb-2">First Impressions & Preparation (Quinten De Meyer)</h3>
+            <p>To make a good first impression, I focus on punctuality, appropriate formal attire, and a calm, confident demeanor. A firm handshake, steady speech, open body language, and maintaining eye contact are key. Most importantly, I listen attentively and respond thoughtfully.</p>
+            
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Team Approach to Client Workshops</h3>
+            <p>Our team prioritizes punctuality, appropriate and consistent attire, and advance preparation of materials. We ensure everyone interacts with the client and that phone notifications are off. We aim to greet the client professionally.</p>
+            <p>Key questions for the first workshop revolve around understanding the client's main problem in depth, and their expected short-term and long-term results from the team.</p>
+            
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Client Demo Preparation & Questions</h3>
+            <p>For client demos, we ensure everyone is present and dressed properly. We outline key topics and assign a note-taker. Proper introductions and a summary of the discussion are important to ensure alignment with the client.</p>
+            <p>Specific questions for the IT-polis event demo included event timing, duration, number of stands and attendees, student voter identification (e.g., NFC tags, codes), and the number of voting stands required.</p>
+
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Professional Growth from Client Communication</h3>
+            <p>We learned that thorough preparation is highly beneficial. For the future, the team aims to ask fewer but more impactful questions and improve introductions and summarizations.</p>
+          </Section>
+        </TimelineItem>
+
+        <TimelineItem>
+          <Section title="Assignment 3: Humanity in IT" id="assignment3">
+            <h3 className="text-xl font-semibold text-purple-600 mb-2">First Reflections on Cultural Appropriation (Quinten De Meyer)</h3>
+            <p>I realized I had unknowingly appropriated Saudi Drifting culture (Hajwala/Tafheet) by creating game videos and using incorrect music, without malicious intent, but now see how it could be damaging to Saudi Arabian car culture.</p>
+            
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Research: The Impact of IT on Political Activism (Quinten De Meyer's Perspective)</h3>
+            <p>Social media is the easiest way to find information from individuals and global media. IT connects everyone, allowing sharing of opinions and information, which is a double-edged sword. I dislike how misinformation and disinformation spread easily, potentially harming many by providing wrong perspectives. Propaganda is easier to spread, and AI can convincingly manipulate footage, with potentially harmful impacts.</p>
+            <p>IT has transformed political activism, making it easier to organize and spread awareness. However, it also leads to misinformation and surveillance. IT is a powerful tool but needs careful use.</p>
+
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Growth as an IT Professional (Quinten De Meyer)</h3>
+            <p>I've learned how IT both helps and endangers activists and online users. Post-graduation, I will use IT responsibly, avoid spreading misinformation, and instruct others on internet safety measures. I'll take privacy seriously in personal and professional settings, using secure tools and promoting ethical practices. I will be mindful of cultural aspects in IT, reflecting on past experiences like my cultural appropriation of Saudi drifting. This awareness helps me spot cultural appropriation and other malpractices. I aim to continuously educate myself and others on ethical IT practices for a more inclusive online environment.</p>
+          </Section>
+        </TimelineItem>
+
+        <TimelineItem>
+          <Section title="Assignment 4: My Cultural Activity (Dossin Kazerne Reflection)" id="assignment4">
+            <p>My visit to the Dossin Kazerne was a profound experience. Through my self-reflection (originally a video), I learned a lot about Belgium's role during the Holocaust and how history offers crucial lessons to prevent such atrocities in the future.</p>
+            <p>It's vital to critically reflect on the impact of propaganda and antisemitism, as dehumanization unfortunately still exists in various forms today. This experience underscored the importance of cultural empathy and understanding the warnings from the past to ensure such events are never repeated.</p>
+            <ul className="list-disc pl-5 mt-2">
+              <li>Key Learnings: Belgium's role, history's warning for modern society.</li>
+              <li>Current Situation Relevance: Impact of propaganda & antisemitism, ongoing dehumanization.</li>
+              <li>Core Message: Importance of cultural empathy.</li>
+            </ul>
+          </Section>
+        </TimelineItem>
+        
+        <TimelineItem>
+          <Section title="Assignment 5: Intercultural Workspaces" id="assignment5">
+            <h3 className="text-xl font-semibold text-purple-600 mb-2">Barnga Game Reflection (Quinten De Meyer)</h3>
+            <p>I predicted different rules for each table. It went well; it wasn't frustrating because if you cheat with confidence and act like you won, opponents can't criticize. They assume you won by your rules. I even "stole" a win once by disagreeing and acting like I won, and the other player believed me.</p>
+
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Intercultural Body Language: Saudi Arabia vs. India (Summary)</h3>
+            <p>Research highlighted distinct body language norms. For instance, greetings in Saudi Arabia involve brief handshakes among men (rare between genders unless initiated by women) and placing the right hand over the heart for sincerity. India commonly uses the "namaste" gesture. Eye contact norms also differ significantly based on gender and hierarchy. Gestures like beckoning and attitudes towards showing soles of feet vary. Personal space and touch are strictly gender-based in Saudi Arabia, while India's norms vary between urban and rural settings.</p>
+
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Hofstede's Dimensions (Quinten De Meyer's Opinions/Reflections)</h3>
+            <ul className="list-disc pl-5 space-y-1">
+              <li><strong>Power Distance (Malaysia):</strong> While high PDI can create social stability and clear responsibilities, I think it may hinder creativeness in work environments where collaborative problem-solving is important, as people might be too scared to share their views. (Stability and structure at the cost of creativeness and equality).</li>
+              <li><strong>Long-Term Orientation (Japan):</strong> While I respect the discipline and planning behind Japan's high LTO, it honestly sounds exhausting. The expectation for employees to stay late if the boss does, or join for drinks, reflects a level of social obligation and pressure that explains burnout. It's a system valuing long-term gains, seemingly at the cost of personal well-being.</li>
+            </ul>
+            
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Reflections on International Days & Sophie Mirgaux Lecture (Quinten De Meyer)</h3>
+            <p><strong>International Days:</strong> I liked the team project, especially working with students from different study programs (e.g., agriculture, business), which brought diverse knowledge. However, the lectures felt more like promotional ads. The lack of international students in my team meant we largely shared Belgian culture, and foreign teachers' input didn't feel culturally distinct. It was a fun learning experience in teamwork but didn't feel like a truly multicultural international day, more like a forced "work in English" day.</p>
+            <p><strong>Sophie Mirgaux Lecture:</strong> Sophie Mirgaux (Belgium's Special Envoy for the Ocean) acts as the ocean's voice in UN negotiations. She discussed Belgium's maritime activities (windmills, research, conservation) and the challenges of negotiating in the EU's rotating presidency system, emphasizing the need for well-prepared proposals. A key takeaway was the environmental message: waste ending up in the ocean affects us all, encouraging recycling.</p>
+
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">General Learnings & Future Career (Quinten De Meyer)</h3>
+            <p>This assignment showed me how much culture affects work, thought, and communication. Different countries have different values (power, emotions, personal space) that matter in teamwork, especially with diverse cultures. What stood out most was the utility of working with people from different backgrounds/fields; everyone brings something different, strengthening the end result and adding perspectives. I learned not just facts but also how to be more aware and flexible, which I believe will help in any future job.</p>
+          </Section>
+        </TimelineItem>
+
+        <TimelineItem>
+          <Section title="Assignment 6: My Passport Presentation" id="assignment6">
+            <p>This presentation summarized key learnings and reflections from the Communication Skills 2 course. The main sections included:</p>
+            <ul className="list-disc pl-5 space-y-2 mt-4">
+              <li>
+                <strong>Humanity in IT:</strong>
+                <ul className="list-circle pl-5">
+                  <li>IT and Political Activism: Internet for activism & awareness (social media, encrypted apps). Risks: misinformation, surveillance.</li>
+                  <li>Benefits & Dangers of IT: Misinformation spreads fast, surveillance tools, need for ethical IT use.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Cultural Activity - Dossin Kazerne:</strong>
+                <ul className="list-circle pl-5">
+                  <li>Created a self-reflection video.</li>
+                  <li>Learned about Belgium's role and history's warning for modern society.</li>
+                  <li>Current Situation: Impact of propaganda & antisemitism, dehumanization still exists, importance of cultural empathy.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Intercultural Workspaces:</strong>
+                <ul className="list-circle pl-5">
+                  <li>Body Language: Eye contact, rules and standards (e.g., Saudi Arabia, India).</li>
+                  <li>Cultural Dimensions (Hofstede): Malaysia (Power Distance), Japan (Long-Term Orientation), Mexico (Indulgence). Cultural impact on work & values.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>My Growth:</strong>
+                <ul className="list-circle pl-5">
+                  <li>More aware of bias, appropriation.</li>
+                  <li>Ethical use of IT – Future.</li>
+                  <li>Stronger intercultural communication & awareness.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>What's Next?</strong>
+                <ul className="list-circle pl-5">
+                  <li>Work in international teams.</li>
+                  <li>Culture shock preparation.</li>
+                  <li>Keep learning, growing, mentoring.</li>
+                  <li>Promote inclusion & ethics in IT.</li>
+                </ul>
+              </li>
+            </ul>
+          </Section>
+        </TimelineItem>
+        
+        <TimelineItem>
+          <Section title="Assignment 7: My Convincing and Negotiating Strategies" id="assignment7">
+            <h3 className="text-xl font-semibold text-purple-600 mb-2">Convincing Others (Quinten De Meyer)</h3>
+            <p>I learned that relationships, trust, and mutual understanding are crucial in negotiations, not just the arguments. The hardest tactic for me is emotional appeal, as I'd feel inauthentic; I prefer building pressure through other means like highlighting rarity or a final chance. I favor logical reasoning over emotional appeals, as it uses facts rather than opinions and feels less like weaponization. Ethical boundaries are vital, especially with high stakes; one shouldn't be fully misleading or withhold critical information.</p>
+
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Negotiation & The $2 Game (Quinten De Meyer)</h3>
+            <p>I learned I was effective at finding holes and solutions in others' stories for my gain, allowing me to control the narrative. The time limit helped me pressure for quick deals. Repeating negotiations with the same person allowed me to reuse successful tactics. I observed that participants often prioritized winning the game's money goal over logical solutions to their narrative problems, which I felt was not playing correctly.
+            Tactics I subconsciously used include: Anchoring, Framing, Hardball tactics (exploiting time pressure, ignoring their story), and making small Concessions after a high initial offer. These are inappropriate if they involve unethical deception or in integrative negotiations requiring trust. If I could change my actions, I might have conceded more easily if the other party wouldn't budge, to achieve a lose/win over a lose/lose.</p>
+            
+            <h3 className="text-xl font-semibold text-purple-600 mt-4 mb-2">Growth as an IT Professional in Ethical Negotiation (Quinten De Meyer)</h3>
+            <p>I learned to be careful with convincing and negotiating, especially at work, without crossing ethical lines just to win. Lying or hiding important info will backfire. In IT, overselling or hiding bugs ruins trust. I'm okay with "playing the game" (pressure, urgency, bluffing) but wouldn't mislead to a damaging extent. If faced with unethical tactics, I'd call it out or push back. I'll stick to smart strategies like anchoring, framing, and using time pressure. Being sharp and confident is better than always being the "nice guy." My favorite strategy when buying is to feign disinterest, point out flaws, and make a lowball offer, often leading to acceptance as the seller fears losing the sale.</p>
+          </Section>
+        </TimelineItem>
+
+        <TimelineItem isLast={true}>
+          <Section title="Reflection on Language Skills Improvement" id="language-reflection">
+            <p>I completed the language exercises and the online exercises, and I scored pretty well. I didn't find this part particularly new or challenging as I've encountered similar material in secondary school (middelbare school). However, it was a good opportunity to refresh and confirm that I've retained my understanding of English grammar and spelling rules.</p>
+            <p className="mt-4 italic text-gray-600">
+              To fully address the assignment requirements (250-500 words), please consider expanding on:
+              <ul className="list-disc pl-5">
+                <li>Which mistakes did you make at first (if any)?</li>
+                <li>What specific things did you learn or re-learn?</li>
+                <li>How did you score on your online tests at first and then again later (if applicable)?</li>
+                <li>Which exercises did you find hardest?</li>
+                <li>Remember to include screenshots from your language exercises or online tests to support your answer.</li>
+              </ul>
+            </p>
+          </Section>
+        </TimelineItem>
       </div>
 
-      {/* Interactive Grid Background - Z Index -10 (behind content, above static background) */}
-      <GridDeformation /> 
-      
-      {/* Sparkles and Lens Flare - Z Index 5 and 10 (above grid, below main content) */}
-      <PurpleSparkle count={isDark ? 10 : 5} /> {/* Fewer sparkles in light mode for subtlety */}
-
-      {/* Main Content - Z Index 2 (ensure it's above background effects) */}
-      <main className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 relative z-[2] flex-grow">
-        <header className="text-center mb-20">
-          <motion.h1
-            initial={{ opacity: 0, y: -30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className={`text-5xl md:text-7xl font-bold mb-6 ${isDark ? 'text-white' : primaryLight}`}
-          >
-            My Portfolio <SparkleText className={isDark ? '' : primaryLightAccent}>Journey</SparkleText>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className={`text-xl md:text-2xl ${isDark ? 'text-muted-foreground' : lightThemeColors.mutedText}`}
-          >
-            A summary of my work for Communication Skills 2.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            className={`mt-10 text-center ${isDark ? 'text-gray-400' : 'text-gray-500'}`}
-            onClick={() => {
-              const firstItem = document.getElementById('timeline-start');
-              if (firstItem) {
-                firstItem.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
-            role="button"
-            tabIndex={0}
-            onKeyPress={(e) => e.key === 'Enter' && (e.target as HTMLElement).click()}
-          >
-            <p className="italic mb-2">Scroll to explore</p>
-            <ChevronDown className={`mx-auto animate-bounce ${isDark ? 'text-purple-400' : primaryLightAccent}`} size={28} />
-          </motion.div>
-        </header>
-
-        {/* Timeline Section */}
-        <div className="max-w-3xl mx-auto" id="timeline-start">
-          {timelineData.map((item, index) => (
-            <TimelineItem
-              key={index}
-              title={item.title}
-              date={item.date}
-              description={item.description}
-              isLast={index === timelineData.length - 1}
-              delay={index * 0.15} // Stagger animation
-            />
-          ))}
-        </div>
-      </main>
-
-      <footer className={`text-center py-8 relative z-[2] ${isDark ? 'text-muted-foreground' : lightThemeColors.mutedText}`}>
-        <p>&copy; {new Date().getFullYear()} Quinten De Meyer. All rights reserved.</p>
-        <p>Portfolio Summary Page</p>
+      <footer className="text-center mt-16 py-8 border-t border-purple-300">
+        <p className="text-gray-600">&copy; {new Date().getFullYear()} Quinten De Meyer. Portfolio Summary.</p>
       </footer>
     </div>
   );
 };
 
-export default Summary; 
+export default PortfolioSummary; 

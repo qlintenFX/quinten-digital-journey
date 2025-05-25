@@ -1,0 +1,132 @@
+Communication Skills  2   І   202 4 - 205      
+Humanity in IT  
+[ Alexander   Conserva ] & [ Quinten   De Meyer ]  
+1.  First reflections  
+In week 7, you will have a class on cultural appropriation and stereotypes. After that class, write 
+down your first reflections on cultural  appropriation and stereotypes. This can be in the workplace, in 
+your personal life or based on personal experiences. Aim for 100 to 150 words.  
+Before  the lesson  I never really thought about it   like for Halloween I thought it was fine and 
+normal to dress up  in   anything you want   but now I see that for  non - dominant groups  this is not 
+nice . I didn’t  realize   it could enforce stereotypes or misunderstandings for these cultures .  
+I (Quinten) have  realized   I  unknowingly appropriated Saudi Drifting culture by making videos of 
+playing a game and doing Saudi drifting (Hajwala / Tafheet). I didn’t in tent to be malicious but now 
+see that it’s damaging to the car culture of  Saudi Arabia .   I also used the wrong  music for these 
+videos.  
+I (Alexander)  at  scho ol when I was  young,   they also did like the  ‘I ndianen   dans’   and dressed up as 
+In dian s   for kids but that also has been  cultural  appropriation,   so you do it already in school when 
+you're   young. You kind of grow up doing it.    
+ 
+2.  Research  
+In week 8, you will have a class on how IT can impact our worldview. Pick a culturally relevant topic 
+of your own and research it. Aim for 500 to 600 words, excluding your bibliography. Provide enough 
+background information and make sure to separate fact f rom opinion.  You are encouraged to share 
+your opinion, but make sure you frame it as such and can give multiple, strong points of 
+argumentation. Three different sources in your text and bibliography  are   the absolute minimum.  
+ 
+The impact of IT on  political   activism  
+ 
+IT  has completely changed politic al activism  because you can now use the internet  to spread 
+information   on ,   for example social media platforms   or even your own website.   But this could also 
+be a negative because of this you also get a lot of misinformation , you get government 
+surveillance and  even online censorship.  
+ 
+One of the biggest impacts of IT is how it helps people organize and  act   quickly. Social media 
+platforms like Twitter and Facebook allow activists to share updates and gather support. For 
+example, during the Arab Spring in 2010 – 2012 social media played a key role in helping people 
+organize protests and share what was happening   with the world. In the 2019 Hong Kong protests, 
+apps like Telegram were used for secure communication to avoid government tracking.    
+ 
+Page  1   out of  3  
+ 
+
+Communication Skills  2   І   202 4 - 205      
+IT also makes it easier to reach a bigger audience.   For example ,   by using hashtags like  #BLM  The 
+Black Lives Matter protests in 2020 gained massive support thanks to the hashtags and viral videos 
+that exposed injustices.  
+ 
+Alexander:   I find the internet   very useful for all the information you can find  but I feel like activist 
+are very dependent of platforms like Facebook, Twitter or even TikTok now   and if they want ,   they 
+can just delete the videos or posts .  
+ 
+Quinten :  S ocial media has become the easiest way to find information from individual people and  
+media from around the world. IT has made it possible for everyone to be connected and share 
+opinions and information about situations which is a  double - edged   sword still.  
+ 
+While IT help s with  spreading  useful information,  there is also  mis information   that gets spread .  
+For example ,   a lot of social media  platforms   push content that gets a lot of views and likes to more 
+people even if  it’s not correct information .   Or even during the 2016 U.S. election, fake news stories 
+and misleading posts were shared   confusing voters and  their   opinions .  
+ 
+Alexander:  I n my opinion  this is the  scariest   thing  about   IT because some people  believe certain 
+things that  are or   are   not true ,   but they don’t even know that it isn’t true. Because sometimes they 
+watch   a short video and believe what the person said but you should always do your own research 
+before believing  it.  
+ 
+Quinten:   I don’t like how misinformation and disinformation are easily spread on social media. 
+They can give millions, even billions, the wrong perspective on something, which can become 
+harmful to  lots   of people. Propaganda is now much easier to  spread   on these platforms.  Also , with 
+AI, footage can be  convincingly manipulated, potentially having harmful impacts on the lives of 
+many people.  
+ 
+It   helps activists but   it also makes the government can track   them.   Some countries have tools like 
+facial recognition cameras  and even internet shutdown s   to try and stop protests. For example , 
+during Hong Kong   protest people had to use umbrellas and laser pointers   to not get identified by 
+the facial recognition cameras.  
+ 
+Alexander:  In think that protestors should   implement more anonymous and secure chat rooms  to 
+communicate with each other because in some  countries   they could get in a lot of trouble. But 
+even for us I think   we should  take privacy more   seriously   because everything we do online can be 
+tracked by your internet provider.   I also find that wanting to  have more privacy by using tools like 
+Tails OS   gives a wrong impression to thinking that you are probably doing something illegal   but 
+you’re   just taking privacy more  seriously .  
+ 
+Quinten:   IT has transformed political activism making it easier to organize and spread awareness. 
+However ,   it also  leads to   misinformation and surveillance. IT is a powerful tool for activism, but it 
+needs to be used carefully.  
+ 
+History.com Editors. (2020, 17 januari ). Arab Spring. HISTORY. Via 
+https://www.history.com/topics/middle - east/arab - spring    
+ 
+Hughes, B. H. C. &. R. (2020, 21 mei ). Why are there protests in Hong Kong? All the context you 
+need. BBC News. Via  https://www.bbc.com/news/world - asia - china - 48607723  
+ 
+Pew Research Center. (2024, 25 oktober).  #BlackLivesMatter turns 10 .   Via 
+https://www.pewresearch.org/internet/2023/06/29/blacklivesmatter - turns - 10/    
+Page  2   out of  3  
+ 
+
+Communication Skills  2   І   202 4 - 205      
+ 
+Freedom House. (z.d.). The Rise of Digital Authoritarianism. In Freedom House.  Via 
+https://freedomhouse.org/report/freedom - net/2018/rise - digital - authoritarianism    
+ 
+ 
+3. Growth as an IT professional  
+This exercise should contribute to your growth as an IT professional. Briefly reflect on what you have 
+learned and  how   you will use this once you graduate and enter the workforce. Avoid broad, vague or 
+general statements. Aim for 100 to 200 words.  
+ 
+Alexander :  I have learned that  you should take  privacy  very serious  and also try and stay 
+anonymous online by using tools like Tails OS , e specially if you are  an   activist .   I didn’t know that in 
+some countries  it was this strict with even internet shutdowns and  identifying you from social 
+media to real life with facial recognition cameras.   Once I graduate ,   I will always try to  stay safe and 
+anonymous online and don’t believe everything on the internet.   Always do your own research 
+before believing  in   someone else.   When I   work with data ,   I would  make sure that   it   is secure   so 
+nobody could use this information for a bad purpose.  At work or even life in general I would try 
+not  to   make  stereotypes and keep in mind non - d ominant groups .   For example ,   because we are 
+from the IT world it  would have  happened   once where you make a joke  of Indian scammers and 
+use the ir   accent but if someone from  India hears th at   they wouldn’t like it.  
+ 
+Quinten:   I have learned how IT both helps and endangers activists   and users o nline .  When   I 
+graduate, I will  use IT   responsibly   and avoid spreading misinformation, I will also instruct people 
+measures to take on the internet . I will take privacy seriously in  personal   and professional settings, 
+applying secure tools and promoting ethical  practices . I will   also   be mindful of cultural  aspects  in 
+IT, reflecting on my past experiences like my  cultural  appropriation of Saudi drifting. This 
+awareness  has helped me in spotting cultural appropriation and other malpractices .   I aim to 
+continuously educate myself and others on ethical IT practices to create a more inclusive online 
+environment .  
+ 
+ 
+ 
+Page  3   out of  3  
+ 
