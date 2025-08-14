@@ -10,7 +10,6 @@ import CursorEffectsProvider from "./components/ui/CursorEffectsProvider";
 // Lazy load components
 const Intro = lazy(() => import("./pages/Intro"));
 const Index = lazy(() => import("./pages/Index"));
-const Presentation = lazy(() => import("./pages/Presentation"));
 
 const queryClient = new QueryClient();
 
@@ -26,7 +25,6 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Intro />} />
                 <Route path="/style" element={<Index />} />
-                <Route path="/professional" element={<Presentation />} />
               </Routes>
             </Suspense>
           </HashRouter>
