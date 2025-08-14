@@ -13,9 +13,39 @@ export const techStack = [
   ];
   
   export const projects = [
-    { title: 'Project Title 1', description: 'Some description', image: 'https://placehold.co/240x140/334155/e2e8f0?text=Project+1' },
-    { title: 'Project Title 2', description: 'Some description', image: 'https://placehold.co/240x140/334155/e2e8f0?text=Project+2' },
-    { title: 'Project Title 3', description: 'Some description', image: 'https://placehold.co/240x140/334155/e2e8f0?text=Project+3' },
+    {
+      title: 'IT Polis Voting System',
+      description: 'Voting system with single-vote enforcement, live leaderboard, and admin controls.',
+      image: '/images/optimized/project-1-Voting-System.webp',
+    },
+    {
+      title: 'App Hosting Platform for Clients',
+      description: 'Kubernetes-based hosting with automated deployments and scaling.',
+      image: '/images/optimized/project-2-hosting-platform.webp',
+    },
+    {
+      title: 'Security Awareness Campaign Movie',
+      description: 'Educational short on cybersecurity risks (found USB devices).',
+      image: '/images/optimized/project-3-video-editing-awareness-movie.webp',
+    },
+    {
+      title: 'KeyedColors',
+      description: 'Windows tool for display profiles with hotkeys and system tray.',
+      image: '/images/project-4-KeyedColors-logo.png',
+    },
+  ];
+
+  export const videos = [
+    'LAHGY-rWtbk',
+    'K7J6DIJPVew',
+    'MGYgqgDiEVg',
+  ];
+
+  export const socials = [
+    { name: 'GitHub', href: 'https://github.com/qlintenFX/' },
+    { name: 'YouTube', href: 'https://www.youtube.com/@qlintenFX' },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/quinten-de-meyer-2336282a2/' },
+    { name: 'Email', href: 'mailto:quinten1508@gmail.com' },
   ];
   
   export const workProcess = [

@@ -1,104 +1,83 @@
 #!/bin/bash
 
-# ==============================================================================
-# Script to integrate generated.tsx components into a Next.js project structure
-# ==============================================================================
-# This script assumes the following project structure:
-# professional/
-# ├── generated.tsx
-# └── src/
-#     └── app/
-#         ├── page.tsx
-#         └── globals.css
-#
-# It will:
-# 1. Create a `src/app/components` directory.
-# 2. Extract and create separate files for each component (e.g., ProfileCard.tsx).
-# 3. Create a `src/data.ts` file for all the mock data.
-# 4. Replace the content of `src/app/page.tsx` with the main page component and its required imports.
-# ==============================================================================
+# integrate.sh
+# This script takes the generated.tsx file, splits it into components and data files,
+# and integrates them into the src/app directory of a Next.js project.
 
-# --- Configuration ---
+echo "Starting integration process..."
+
+# Define file paths
 GENERATED_FILE="generated.tsx"
+DATA_DIR="src/data"
 COMPONENTS_DIR="src/app/components"
-DATA_FILE="src/data.ts"
 PAGE_FILE="src/app/page.tsx"
-DATA_START_MARKER="// START_DATA_SECTION"
-DATA_END_MARKER="// END_DATA_SECTION"
-COMPONENT_PREFIX="START_"
-COMPONENT_SUFFIX="_COMPONENT"
-PAGE_START_MARKER="// START_PAGE_CONTENT"
-PAGE_END_MARKER="// END_PAGE_CONTENT"
 
-echo "Starting component integration process..."
-
-# --- Check if the generated file exists ---
+# --- Step 1: Validate prerequisites ---
 if [ ! -f "$GENERATED_FILE" ]; then
-    echo "Error: $GENERATED_FILE not found. Please ensure it is in the project root."
+    echo "Error: The file $GENERATED_FILE does not exist. Please place it at the root of your project."
     exit 1
 fi
+echo "Found $GENERATED_FILE. Proceeding."
 
-# --- Create the components directory if it doesn't exist ---
+# --- Step 2: Create necessary directories ---
+echo "Creating required directories..."
+mkdir -p "$DATA_DIR"
 mkdir -p "$COMPONENTS_DIR"
-if [ $? -eq 0 ]; then
-    echo "Created directory: $COMPONENTS_DIR"
-else
-    echo "Error: Failed to create $COMPONENTS_DIR."
-    exit 1
-fi
 
-# --- Extract and create the data file ---
-echo "Extracting mock data to $DATA_FILE..."
-# Extract lines between markers and save to the data file.
-awk "/$DATA_START_MARKER/,/$DATA_END_MARKER/" "$GENERATED_FILE" | \
-    grep -vE "$DATA_START_MARKER|$DATA_END_MARKER" > "$DATA_FILE"
-echo "Extracted data to $DATA_FILE."
+# --- Step 3: Extract data and save to data.ts ---
+echo "Extracting data into $DATA_DIR/data.ts..."
+awk '
+  /START_DATA/ { in_data=1; next }
+  /END_DATA/ { in_data=0; }
+  in_data { print }
+' "$GENERATED_FILE" > "$DATA_DIR/data.ts"
+echo "Data extraction complete."
 
-# --- Extract and create component files ---
-echo "Extracting components to $COMPONENTS_DIR..."
+# --- Step 4: Extract components and save them as individual files ---
+echo "Extracting components into $COMPONENTS_DIR/..."
+# List of components to extract
+COMPONENTS=("StarRating" "ProfileCard" "TechStack" "WorkProcess" "Services" "Projects" "Testimonials")
 
-# List of components to extract based on the markers
-COMPONENTS=("STAR_RATING" "PROFILE_CARD" "TECH_STACK" "WORK_PROCESS" "SERVICES" "PROJECTS" "TESTIMONIALS")
-IMPORT_STATEMENTS=""
-
-for COMPONENT_NAME in "${COMPONENTS[@]}"; do
-    # Convert component name to PascalCase for filename and component reference
-    FILE_NAME=""
-    IFS='_' read -r -a words <<< "$COMPONENT_NAME"
-    for word in "${words[@]}"; do
-      FILE_NAME+="$(tr '[:lower:]' '[:upper:]' <<< "${word:0:1}")$(tr '[:upper:]' '[:lower:]' <<< "${word:1}")"
-    done
-    FILE_PATH="$COMPONENTS_DIR/$FILE_NAME.tsx"
-
-    START_MARKER="// $COMPONENT_PREFIX${COMPONENT_NAME}${COMPONENT_SUFFIX}"
-    END_MARKER="// END_${COMPONENT_NAME}${COMPONENT_SUFFIX}"
-
-    # Use awk to extract the component block and save it to a new file
-    awk -v start="$START_MARKER" -v end="$END_MARKER" '
-    $0 == start { found=1; next }
-    $0 == end { found=0 }
-    found { print }
-    ' "$GENERATED_FILE" > "$FILE_PATH"
-
-    if [ -f "$FILE_PATH" ]; then
-        echo "Created component: $FILE_PATH"
-        # Add the import statement to our list
-        IMPORT_STATEMENTS+="import { $FILE_NAME } from './components/$FILE_NAME';\n"
-    else
-        echo "Error: Failed to create component $FILE_PATH."
-    fi
+for COMPONENT in "${COMPONENTS[@]}"; do
+    echo "  - Processing $COMPONENT..."
+    awk -v component_name="$COMPONENT" '
+        /START_COMPONENT/ && $3 == component_name { in_component=1; next }
+        /END_COMPONENT/ && $3 == component_name { in_component=0; }
+        in_component { print }
+    ' "$GENERATED_FILE" > "$COMPONENTS_DIR/$COMPONENT.tsx"
 done
 
-# Add import for data
-IMPORT_STATEMENTS+="import { techStack, services, projects, workProcess, testimonials } from '../data';\n"
+# Add a specific import to the Testimonials component
+echo "Adding import statement to Testimonials.tsx..."
+echo "import { StarRating } from './StarRating';" | cat - "$COMPONENTS_DIR/Testimonials.tsx" > temp && mv temp "$COMPONENTS_DIR/Testimonials.tsx"
 
-# --- Extract and create the main page file ---
-echo "Updating $PAGE_FILE..."
-# Extract the content of the main page component
-PAGE_CONTENT=$(awk "/$PAGE_START_MARKER/,/$PAGE_END_MARKER/" "$GENERATED_FILE" | grep -vE "$PAGE_START_MARKER|$PAGE_END_MARKER")
+echo "All components extracted."
 
-# Combine the new import statements with the page content
-echo -e "$IMPORT_STATEMENTS\n$PAGE_CONTENT" > "$PAGE_FILE"
+# --- Step 5: Extract the main page content and replace existing page.tsx ---
+echo "Replacing $PAGE_FILE with the new home page content..."
+# Extract the main page content
+awk '
+  /START_MAIN_PAGE/ { in_page=1; next }
+  /END_MAIN_PAGE/ { in_page=0; }
+  in_page { print }
+' "$GENERATED_FILE" > "$PAGE_FILE"
 
-echo "Integration complete! Your project should now be updated with the new home page."
-echo "You can now safely remove the generated.tsx file."
+# Add all necessary import statements to the new page.tsx file
+echo "Adding import statements to page.tsx..."
+IMPORT_STATEMENTS=$(cat <<EOF
+import React from 'react';
+import { ProfileCard } from './components/ProfileCard';
+import { TechStack } from './components/TechStack';
+import { Services } from './components/Services';
+import { WorkProcess } from './components/WorkProcess';
+import { Projects } from './components/Projects';
+import { Testimonials } from './components/Testimonials';
+import { techStack, services, projects, workProcess, testimonials } from '../data/data';
+EOF
+)
+
+echo "$IMPORT_STATEMENTS" | cat - "$PAGE_FILE" > temp && mv temp "$PAGE_FILE"
+
+echo "Home page updated successfully."
+
+echo "Integration complete! You can now remove the generated.tsx file."
