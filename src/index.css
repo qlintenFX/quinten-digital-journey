@@ -170,6 +170,55 @@
   background-repeat: repeat;
 }
 
+/* Hover and micro-interaction utilities */
+@layer utilities {
+  .hover-lift {
+    transition: transform 300ms ease, box-shadow 300ms ease;
+  }
+  .hover-lift:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 12px 30px rgba(168, 85, 247, 0.18);
+  }
+
+  .hover-glow {
+    transition: text-shadow 300ms ease, color 300ms ease;
+  }
+  .hover-glow:hover {
+    text-shadow: 0 0 10px rgba(168,85,247,0.6), 0 0 20px rgba(168,85,247,0.4);
+    color: rgb(168,85,247);
+  }
+
+  /* Glitch text effect */
+  .glitch {
+    position: relative;
+  }
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    overflow: hidden;
+    clip-path: inset(0 0 0 0);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .glitch::before { color: #a855f7; transform: translate(1px, 0); }
+  .glitch::after { color: #60a5fa; transform: translate(-1px, 0); }
+  .glitch:hover::before,
+  .glitch:hover::after { animation: glitch-shift 900ms infinite linear alternate; opacity: 0.7; }
+
+  @keyframes glitch-shift {
+    0% { clip-path: inset(0 0 80% 0); transform: translate(1px, -1px); }
+    20% { clip-path: inset(0 0 40% 0); transform: translate(-1px, 1px); }
+    40% { clip-path: inset(10% 0 30% 0); transform: translate(2px, 0); }
+    60% { clip-path: inset(40% 0 20% 0); transform: translate(-2px, 1px); }
+    80% { clip-path: inset(70% 0 5% 0); transform: translate(1px, -1px); }
+    100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+  }
+}
+
 /* Card Collage Animation */
 .card-collage-container {
   position: relative;

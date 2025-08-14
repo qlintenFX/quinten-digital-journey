@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Sun, Moon, MousePointer, MousePointerClick } from 'lucide-react';
@@ -7,6 +7,7 @@ import { Switch } from '@/components/ui-optimized/switch';
 import { useLocation } from 'react-router-dom';
 import { useCursor } from '@/components/ui/CursorEffectsProvider';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
+import Lenis from 'lenis';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,11 +18,34 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { cursorEnabled, toggleCursor } = useCursor();
   const location = useLocation();
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.1,
+      smoothWheel: true,
+      wheelMultiplier: 1,
+    });
+
+    let rafId: number;
+    const raf = (time: number) => {
+      lenis.raf(time);
+      rafId = requestAnimationFrame(raf);
+    };
+    rafId = requestAnimationFrame(raf);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      // @ts-ignore: lenis may have destroy method in types depending on version
+      if (typeof (lenis as any).destroy === 'function') {
+        (lenis as any).destroy();
+      }
+    };
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen relative">
       <Navbar currentPath={location.pathname} />
       
-      <div className="fixed bottom-4 right-4 z-50 flex items-center gap-4 bg-card p-2 px-4 rounded-full shadow-lg">
+      <div className="fixed bottom-4 right-4 z-50 hidden md:flex items-center gap-4 bg-card p-2 px-4 rounded-full shadow-lg">
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>

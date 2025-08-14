@@ -21,6 +21,7 @@ import {
   X
 } from 'lucide-react';
 import { Modal } from '@/components/ui/modal';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogClose } from '@/components/ui/dialog';
 
 /**
@@ -896,7 +897,7 @@ const KeywordHighlight = ({ children, className = "" }) => {
 };
 
 // Replace the entire TiltCard component implementation with this improved version using react-parallax-tilt
-const TiltCard = ({ children }: { children: React.ReactNode }) => {
+const TiltCard = ({ children, isMobile, onClick, ariaLabel }: { children: React.ReactNode, isMobile: boolean, onClick?: () => void, ariaLabel?: string }) => {
   return (
     <Tilt
       className="w-full h-full"
@@ -912,11 +913,24 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
       glareColor="rgba(255, 255, 255, 0.25)"
       glarePosition="all"
       glareBorderRadius="12px"
-      tiltEnable={true}
+      tiltEnable={!isMobile}
       trackOnWindow={false}
       reset={true}  // Reset tilt when mouse leaves
     >
-      <div className="w-full h-full transition-shadow duration-300 hover:shadow-[0_10px_25px_-5px_rgba(168,85,247,0.3)]">
+      <div 
+        className="w-full h-full transition-shadow duration-300 hover:shadow-[0_10px_25px_-5px_rgba(168,85,247,0.3)] cursor-pointer"
+        onClick={onClick}
+        role={onClick ? 'button' : undefined}
+        aria-label={ariaLabel}
+        tabIndex={onClick ? 0 : -1}
+        onKeyDown={(e) => {
+          if (!onClick) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            onClick();
+          }
+        }}
+      >
         {children}
       </div>
     </Tilt>
@@ -933,6 +947,7 @@ const TiltCard = ({ children }: { children: React.ReactNode }) => {
  * - Contact section with form and links
  */
 const Home = () => {
+  const isMobile = useIsMobile();
   const { scrollY } = useScroll();
   const controls = useAnimation();
   const [emailVisible, setEmailVisible] = useState(false);
@@ -1170,10 +1185,10 @@ const Home = () => {
       </div>
 
       {/* Interactive grid background */}
-      <GridDeformation />
+      {!isMobile && <GridDeformation />}
       
       {/* Purple Sparkle Effects */}
-      <PurpleSparkle count={10} />
+      <PurpleSparkle count={isMobile ? 4 : 10} />
       
       {/* Lens glares - moved to top */}
       <LensGlare />
@@ -1186,9 +1201,19 @@ const Home = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="text-5xl md:text-7xl font-bold mb-8"
+              className="text-5xl md:text-7xl font-bold mb-8 tracking-tight"
             >
-              Welcome to my <SparkleText className="text-primary">E-Portfolio</SparkleText> 👋
+              Welcome to my{' '}
+              <span className="relative inline-block">
+                <SparkleText className="text-primary">E-Portfolio</SparkleText>
+                <motion.span
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 0.6, delay: 0.9 }}
+                  className="absolute left-0 -bottom-2 h-1 bg-primary rounded-full origin-left w-full"
+                />
+              </span>{' '}
+              👋
             </motion.h1>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -1367,11 +1392,11 @@ const Home = () => {
               <div className="w-full h-full rounded-md border-2 border-secondary"></div>
             </motion.div>
 
-            {/* Project layout with external button */}
-            <div className="flex flex-row gap-20">
+            {/* Project layout - card is clickable */}
+            <div className="flex flex-col md:flex-row gap-8 md:gap-20">
               <div className="flex-grow">
-                <TiltCard>
-                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20">
+                <TiltCard isMobile={isMobile} onClick={() => setSelectedProject('project1')} ariaLabel="Open IT Polis Voting System photos">
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 hover-lift">
                     <div className="grid md:grid-cols-2 relative z-10">
                       <div className="p-8">
                         <div className="mb-6">
@@ -1418,25 +1443,6 @@ const Home = () => {
                   </div>
                 </TiltCard>
               </div>
-              
-              {/* Button positioned outside the card, full height */}
-              <div className="flex items-stretch w-20">
-                <div className="group flex flex-col w-full">
-                  <button
-                    onClick={() => setSelectedProject('project1')}
-                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform
-                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
-                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
-                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
-                  >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" width="24" height="24" />
-                  </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
-                </div>
-              </div>
             </div>
           </motion.div>
 
@@ -1471,30 +1477,11 @@ const Home = () => {
               <div className="w-full h-full rounded-full bg-secondary/20"></div>
             </motion.div>
 
-            {/* Project layout with external button */}
-            <div className="flex flex-row gap-20">
-              {/* Button positioned outside the card, full height */}
-              <div className="flex items-stretch w-20">
-                <div className="group flex flex-col w-full">
-                  <button
-                    onClick={() => setSelectedProject('project2')}
-                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform
-                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
-                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
-                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
-                  >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" width="24" height="24" />
-                  </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
-                </div>
-              </div>
-              
+            {/* Project layout - card is clickable */}
+            <div className="flex flex-col md:flex-row gap-8 md:gap-20">
               <div className="flex-grow">
-                <TiltCard>
-                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20">
+                <TiltCard isMobile={isMobile} onClick={() => setSelectedProject('project2')} ariaLabel="Open App Hosting Platform photos">
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 hover-lift">
                     <div className="grid md:grid-cols-2 relative z-10">
                       <div className="bg-muted lg:block hidden">
                         {/* Project 2 Image */}
@@ -1575,11 +1562,11 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-secondary"></div>
             </motion.div>
 
-            {/* Project layout with external button */}
-            <div className="flex flex-row gap-20">
+            {/* Project layout - card is clickable */}
+            <div className="flex flex-col md:flex-row gap-8 md:gap-20">
               <div className="flex-grow">
-                <TiltCard>
-                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20">
+                <TiltCard isMobile={isMobile} onClick={() => setSelectedProject('project3')} ariaLabel="Open Security Awareness Campaign photos">
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 hover-lift">
                     <div className="grid md:grid-cols-2 relative z-10">
                       <div className="p-8">
                         <div className="mb-6">
@@ -1626,25 +1613,6 @@ const Home = () => {
                   </div>
                 </TiltCard>
               </div>
-              
-              {/* Button positioned outside the card, full height */}
-              <div className="flex items-stretch w-20">
-                <div className="group flex flex-col w-full">
-                  <button
-                    onClick={() => setSelectedProject('project3')}
-                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform
-                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
-                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
-                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
-                  >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain" width="24" height="24" />
-                  </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
-                </div>
-              </div>
             </div>
           </motion.div>
 
@@ -1679,30 +1647,11 @@ const Home = () => {
               <div className="w-full h-full rounded-full border-2 border-primary"></div>
             </motion.div>
 
-            {/* Project layout with external button */}
-            <div className="flex flex-row gap-20">
-              {/* Button positioned outside the card, full height */}
-              <div className="flex items-stretch w-20">
-                <div className="group flex flex-col w-full">
-                  <button
-                    onClick={() => setSelectedProject('project4')}
-                    className="w-20 flex-grow rounded-2xl bg-gradient-to-b from-primary to-primary/70 flex items-center justify-center shadow-lg 
-                      group-hover:shadow-[0_0_15px_rgba(168,85,247,0.7)] shadow-[0_0_10px_rgba(168,85,247,0.4)]
-                      relative overflow-hidden transform
-                      before:absolute before:inset-0 before:bg-[rgba(255,255,255,0.03)] before:opacity-0 
-                      group-hover:before:opacity-100 before:transition-opacity before:duration-300
-                      after:absolute after:h-[100%] after:w-[120%] after:bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent)] after:-left-[100%] 
-                      group-hover:after:left-[100%] after:top-0 after:transition-all after:duration-700 after:skew-x-[-20deg]"
-                  >
-                    <img src="/images/optimized/arrow.webp" alt="Arrow" className="h-5 w-5 object-contain transform rotate-180" width="24" height="24" />
-                  </button>
-                  <span className="text-sm font-medium text-center mt-2 block group-hover:text-primary transition-all">View Photos</span>
-                </div>
-              </div>
-              
+            {/* Project layout - card is clickable */}
+            <div className="flex flex-col md:flex-row gap-8 md:gap-20">
               <div className="flex-grow">
-                <TiltCard>
-                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20">
+                <TiltCard isMobile={isMobile} onClick={() => setSelectedProject('project4')} ariaLabel="Open KeyedColors photos">
+                  <div className="bg-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-500 hover:shadow-primary/20 hover-lift">
                     <div className="grid md:grid-cols-2 relative z-10">
                       <div className="bg-muted lg:block hidden">
                         {/* Project 4 Image */}
@@ -1815,7 +1764,7 @@ const Home = () => {
                 <div className="mt-6">
                   <div className="relative">
                     {/* Video container with animation */}
-                    <div className="relative rounded-lg overflow-hidden shadow-md" style={{ paddingBottom: '75%' }}>
+                    <div className="relative rounded-lg overflow-hidden shadow-md" style={{ paddingBottom: '56.25%' }}>
                       {videos.map((videoId, index) => (
                         <motion.div
                           key={videoId}
