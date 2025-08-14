@@ -28,7 +28,6 @@ const CardLink = ({ to, title, description, icon: Icon, accent }: { to: string, 
 };
 
 const Intro: React.FC = () => {
-  const professionalUrl = (import.meta as any)?.env?.VITE_PROFESSIONAL_URL || 'http://localhost:3000';
   return (
     <div className="min-h-screen flex items-center justify-center relative">
       <div className="absolute inset-0 -z-10">
@@ -65,25 +64,13 @@ const Intro: React.FC = () => {
             accent="primary"
           />
 
-          <a href={professionalUrl} target="_blank" rel="noopener noreferrer" className="group block focus:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="relative overflow-hidden rounded-xl bg-card border shadow-sm hover:shadow-lg transition-shadow"
-            >
-              <div className="p-6 md:p-8">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`rounded-lg p-2 bg-foreground/10 text-foreground`}>
-                    <Shield className="w-5 h-5" />
-                  </div>
-                  <h3 className="text-xl md:text-2xl font-semibold">Professional version</h3>
-                </div>
-                <p className="text-muted-foreground">Clean, minimal presentation-focused layout.</p>
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-transparent via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-            </motion.div>
-          </a>
+          <CardLink
+            to="/professional"
+            title="Professional version"
+            description="Clean, minimal presentation-focused layout."
+            icon={Shield}
+            accent="foreground"
+          />
         </div>
       </div>
     </div>
