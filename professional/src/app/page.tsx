@@ -1,12 +1,8 @@
 import { ProfileCard } from './components/ProfileCard'
 import { TechStack } from './components/TechStack'
 import { WorkProcess } from './components/WorkProcess'
-import { Services } from './components/Services'
 import { Projects } from './components/Projects'
-import { Testimonials } from './components/Testimonials'
-import { YouTube } from './components/YouTube'
-import { Socials } from './components/Socials'
-import { techStack, services, projects, workProcess, testimonials, videos, socials } from '../data/data'
+import { techStack, projects, workProcess } from '../data/data'
 
 export default function Home() {
   return (
@@ -18,19 +14,11 @@ export default function Home() {
         <div className="lg:col-span-2">
           <TechStack techStack={techStack} />
         </div>
-        <div className="lg:col-span-1">
-          <Services services={services} />
-        </div>
         <div className="lg:col-span-2">
           <WorkProcess workProcess={workProcess} />
         </div>
         <div className="lg:col-span-1">
           <Projects projects={projects} />
-        </div>
-        <div className="lg:col-span-2 space-y-6">
-          <YouTube videos={videos} />
-          <Testimonials testimonials={testimonials} />
-          <Socials socials={socials} />
         </div>
       </div>
     </main>
