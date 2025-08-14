@@ -10,7 +10,12 @@ import CursorEffectsProvider from "./components/ui/CursorEffectsProvider";
 // Lazy load components
 const Intro = lazy(() => import("./pages/Intro"));
 const Index = lazy(() => import("./pages/Index"));
-const Professional = lazy(() => import("./pages/Professional"));
+const ProLayout = lazy(() => import("./pages/professional/Layout"));
+const ProOverview = lazy(() => import("./pages/professional/Overview"));
+const ProAbout = lazy(() => import("./pages/professional/About"));
+const ProProjects = lazy(() => import("./pages/professional/Projects"));
+const ProYouTube = lazy(() => import("./pages/professional/YouTube"));
+const ProContact = lazy(() => import("./pages/professional/Contact"));
 
 const queryClient = new QueryClient();
 
@@ -26,7 +31,13 @@ const App = () => {
               <Routes>
                 <Route path="/" element={<Intro />} />
                 <Route path="/style" element={<Index />} />
-                <Route path="/professional" element={<Professional />} />
+                <Route path="/professional" element={<ProLayout />}>
+                  <Route index element={<ProOverview />} />
+                  <Route path="about" element={<ProAbout />} />
+                  <Route path="projects" element={<ProProjects />} />
+                  <Route path="youtube" element={<ProYouTube />} />
+                  <Route path="contact" element={<ProContact />} />
+                </Route>
                 <Route path="*" element={<Intro />} />
               </Routes>
             </Suspense>
